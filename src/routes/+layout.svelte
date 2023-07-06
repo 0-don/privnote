@@ -1,13 +1,12 @@
 <script>
-	import 'uno.css';
-	import '../app.postcss';
-
+  import 'uno.css';
+  import '../app.postcss';
 </script>
 
-<main>
-<header class="bg-rose-600 flex justify-center items-center py-1 space-x-2">
-	<img alt="logo" src="/privnote-logo.svg" >
-	<p class="w-64 text-sm">Send notes will self-destruct after being read.</p>
+<header class="absolute left-0 right-0 top-0 bg-rose-600 py-1">
+  <section class="container mx-auto flex items-center space-x-2 px-2">
+    <img alt="logo" src="/privnote-logo.svg" />
+    <p class="w-64 text-sm">Send notes will self-destruct after being read.</p>
+  </section>
 </header>
 <slot />
-</main>
