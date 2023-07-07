@@ -10,8 +10,8 @@
 </script>
 
 {#if type === 'a'}
-  <div class={className + ' cursor-pointer'}>
-    <a href="#{href}" class={defaultClassName}>
+  <div class={'cursor-pointer'}>
+    <a href="#{href}" class={defaultClassName + ' ' + className}>
       <p>{text}</p>
       <i class={icon + ' text-xl'} />
     </a>

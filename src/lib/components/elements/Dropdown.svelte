@@ -5,7 +5,7 @@
 </script>
 
 <label class="w-full" for={name}>
-  <select id={name} {name} class="{className} w-full bg-zinc-600">
+  <select id={name} {name} class="{className} w-full bg-zinc-600 p-2">
     {#each options as { value, text }, i}
       <option {value}>{text}</option>
     {/each}
