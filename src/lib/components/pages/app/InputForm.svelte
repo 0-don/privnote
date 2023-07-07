@@ -6,7 +6,7 @@
 <form>
   <section id="content" class="mt-4">
     <textarea
-      rows="15"
+      rows="13"
       placeholder="Write your note here..."
       class="w-full !bg-yellow-100 !bg-opacity-75 p-5 text-black outline-none placeholder:text-black"
     />

@@ -3,5 +3,9 @@
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
 </script>
 
+<svelte:head>
+  <title>Priv-Note</title>
+</svelte:head>
+
 <Header />
 <InputForm />

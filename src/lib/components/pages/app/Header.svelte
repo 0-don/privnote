@@ -4,10 +4,10 @@
 
 <div class="mt-3 flex items-center justify-between">
   <h1 class="my-2 text-2xl font-bold">New note</h1>
-  <Button className="mr-1" href="question" icon="i-line-md:question-circle" />
+  <Button className="mr-1 !mt-[0.35rem]" href="question" icon="i-line-md:question-circle" />
 </div>
 <div id="question" class="relative mt-4 hidden bg-container p-2 target:block">
-  <div class="absolute right-1 top-2"><Button href="" icon="i-line-md:close-circle" /></div>
+  <div class="absolute -top-14 right-1"><Button href="" icon="i-line-md:close-circle" /></div>
   <div>
     With Privnote you can send notes that will self-destruct after being read.<br />
     1. Write the note below, encrypt it and get a link.<br />
