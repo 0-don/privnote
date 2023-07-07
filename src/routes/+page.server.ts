@@ -1,3 +1,5 @@
+import { redirect } from '@sveltejs/kit';
+
 const contacts = [
   {
     id: 'de393e6a-1c08-4e6e-9aad-0994fcf0d981',
@@ -15,9 +17,10 @@ export const load = () => {
 };
 
 export const actions: import('./$types').Actions = {
-  note: async ({ request }) => {
+  createNote: async ({ request }) => {
     const formData = await request.formData();
 
     console.log('formData', formData);
+    throw redirect(303, '/');
   }
 };

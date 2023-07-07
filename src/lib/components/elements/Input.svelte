@@ -11,6 +11,6 @@
     id={name}
     {type}
     {name}
-    class="w-full bg-zinc-600 p-2 focus:border-transparent focus:bg-zinc-500 focus:ring focus:ring-transparent {className}"
+    class="w-full bg-zinc-600 p-2 focus:bg-zinc-500 {className}"
   />
 </div>

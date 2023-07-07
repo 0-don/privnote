@@ -8,7 +8,7 @@
   <select
     id={name}
     {name}
-    class="{className}w-full bg-zinc-600 p-2 focus:border-transparent focus:bg-zinc-500 focus:ring focus:ring-transparent"
+    class="{className} w-full bg-zinc-600 p-2 focus:bg-zinc-500"
   >
     {#each options as { value, text }, i}
       <option {value}>{text}</option>
