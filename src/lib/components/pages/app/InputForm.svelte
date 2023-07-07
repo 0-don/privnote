@@ -1,9 +1,26 @@
 <script>
+  import { applyAction, enhance } from '$app/forms';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 </script>
 
-<form>
+<form
+  method="POST"
+  action="?/note"
+  use:enhance={({ form }) => {
+    // Before form submission to server
+    return async ({ result, update }) => {
+      // After form submission to server
+      if (result.type === 'success') {
+        form.reset();
+      } else {
+        await applyAction(result);
+      }
+
+      update();
+    };
+  }}
+>
   <section id="content" class="mt-4">
     <textarea
       rows="13"
