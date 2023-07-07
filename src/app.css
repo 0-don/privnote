@@ -6,6 +6,7 @@
   background: rgba(180, 166, 41) url(/privnote-page-flip-30.png) no-repeat bottom right;
 }
 
+
 ::-webkit-scrollbar {
   @apply h-[2px] w-[2px];
 }
