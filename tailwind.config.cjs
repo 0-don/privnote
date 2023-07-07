@@ -8,6 +8,9 @@ const config = {
         body: {
           DEFAULT: '#242729'
         },
+        main: {
+          DEFAULT: '#7D4698'
+        },
         alt: {
           DEFAULT: '#4E5457'
         },

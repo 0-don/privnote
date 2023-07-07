@@ -1,45 +1,7 @@
-/* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:not(:target) {
-  display: hidden;
-}
-
 #content textarea {
-  border-color: initial;
-  box-shadow: none;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiPjxkZWZzPjxmaWx0ZXIgaWQ9ImRhcmtyZWFkZXItaW1hZ2UtZmlsdGVyIj48ZmVDb2xvck1hdHJpeCB0eXBlPSJtYXRyaXgiIHZhbHVlcz0iMC41MDAgLTEuMDAxIC0xLjAwMSAwLjAwMCAxLjUwMCAtMS4wMDEgMC41MDAgLTEuMDAxIDAuMDAwIDEuNTAwIC0xLjAwMSAtMS4wMDEgMC41MDAgMC4wMDAgMS41MDAgMC4wMDAgMC4wMDAgMC4wMDAgMS4wMDAgMC4wMDAiIC8+PC9maWx0ZXI+PC9kZWZzPjxpbWFnZSB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIGZpbHRlcj0idXJsKCNkYXJrcmVhZGVyLWltYWdlLWZpbHRlcikiIHhsaW5rOmhyZWY9ImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBQjRBQUFBZUNBTUFBQUFNN2w2UUFBQUFHWFJGV0hSVGIyWjBkMkZ5WlFCQlpHOWlaU0JKYldGblpWSmxZV1I1Y2NsbFBBQUFBQWxRVEZSRi8vLy96TXlaN096Wldlb2pNZ0FBQUR0SlJFRlVlTnA4eVRFQkFBQU13NkJzL2tYWEFieDA4bm56NXMyYk4yL2V2SG56NXMyYk4yL2V2SG56NXMyYk4yL2V2SG56NXMyYmR3SU1BSi90QWZBQ3NOT1hBQUFBQUVsRlRrU3VRbUNDIiAvPjwvc3ZnPg==);
-  background-color: rgb(90, 81, 0);
-}
-#content textarea {
-  background-color: #ffface;
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.9rem;
-  font-family: 'Lucida Console', Monaco, monospace;
-  height: 250px;
-  margin-bottom: 1em;
-  border: none;
-  box-shadow: none;
-  background: #ffface url(privnote-page-flip-30.png) no-repeat bottom right;
-}
-#content textarea {
-  border-color: initial;
-  box-shadow: none;
-  background-image: url(privnote-page-flip-30.png);
-  background-color: rgb(90, 81, 0);
-}
-#content textarea {
-  background-color: #ffface;
-  width: 100%;
-  max-width: 100%;
-  font-size: 0.9rem;
-  font-family: 'Lucida Console', Monaco, monospace;
-  height: 250px;
-  margin-bottom: 1em;
-  border: none;
-  box-shadow: none;
-  background: #ffface url(privnote-page-flip-30.png) no-repeat bottom right;
+  background: #ffface url(/privnote-page-flip-30.png) no-repeat bottom right;
 }
