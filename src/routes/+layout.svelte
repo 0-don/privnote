@@ -10,6 +10,6 @@
   </section>
 </header>
 <hr class="border-8 border-alt" />
-<section class="container">
+<section class="container relative">
   <slot />
 </section>
