@@ -11,11 +11,13 @@ async fn main() {
     tracing_subscriber::fmt::init();
 
     // build our application with a route
-    let app = Router::new()
-        // `GET /` goes to `root`
-        .route("/", get(root))
-        // `POST /users` goes to `create_user`
-        .route("/users", post(create_user));
+    let app = Router::new().nest(
+        "/api",
+        Router::new()
+            .route("/", get(root))
+            .route("/create-note", post(create_user)),
+    );
+    // `GET /` goes to `root`
 
     // run our app with hyper, listening globally on port 3000
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())

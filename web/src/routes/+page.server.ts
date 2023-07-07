@@ -1,4 +1,6 @@
+import { env } from '$env/dynamic/private';
 import { redirect } from '@sveltejs/kit';
+import { request } from 'undici';
 
 const contacts = [
   {
@@ -17,8 +19,17 @@ export const load = () => {
 };
 
 export const actions: import('./$types').Actions = {
-  createNote: async ({ request }) => {
-    const formData = await request.formData();
+  createNote: async ({ request: req }) => {
+    const formData = await req.formData();
+
+    const { statusCode, headers, trailers, body } = await request(env.ENDPOINT);
+
+    console.log('response received', statusCode);
+    console.log('headers', headers);
+
+    // for await (const data of body) {
+    //   console.log('data', data);
+    // }
 
     console.log('formData', formData);
     throw redirect(303, '/');
