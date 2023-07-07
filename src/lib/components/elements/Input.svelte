@@ -7,5 +7,10 @@
 
 <div class="flex w-full flex-col">
   <label for={name} class="text-sm">{label}</label>
-  <input id={name} {type} {name} class="foc w-full bg-zinc-600 p-2 outline-0 focus:bg-zinc-500 {className}" />
+  <input
+    id={name}
+    {type}
+    {name}
+    class="foc w-full bg-zinc-600 p-2 outline-0 focus:bg-zinc-500 focus:outline-none {className}"
+  />
 </div>

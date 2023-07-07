@@ -1,6 +1,7 @@
 <script lang="ts">
   export let href = '';
   export let type = 'a' as 'button' | 'a';
+  export let title = '';
   export let text = '';
   export let className = '';
   export let icon = '';
@@ -10,14 +11,14 @@
 </script>
 
 {#if type === 'a'}
-  <div class={'cursor-pointer'}>
+  <div class={'cursor-pointer'} title={title || text}>
     <a href="#{href}" class={defaultClassName + ' ' + className}>
       <p>{text}</p>
       <i class={icon + ' text-xl'} />
     </a>
   </div>
 {:else}
-  <button type="submit" class={defaultClassName + ` ${className}`}>
+  <button title={title || text} type="submit" class={defaultClassName + ` ${className}`}>
     <p>{text}</p>
     <i class={icon + ' text-xl'} />
   </button>

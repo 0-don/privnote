@@ -37,5 +37,5 @@
     <Input type="text" name="notify_ref" label="Reference name for the note (optional)" />
   </div>
 
-  <div class="mt-3 flex justify-end"><Button href="" icon="i-line-md:close-circle" /></div>
+  <div class="absolute -bottom-14 right-1/2"><Button title="close" href="" icon="i-line-md:close-circle" /></div>
 </section>
