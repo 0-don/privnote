@@ -10,6 +10,9 @@ const config = {
         },
         alt: {
           DEFAULT: '#4E5457'
+        },
+        container: {
+          DEFAULT: '#333639'
         }
       }
     },

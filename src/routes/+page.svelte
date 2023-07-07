@@ -1,9 +1,9 @@
 <script>
-  import Popup from '$lib/components/elements/Popup.svelte';
+  import Header from '$lib/components/pages/app/Header.svelte';
 </script>
 
-<div class="flex items-center justify-between">
-  <h1 class="my-2 text-2xl font-bold">New note</h1>
-  <Popup id="question" />
-</div>
-<div id="question" class="hidden target:block">asd</div>
+<Header />
+
+<section id="content" class="mt-4 placeholder:!text-white">
+  <textarea rows="4" placeholder="Write your note here..." />
+</section>
