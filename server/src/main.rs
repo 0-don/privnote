@@ -1,61 +1,35 @@
-use axum::{
-    http::StatusCode,
-    routing::{get, post},
-    Json, Router,
+mod resource;
+mod types;
+
+use std::env;
+
+use axum::{routing::get, Router};
+
+use crate::resource::{
+    auth::get_captcha,
+    note::{create_note, get_note},
 };
-use serde::{Deserialize, Serialize};
 
 #[tokio::main]
 async fn main() {
-    // initialize tracing
+    dotenvy::dotenv().expect("Failed to read .env file");
+
     tracing_subscriber::fmt::init();
 
-    // build our application with a route
+    let server_port = env::var("SERVER_PORT").expect("PORT not set");
+
     let app = Router::new().nest(
         "/api",
         Router::new()
-            .route("/", get(root))
-            .route("/create-note", post(create_user)),
+            .route("/", get(|| async { "Hello, World!" }))
+            .route("/auth/captcha", get(get_captcha))
+            .route("/note", get(get_note).post(create_note)),
     );
-    // `GET /` goes to `root`
 
-    // run our app with hyper, listening globally on port 3000
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+    println!("http://127.0.0.1:{}/api", server_port);
+
+    axum::Server::bind(&format!("0.0.0.0:{}", server_port).parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();
-}
-
-// basic handler that responds with a static string
-async fn root() -> &'static str {
-    "Hello, World!"
-}
-
-async fn create_user(
-    // this argument tells axum to parse the request body
-    // as JSON into a `CreateUser` type
-    Json(payload): Json<CreateUser>,
-) -> (StatusCode, Json<User>) {
-    // insert your application logic here
-    let user = User {
-        id: 1337,
-        username: payload.username,
-    };
-
-    // this will be converted into a JSON response
-    // with a status code of `201 Created`
-    (StatusCode::CREATED, Json(user))
-}
-
-// the input to our `create_user` handler
-#[derive(Deserialize)]
-struct CreateUser {
-    username: String,
-}
-
-// the output to our `create_user` handler
-#[derive(Serialize)]
-struct User {
-    id: u64,
-    username: String,
 }
