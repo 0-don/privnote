@@ -2,3 +2,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .item {
+    @apply flex w-full select-none flex-wrap items-center gap-x-3 text-xs sm:w-96 sm:text-sm;
+  }
+  .content {
+    @apply max-h-0 basis-full select-text overflow-hidden border-blue-300 transition-all peer-checked:max-h-max peer-checked:border-y-[1px] peer-checked:p-3;
+  }
+}

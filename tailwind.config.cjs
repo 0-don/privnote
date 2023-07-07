@@ -7,6 +7,9 @@ const config = {
       colors: {
         body: {
           DEFAULT: '#242729'
+        },
+        alt: {
+          DEFAULT: '#4E5457'
         }
       }
     },

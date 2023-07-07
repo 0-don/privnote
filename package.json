@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "version": "0.0.1",
+  "name": "priv-note",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite dev",
@@ -24,7 +24,6 @@
     "postcss": "^8.4.25",
     "postcss-load-config": "^4.0.1",
     "prettier": "^2.8.8",
-    "prettier-plugin-organize-imports": "^3.2.2",
     "prettier-plugin-svelte": "^2.10.1",
     "prettier-plugin-tailwindcss": "^0.3.0",
     "svelte": "^4.0.5",
