@@ -1,5 +1,6 @@
 import { env } from '$env/dynamic/private';
-import { redirect } from '@sveltejs/kit';
+import { client } from '$lib/utils/client';
+import { json, redirect } from '@sveltejs/kit';
 import { request } from 'undici';
 
 const contacts = [
@@ -12,7 +13,7 @@ const contacts = [
   }
 ];
 
-export const load = () => {
+export const load = async () => {
   return {
     contacts
   };
@@ -22,10 +23,21 @@ export const actions: import('./$types').Actions = {
   createNote: async ({ request: req }) => {
     const formData = await req.formData();
 
-    const { statusCode, headers, trailers, body } = await request(env.ENDPOINT);
+    const data = {
+      note: formData.get('note'),
+      duration_hours: formData.get('duration_hours'),
+      manual_password: formData.get('manual_password'),
+      manual_password_confirm: formData.get('manual_password_confirm'),
+      notify_email: formData.get('notify_email'),
+      notify_ref: formData.get('notify_ref')
+    };
+
+    const { statusCode, headers, body } = await client('note', { method: 'POST', body: json(data) });
 
     console.log('response received', statusCode);
     console.log('headers', headers);
+
+    console.log(body);
 
     // for await (const data of body) {
     //   console.log('data', data);

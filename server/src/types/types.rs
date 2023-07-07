@@ -1,25 +1,22 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Captcha {
     pub text: String,
     pub hash: String,
 }
-// the input to our `create_user` handler
-#[derive(Deserialize)]
-pub struct CreateUser {
-    pub username: String,
-}
 
-// the input to our `create_user` handler
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct GetNote {
     pub id: String,
 }
 
-// the output to our `create_user` handler
-#[derive(Serialize)]
-pub struct User {
-    pub id: u64,
-    pub username: String,
+#[derive(Serialize, Deserialize, Debug, Default)]
+pub struct Note {
+    pub note: String,
+    pub duration_hours: i32,
+    pub manual_password: String,
+    pub manual_password_confirm: String,
+    pub notify_email: String,
+    pub notify_ref: String,
 }

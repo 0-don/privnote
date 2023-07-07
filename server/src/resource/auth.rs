@@ -1,11 +1,7 @@
 use std::env;
 
-use argon2::{Config, ThreadMode, Variant, Version};
-use axum::{
-    http::StatusCode,
-    response::{IntoResponse, Response},
-    Json,
-};
+use argon2::Config;
+use axum::{http::StatusCode, Json};
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
 
 use crate::types::types::Captcha;
