@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 #content textarea {
-  background: #ffface url(/privnote-page-flip-30.png) no-repeat bottom right;
+  background: rgba(180, 166, 41) url(/privnote-page-flip-30.png) no-repeat bottom right;
 }

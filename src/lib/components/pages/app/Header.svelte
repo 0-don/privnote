@@ -1,5 +1,5 @@
 <script>
-  import Popup from '$lib/components/elements/Popup.svelte';
+  import Popup from '$lib/components/elements/Button.svelte';
 </script>
 
 <div class="mt-3 flex items-center justify-between">
