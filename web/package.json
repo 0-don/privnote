@@ -37,5 +37,8 @@
     "unocss": "^0.53.4",
     "vite": "^4.4.1"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "undici": "^5.22.1"
+  }
 }
