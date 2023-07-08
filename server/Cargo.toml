@@ -1,8 +1,12 @@
 [package]
-name = "api"
-version = "0.1.0"
+name = "priv_note_server"
+version = "1.0.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[workspace]
+members = [".", "api"]
+
 
 [dependencies]
+priv_note_api = { path = "api" }

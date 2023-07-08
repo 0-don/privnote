@@ -1,3 +1,3 @@
 fn main() {
-    println!("Hello, world!");
+    priv_note_api::main();
 }
