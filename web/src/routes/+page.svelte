@@ -3,7 +3,7 @@
   import Header from '$lib/components/pages/app/Header.svelte';
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
 
-  export let form: CreateNoteResponse[];
+  export let form: CreateNoteResponse[] = [];
 </script>
 
 <svelte:head>

@@ -4,8 +4,8 @@
   export let name: string;
   export let className = '';
 
-  export let form: CreateNoteResponse[];
-  const error = form.find((f) => f.path === name)?.message;
+  export let form: CreateNoteResponse[] = [];
+  const error = form?.find((f) => f.path === name)?.message;
 </script>
 
 <fieldset class="w-full {className}">

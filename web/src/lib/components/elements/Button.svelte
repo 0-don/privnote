@@ -9,7 +9,7 @@
   export let icon = '';
 
   export let form: CreateNoteResponse[] = [];
-  const error = form.find((f) => f.path === text)?.message;
+  const error = form?.find((f) => f.path === text)?.message;
 
   let defaultClassName =
     'flex items-center rounded-md border border-zinc-500 bg-zinc-600 p-2 shadow-main hover:border-main';

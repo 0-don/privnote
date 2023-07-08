@@ -3,7 +3,7 @@
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 
-  export let form: CreateNoteResponse[];
+  export let form: CreateNoteResponse[] = [];
   const note = form?.find(({ path }) => path === 'note');
 </script>
 

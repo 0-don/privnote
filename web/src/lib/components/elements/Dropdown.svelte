@@ -4,9 +4,9 @@
   export let className = '';
   export let name = '';
   export let options = [] as { value: string | number; text: string | number }[];
-  
-  export let form: CreateNoteResponse[];
-  const error = form.find((f) => f.path === name)?.message;
+
+  export let form: CreateNoteResponse[] = [];
+  const error = form?.find((f) => f.path === name)?.message;
 </script>
 
 <label class="w-full" for={name}>

@@ -7,8 +7,8 @@
   export let type = 'text' as HTMLInputTypeAttribute;
   export let label = '';
 
-  export let form: CreateNoteResponse[];
-  const error = form.find((f) => f.path === name)?.message;
+  export let form: CreateNoteResponse[] = [];
+  const error = form?.find((f) => f.path === name)?.message;
 </script>
 
 <div class="flex w-full flex-col">

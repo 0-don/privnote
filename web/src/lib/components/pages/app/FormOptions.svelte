@@ -4,13 +4,8 @@
   import Checkbox from '$lib/components/elements/Checkbox.svelte';
   import Dropdown from '$lib/components/elements/Dropdown.svelte';
   import Input from '$lib/components/elements/Input.svelte';
-  import type { ActionData } from '../../../../routes/$types';
 
-  export let form: CreateNoteResponse[];
-  // const durationHours = form?.find(({ path }) => path === 'duration_hours');
-  // const destroyWithoutConfirmation = form?.find(({ path }) => path === 'destroy_without_confirmation');
-  // const manualPassword = form?.find(({ path }) => path === 'manual_password');
-  // const manualPasswordConfirm = form?.find(({ path }) => path === 'manual_password_confirm');
+  export let form: CreateNoteResponse[] = [];
 </script>
 
 <section id="options" class="relative mt-4 hidden target:block">
