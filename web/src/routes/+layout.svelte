@@ -9,7 +9,7 @@
     <p class="w-64 text-sm">Send notes will self-destruct after being read.</p>
   </section>
 </header>
-<hr class="border-8 border-alt" />
+<hr class="border-alt border-8" />
 <section class="container relative">
   <slot />
 </section>

@@ -2,13 +2,13 @@ use axum::{http::StatusCode, Json};
 
 use crate::types::types::{GetNote, Note};
 
-pub async fn create_note(Json(payload): Json<Note>) -> (StatusCode, Json<Note>) {
-    let note = Note {
-        note: payload.note,
-        ..Default::default()
-    };
+pub async fn create_note(Json(note): Json<Note>) -> (StatusCode, Json<Note>) {
+    // let note = Note {
+    //     note: payload.note,
+    //     ..Default::default()
+    // };
 
-    // println!("{:?}", note);
+    println!("{:?}", note);
 
     (StatusCode::CREATED, Json(note))
 }

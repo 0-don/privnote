@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { dev } from '$app/environment';
   import type { CreateNoteResponse } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
@@ -8,7 +9,9 @@
 </script>
 
 <form method="POST">
-  {JSON.stringify(form)}
+  {#if dev}
+    {JSON.stringify(form)}
+  {/if}
 
   <section id="content" class="mt-4">
     <textarea
