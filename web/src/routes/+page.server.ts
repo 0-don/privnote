@@ -1,7 +1,9 @@
-import { env } from '$env/dynamic/private';
+import type { CreateNoteResponse } from '$lib/@types';
 import { client } from '$lib/utils/client';
-import { json, redirect } from '@sveltejs/kit';
-import { request } from 'undici';
+import { NoteSchema } from '$lib/utils/schemas/note.schema';
+import type { Actions } from '@sveltejs/kit';
+import { error } from 'console';
+import { z } from 'zod';
 
 const contacts = [
   {
@@ -19,31 +21,29 @@ export const load = async () => {
   };
 };
 
-export const actions: import('./$types').Actions = {
-  createNote: async ({ request: req }) => {
-    const formData = await req.formData();
+export const actions = {
+  default: async ({ request }): Promise<CreateNoteResponse[]> => {
+    try {
+      const data = NoteSchema.parse(Object.fromEntries(await request.formData()));
 
-    const data = {
-      note: formData.get('note'),
-      duration_hours: formData.get('duration_hours'),
-      manual_password: formData.get('manual_password'),
-      manual_password_confirm: formData.get('manual_password_confirm'),
-      notify_email: formData.get('notify_email'),
-      notify_ref: formData.get('notify_ref')
-    };
+      const message = await (
+        await client('note', {
+          method: 'POST',
+          body: JSON.stringify(data)
+        })
+      ).body.json();
 
-    const { statusCode, headers, body } = await client('note', { method: 'POST', body: json(data) });
-
-    console.log('response received', statusCode);
-    console.log('headers', headers);
-
-    console.log(body);
-
-    // for await (const data of body) {
-    //   console.log('data', data);
-    // }
-
-    console.log('formData', formData);
-    throw redirect(303, '/');
+      return [{ message, path: 'ok' }];
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return err.issues.map(({ message, path }) => ({
+          message: message,
+          path: path.join('.')
+        })) as CreateNoteResponse[];
+      } else {
+        error(err);
+        return [{ message: 'Unknown error', path: 'error' }];
+      }
+    }
   }
-};
+} satisfies Actions;
