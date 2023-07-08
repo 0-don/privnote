@@ -1,0 +1,16 @@
+[package]
+name = "priv_note_service"
+version = "1.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+entity = { path = "../entity" }
+
+
+[dependencies.sea-orm]
+version = "0.11.3"
+features = ["debug-print", "runtime-tokio-rustls", "sqlx-postgres"]
+
+[dev-dependencies]
+tokio = { version = "1.29.1", features = ["macros", "rt"] }

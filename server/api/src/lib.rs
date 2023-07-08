@@ -16,10 +16,17 @@ async fn start() -> anyhow::Result<()> {
     tracing_subscriber::fmt::init();
 
     dotenvy::dotenv().ok();
-
+    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
     let host = env::var("HOST").expect("HOST is not set in .env file");
     let port = env::var("PORT").expect("PORT is not set in .env file");
     let server_url = format!("{host}:{port}");
+
+    println!("Connecting to database: {db_url}", db_url = db_url);
+
+    // let conn = Database::connect(db_url)
+    //     .await
+    //     .expect("Database connection failed");
+    // Migrator::up(&conn, None).await.unwrap();
 
     let app = Router::new().nest(
         "/api",
