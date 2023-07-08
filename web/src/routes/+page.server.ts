@@ -18,6 +18,11 @@ const contacts = [
 ];
 
 export const load = async () => {
+  await (
+    await client('auth/captcha', {
+      method: 'GET'
+    })
+  ).body.json();
   return {
     contacts
   };
@@ -27,10 +32,8 @@ export const actions = {
   default: async ({ request }): Promise<CreateNoteResponse[]> => {
     try {
       const form = Object.fromEntries(await request.formData());
-      console.log(form);
-      const data = NoteSchema.parse(form);
 
-      console.log(await request.formData());
+      const data = NoteSchema.parse(form);
 
       const message = await (
         await client('note', {

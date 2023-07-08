@@ -8,7 +8,7 @@
 </script>
 
 <form method="POST">
-  {JSON.stringify(note)}
+  {JSON.stringify(form)}
 
   <section id="content" class="mt-4">
     <textarea
