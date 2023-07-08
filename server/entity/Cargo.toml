@@ -1,5 +1,5 @@
 [package]
-name = "priv_note_entity"
+name = "entity"
 version = "1.0.0"
 edition = "2021"
 

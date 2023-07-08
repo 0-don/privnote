@@ -9,4 +9,4 @@ members = [".", "api", "entity", "migration", "service"]
 
 
 [dependencies]
-priv_note_api = { path = "api" }
+api = { path = "api" }

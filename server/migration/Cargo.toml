@@ -1,5 +1,5 @@
 [package]
-name = "priv_note_migration"
+name = "migration"
 version = "1.0.0"
 edition = "2021"
 publish = false
