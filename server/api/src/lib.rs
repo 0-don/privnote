@@ -1,9 +1,9 @@
 mod resource;
 mod types;
 
-use std::env;
-
-use axum::{routing::get, Router};
+use axum::{routing::get, Router, Server};
+use core::str::FromStr;
+use std::{env, net::SocketAddr};
 
 use crate::resource::{
     auth::get_captcha,
@@ -12,11 +12,14 @@ use crate::resource::{
 
 #[tokio::main]
 async fn start() -> anyhow::Result<()> {
-    dotenvy::dotenv().expect("Failed to read .env file");
-
+    env::set_var("RUST_LOG", "debug");
     tracing_subscriber::fmt::init();
 
-    let server_port = env::var("SERVER_PORT").expect("PORT not set");
+    dotenvy::dotenv().ok();
+
+    let host = env::var("HOST").expect("HOST is not set in .env file");
+    let port = env::var("PORT").expect("PORT is not set in .env file");
+    let server_url = format!("{host}:{port}");
 
     let app = Router::new().nest(
         "/api",
@@ -26,12 +29,10 @@ async fn start() -> anyhow::Result<()> {
             .route("/note", get(get_note).post(create_note)),
     );
 
-    println!("http://127.0.0.1:{}/api", server_port);
+    println!("http://{}/api", server_url);
 
-    axum::Server::bind(&format!("0.0.0.0:{}", server_port).parse().unwrap())
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    let addr = SocketAddr::from_str(&server_url).unwrap();
+    Server::bind(&addr).serve(app.into_make_service()).await?;
 
     Ok(())
 }
