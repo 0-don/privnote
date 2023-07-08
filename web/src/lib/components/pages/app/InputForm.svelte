@@ -1,9 +1,9 @@
 <script lang="ts">
+  import type { CreateNoteResponse } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
-  import type { ActionData } from '../../../../routes/$types';
   import FormOptions from './FormOptions.svelte';
 
-  export let form: ActionData;
+  export let form: CreateNoteResponse[];
   const note = form?.find(({ path }) => path === 'note');
 </script>
 
@@ -22,7 +22,7 @@
     {/if}
   </section>
 
-  <FormOptions />
+  <FormOptions {form} />
 
   <section class="mt-4 flex justify-between">
     <Button type="button" className="!rounded-none" text="Create Note" icon="i-line-md:document-add" />

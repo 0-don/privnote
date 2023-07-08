@@ -1,9 +1,9 @@
 <script lang="ts">
+  import type { CreateNoteResponse } from '$lib/@types';
   import Header from '$lib/components/pages/app/Header.svelte';
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
-  import type { ActionData } from './$types';
 
-  export let form: ActionData;
+  export let form: CreateNoteResponse[];
 </script>
 
 <svelte:head>

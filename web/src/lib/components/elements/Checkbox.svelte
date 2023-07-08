@@ -1,6 +1,11 @@
 <script lang="ts">
+    import type { CreateNoteResponse } from "$lib/@types";
+
   export let name: string;
   export let className = '';
+
+  export let form: CreateNoteResponse[];
+  const error = form.find((f) => f.path === name)?.message;
 </script>
 
 <fieldset class="w-full {className}">
@@ -8,7 +13,14 @@
   <div class="space-y-5">
     <div class="flex items-start">
       <div class="flex h-6 items-center">
-        <input id={name} {name} type="checkbox" class="h-4 w-4 rounded border-gray-300 text-main focus:ring-main" />
+        <input
+          id={name}
+          {name}
+          checked
+          value="1"
+          type="checkbox"
+          class="text-main focus:ring-main h-4 w-4 rounded border-gray-300"
+        />
       </div>
       <div class="ml-3 text-sm leading-6">
         <label for="comments" class="font-medium text-white"
@@ -17,4 +29,7 @@
       </div>
     </div>
   </div>
+  {#if error}
+    <p class="text-red-400">{error}</p>
+  {/if}
 </fieldset>

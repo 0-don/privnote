@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { CreateNoteResponse } from '$lib/@types';
+
   export let href = '';
   export let type = 'a' as 'button' | 'a';
   export let title = '';
@@ -6,7 +8,10 @@
   export let className = '';
   export let icon = '';
 
-  export let defaultClassName =
+  export let form: CreateNoteResponse[] = [];
+  const error = form.find((f) => f.path === text)?.message;
+
+  let defaultClassName =
     'flex items-center rounded-md border border-zinc-500 bg-zinc-600 p-2 shadow-main hover:border-main';
 </script>
 
@@ -18,8 +23,11 @@
     </a>
   </div>
 {:else}
-  <button title={title || text} type="submit" class={defaultClassName + ` ${className}`}>
+  <button name={text || title} title={title || text} type="submit" class={defaultClassName + ` ${className}`}>
     <p>{text}</p>
     <i class={icon + ' text-xl'} />
   </button>
+{/if}
+{#if error}
+  <p class="text-red-400">{error}</p>
 {/if}

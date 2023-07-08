@@ -3,6 +3,7 @@ export type NoteKeys =
   | 'duration_hours'
   | 'manual_password'
   | 'manual_password_confirm'
+  | 'destroy_without_confirmation'
   | 'notify_email'
   | 'notify_ref'
   | 'error'

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { CreateNoteResponse } from '$lib/@types';
 import { client } from '$lib/utils/client';
 import { NoteSchema } from '$lib/utils/schemas/note.schema';
 import type { Actions } from '@sveltejs/kit';
+// @ts-ignore
 import { error } from 'console';
 import { z } from 'zod';
 
@@ -24,7 +26,11 @@ export const load = async () => {
 export const actions = {
   default: async ({ request }): Promise<CreateNoteResponse[]> => {
     try {
-      const data = NoteSchema.parse(Object.fromEntries(await request.formData()));
+      const form = Object.fromEntries(await request.formData());
+      console.log(form);
+      const data = NoteSchema.parse(form);
+
+      console.log(await request.formData());
 
       const message = await (
         await client('note', {
