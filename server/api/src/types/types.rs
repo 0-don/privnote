@@ -12,7 +12,10 @@ pub struct GetNote {
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
-pub struct Note {
+pub struct NoteReq {
+    pub tag: usize,
+    pub text: String,
+
     pub note: String,
     pub duration_hours: i32,
     pub manual_password: String,

@@ -15,11 +15,14 @@
 
 <form method="POST">
   {#if dev}
-    {JSON.stringify({ ...form, ...data })}
+    <h5 class="text-green-400">Form</h5>
+    <p class="break-all text-green-400">{JSON.stringify(form, null, 4)}</p>
+    <h5 class="text-blue-400">Load</h5>
+    <p class="break-all text-blue-400">{JSON.stringify(data, null, 4)}</p>
   {/if}
 
   {#if errorForm || errorCaptcha || tag}
-    <p class="text-red-400">{errorForm + ' ' + errorCaptcha + ' ' + tag}</p>
+    <p class="break-all text-red-400">{errorForm + ' ' + errorCaptcha + ' ' + tag}</p>
   {/if}
 
   <section id="content" class="mt-4">

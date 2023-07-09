@@ -1,8 +1,8 @@
 use axum::{http::StatusCode, Json};
 
-use crate::types::types::{GetNote, Note};
+use crate::types::types::{GetNote, NoteReq};
 
-pub async fn create_note(Json(note): Json<Note>) -> (StatusCode, Json<Note>) {
+pub async fn create_note(Json(note): Json<NoteReq>) -> (StatusCode, Json<NoteReq>) {
     // let note = Note {
     //     note: payload.note,
     //     ..Default::default()
