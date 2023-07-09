@@ -1,5 +1,5 @@
 export type NoteKeys =
-  | 'id'
+  | 'tag'
   | 'note'
   | 'duration_hours'
   | 'manual_password'
@@ -15,4 +15,9 @@ export type Notification = {
   path: NoteKeys;
 };
 
-export type CaptchLoad = { id: string } | Notification[];
+export type Captcha = {
+  text: string;
+  tag: number;
+};
+
+export type CaptchaLoad = { tag: string } | Notification[];

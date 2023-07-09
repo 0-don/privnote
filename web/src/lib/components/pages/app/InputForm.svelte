@@ -1,13 +1,13 @@
 <script lang="ts">
   import { dev } from '$app/environment';
-  import type { CaptchLoad, Notification } from '$lib/@types';
+  import type { CaptchaLoad, Notification } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 
   export let form: Notification[] = [];
-  export let data: CaptchLoad;
+  export let data: CaptchaLoad;
   const note = form?.find(({ path }) => path === 'note');
-  const id = form?.find(({ path }) => path === 'id');
+  const tag = form?.find(({ path }) => path === 'tag');
 
   const errorForm = form?.find((f) => f.path === 'error')?.message;
   const errorCaptcha = form?.find((f) => f.path === 'error')?.message;
@@ -18,8 +18,8 @@
     {JSON.stringify({ ...form, ...data })}
   {/if}
 
-  {#if errorForm || errorCaptcha || id}
-    <p class="text-red-400">{errorForm + ' ' + errorCaptcha + ' ' + id}</p>
+  {#if errorForm || errorCaptcha || tag}
+    <p class="text-red-400">{errorForm + ' ' + errorCaptcha + ' ' + tag}</p>
   {/if}
 
   <section id="content" class="mt-4">
@@ -34,8 +34,8 @@
     {/if}
   </section>
 
-  {#if 'id' in data}
-    <input type="hidden" name="id" value={data.id} />
+  {#if 'tag' in data}
+    <input type="hidden" name="tag" value={data.tag} />
   {/if}
 
   <FormOptions {form} />

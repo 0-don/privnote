@@ -13,14 +13,14 @@ pub async fn get_captcha(state: State<AppState>) -> (StatusCode, Json<Captcha>) 
 
     state.cache.insert(id, text.clone()).await;
 
-    (StatusCode::OK, Json(Captcha { id, text }))
+    (StatusCode::OK, Json(Captcha { tag: id, text }))
 }
 
 pub async fn verify_captcha(
     state: State<AppState>,
     Json(captcha): Json<Captcha>,
 ) -> (StatusCode, Json<Captcha>) {
-    let rest = state.cache.get(&captcha.id);
+    let rest = state.cache.get(&captcha.tag);
 
     if rest.is_none() || rest.unwrap() != captcha.text {
         println!("Captcha verification failed: {:?}", captcha);

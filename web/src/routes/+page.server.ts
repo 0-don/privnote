@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { Notification } from '$lib/@types';
+import type { Captcha, Notification } from '$lib/@types';
 import { client } from '$lib/utils/client';
 import { COOKIE, COOKIE_SERIALIZE_OPTIONS } from '$lib/utils/constants';
 import { NoteSchema } from '$lib/utils/schemas/note.schema';
@@ -11,17 +11,17 @@ import { error } from 'console';
 
 export const load = (async ({ cookies }) => {
   try {
-    const { text, id } = await (
-      await client<{ text: string; id: number }>('auth/captcha', {
+    const { text, tag } = await (
+      await client<Captcha>('auth/captcha', {
         method: 'GET'
       })
     ).body.json();
 
     cookies.set(COOKIE, text, COOKIE_SERIALIZE_OPTIONS);
 
-    return { id };
+    return { tag } as Omit<Captcha, 'text'>;
   } catch (error) {
-    return [{ message: 'Server error', path: 'error' }];
+    return [{ message: 'Server error', path: 'error' }] as Notification[];
   }
 }) satisfies PageServerLoad;
 

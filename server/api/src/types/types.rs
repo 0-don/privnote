@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Captcha {
-    pub id: usize,
+    pub tag: usize,
     pub text: String,
 }
 
