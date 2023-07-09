@@ -1,6 +1,5 @@
-import { text } from '@sveltejs/kit';
-
 export type NoteKeys =
+  | 'id'
   | 'note'
   | 'duration_hours'
   | 'manual_password'
@@ -11,9 +10,9 @@ export type NoteKeys =
   | 'error'
   | 'ok';
 
-export type CreateNoteResponse = {
+export type Notification = {
   message: string;
   path: NoteKeys;
 };
 
-export type CaptchLoad = { captcha: string } | CreateNoteResponse;
+export type CaptchLoad = { id: string } | Notification[];

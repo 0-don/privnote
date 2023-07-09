@@ -1,44 +1,43 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { CreateNoteResponse } from '$lib/@types';
+import type { Notification } from '$lib/@types';
 import { client } from '$lib/utils/client';
-import { COOKIE_SERIALIZE_OPTIONS } from '$lib/utils/constants';
+import { COOKIE, COOKIE_SERIALIZE_OPTIONS } from '$lib/utils/constants';
 import { NoteSchema } from '$lib/utils/schemas/note.schema';
 import type { PageServerLoad } from './$types';
-
 import type { Actions } from '@sveltejs/kit';
+import { z } from 'zod';
 // @ts-ignore
 import { error } from 'console';
-import { z } from 'zod';
 
 export const load = (async ({ cookies }) => {
   try {
-    const { text } = (await (
-      await client('auth/captcha', {
+    const { text, id } = await (
+      await client<{ text: string; id: number }>('auth/captcha', {
         method: 'GET'
       })
-    ).body.json()) as { text: string; id: number };
+    ).body.json();
 
-    cookies.set('captcha', text, COOKIE_SERIALIZE_OPTIONS);
+    cookies.set(COOKIE, text, COOKIE_SERIALIZE_OPTIONS);
 
-    return {
-      captcha: text
-    };
+    return { id };
   } catch (error) {
     return [{ message: 'Server error', path: 'error' }];
   }
 }) satisfies PageServerLoad;
 
 export const actions = {
-  default: async ({ request }): Promise<CreateNoteResponse[]> => {
+  default: async ({ request, cookies }): Promise<Notification[]> => {
     try {
+      const text = cookies.get(COOKIE);
+
       const form = Object.fromEntries(await request.formData());
 
       const data = NoteSchema.parse(form);
 
       const message = await (
-        await client('note', {
+        await client<string>('note', {
           method: 'POST',
-          body: JSON.stringify(data)
+          body: JSON.stringify({ ...data, text })
         })
       ).body.json();
 
@@ -48,7 +47,7 @@ export const actions = {
         return err.issues.map(({ message, path }) => ({
           message: message,
           path: path.join('.')
-        })) as CreateNoteResponse[];
+        })) as Notification[];
       } else {
         error(err);
         return [{ message: 'Unknown error', path: 'error' }];

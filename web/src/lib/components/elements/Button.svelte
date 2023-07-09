@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CreateNoteResponse } from '$lib/@types';
+  import type { Notification } from '$lib/@types';
 
   export let href = '';
   export let type = 'a' as 'button' | 'a';
@@ -8,7 +8,7 @@
   export let className = '';
   export let icon = '';
 
-  export let form: CreateNoteResponse[] = [];
+  export let form: Notification[] = [];
   const error = form?.find((f) => f.path === text)?.message;
 
   let defaultClassName =

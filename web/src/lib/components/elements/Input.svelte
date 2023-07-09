@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { HTMLInputTypeAttribute } from 'svelte/elements';
-  import type { CreateNoteResponse } from '$lib/@types';
+  import type { Notification } from '$lib/@types';
 
   export let className = '';
   export let name = '';
   export let type = 'text' as HTMLInputTypeAttribute;
   export let label = '';
 
-  export let form: CreateNoteResponse[] = [];
+  export let form: Notification[] = [];
   const error = form?.find((f) => f.path === name)?.message;
 </script>
 

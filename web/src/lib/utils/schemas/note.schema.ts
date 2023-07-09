@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const NoteSchema = z
   .object({
+    id: z.coerce.number().int().min(0).max(255),
     note: z.string().min(1).max(10000),
     duration_hours: z.coerce.number().int().min(0).max(24).optional(),
     manual_password: z.string().min(1).max(100).optional().or(z.literal('')),

@@ -1,6 +1,8 @@
 import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
 
+export const COOKIE = 'captcha';
+
 export const TOKEN_EXPIRES_IN = 60 * 60; // 1 Minute
 
 export const COOKIE_SERIALIZE_OPTIONS: import('cookie').CookieSerializeOptions = {
