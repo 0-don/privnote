@@ -20,6 +20,7 @@ pub struct Model {
     pub manual_password: Option<String>,
     pub notify_email: Option<String>,
     pub notify_ref: Option<String>,
+    pub created_at: Option<DateTime>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveColumn)]
@@ -30,6 +31,7 @@ pub enum Column {
     ManualPassword,
     NotifyEmail,
     NotifyRef,
+    CreatedAt,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DerivePrimaryKey)]
@@ -52,11 +54,12 @@ impl ColumnTrait for Column {
     fn def(&self) -> ColumnDef {
         match self {
             Self::Id => ColumnType::Uuid.def(),
-            Self::Note => ColumnType::String(None).def(),
+            Self::Note => ColumnType::Char(Some(10000u32)).def(),
             Self::DurationHours => ColumnType::Integer.def(),
-            Self::ManualPassword => ColumnType::String(None).def().null(),
-            Self::NotifyEmail => ColumnType::String(None).def().null(),
-            Self::NotifyRef => ColumnType::String(None).def().null(),
+            Self::ManualPassword => ColumnType::Char(Some(10000u32)).def().null(),
+            Self::NotifyEmail => ColumnType::Char(Some(1000u32)).def().null(),
+            Self::NotifyRef => ColumnType::Char(Some(100u32)).def().null(),
+            Self::CreatedAt => ColumnType::DateTime.def().null(),
         }
     }
 }

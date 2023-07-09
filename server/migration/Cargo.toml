@@ -11,7 +11,7 @@ path = "src/lib.rs"
 
 [dependencies]
 async-std = { version = "1.12.0", features = ["attributes", "tokio1"] }
-tracing-subscriber = { version = "0.3"}
+tracing-subscriber = { version = "0.3.17"}
 
 [dependencies.sea-orm-migration]
 version = "^0"

@@ -1,18 +1,29 @@
+use entity::note;
+use sea_orm::{DbConn, DbErr, Set};
+
+use crate::types::types::NoteReq;
+
 pub struct Mutation;
 
 impl Mutation {
-    // pub async fn create_post(
-    //     db: &DbConn,
-    //     form_data: posts::Model,
-    // ) -> Result<posts::ActiveModel, DbErr> {
-    //     posts::ActiveModel {
-    //         title: Set(form_data.title.to_owned()),
-    //         text: Set(form_data.text.to_owned()),
-    //         ..Default::default()
-    //     }
-    //     .save(db)
-    //     .await
-    // }
+    pub async fn create_note(db: &DbConn, form_data: NoteReq) -> Result<note::Model, DbErr> {
+        let res = note::Model {
+            note: form_data.note,
+            id: todo!(),
+            duration_hours: todo!(),
+            manual_password: todo!(),
+            notify_email: todo!(),
+            notify_ref: todo!(),
+            created_at: todo!(),
+        };
+
+        // let active_model = note::ActiveModel {
+        //     notify_email: Set(None),
+        //     ..Default::default()
+        // };
+
+        Ok(res)
+    }
 
     // pub async fn update_post_by_id(
     //     db: &DbConn,

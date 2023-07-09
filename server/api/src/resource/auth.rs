@@ -1,7 +1,8 @@
 use axum::{extract::State, http::StatusCode, Json};
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
+use service::types::types::Captcha;
 
-use crate::{types::types::Captcha, AppState};
+use crate::AppState;
 
 pub async fn get_captcha(state: State<AppState>) -> (StatusCode, Json<Captcha>) {
     let id = rand::thread_rng().gen_range(0..255);

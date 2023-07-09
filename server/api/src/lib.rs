@@ -1,5 +1,4 @@
 mod resource;
-mod types;
 
 use axum::{routing::get, Router, Server};
 use core::{str::FromStr, time::Duration};
