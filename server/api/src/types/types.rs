@@ -2,8 +2,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Captcha {
+    pub id: usize,
     pub text: String,
-    pub hash: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]

@@ -1,32 +1,32 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { CreateNoteResponse } from '$lib/@types';
 import { client } from '$lib/utils/client';
+import { COOKIE_SERIALIZE_OPTIONS } from '$lib/utils/constants';
 import { NoteSchema } from '$lib/utils/schemas/note.schema';
+import type { PageServerLoad } from './$types';
+
 import type { Actions } from '@sveltejs/kit';
 // @ts-ignore
 import { error } from 'console';
 import { z } from 'zod';
 
-const contacts = [
-  {
-    id: 'de393e6a-1c08-4e6e-9aad-0994fcf0d981',
-    name: 'Saul Goodman',
-    email: 'saul@example.com',
-    company: 'Saul Goodman & Associates',
-    job: 'Attorney'
-  }
-];
+export const load = (async ({ cookies }) => {
+  try {
+    const { text } = (await (
+      await client('auth/captcha', {
+        method: 'GET'
+      })
+    ).body.json()) as { text: string; id: number };
 
-export const load = async () => {
-  await (
-    await client('auth/captcha', {
-      method: 'GET'
-    })
-  ).body.json();
-  return {
-    contacts
-  };
-};
+    cookies.set('captcha', text, COOKIE_SERIALIZE_OPTIONS);
+
+    return {
+      captcha: text
+    };
+  } catch (error) {
+    return [{ message: 'Server error', path: 'error' }];
+  }
+}) satisfies PageServerLoad;
 
 export const actions = {
   default: async ({ request }): Promise<CreateNoteResponse[]> => {

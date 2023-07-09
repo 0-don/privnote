@@ -24,3 +24,5 @@ rust-argon2 = "1.0.0"
 rand = "0.8.5"
 dotenvy = "0.15.7"
 anyhow = "1.0.71"
+moka = { version = "0.11.2", features = ["future"] }
+futures-util = "0.3.28"

@@ -1,16 +1,23 @@
 <script lang="ts">
   import { dev } from '$app/environment';
-  import type { CreateNoteResponse } from '$lib/@types';
+  import type { CaptchLoad, CreateNoteResponse } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 
   export let form: CreateNoteResponse[] = [];
+  export let data: CaptchLoad;
   const note = form?.find(({ path }) => path === 'note');
+  const errorForm = form?.find((f) => f.path === 'error')?.message;
+  const errorCaptcha = form?.find((f) => f.path === 'error')?.message;
 </script>
 
 <form method="POST">
   {#if dev}
     {JSON.stringify(form)}
+  {/if}
+
+  {#if errorForm || errorCaptcha}
+    <p class="text-red-400">{errorForm + ' ' + errorCaptcha}</p>
   {/if}
 
   <section id="content" class="mt-4">
@@ -24,6 +31,10 @@
       <p class="text-red-400">{note.message}</p>
     {/if}
   </section>
+
+  {#if 'captch' in data}
+    <input type="hidden" name="captcha" value={data.captch} />
+  {/if}
 
   <FormOptions {form} />
 

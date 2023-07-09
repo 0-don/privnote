@@ -1,3 +1,5 @@
+import { text } from '@sveltejs/kit';
+
 export type NoteKeys =
   | 'note'
   | 'duration_hours'
@@ -13,3 +15,5 @@ export type CreateNoteResponse = {
   message: string;
   path: NoteKeys;
 };
+
+export type CaptchLoad = { captcha: string } | CreateNoteResponse;

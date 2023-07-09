@@ -1,25 +1,32 @@
-use std::env;
-
-use argon2::Config;
-use axum::{http::StatusCode, Json};
+use axum::{extract::State, http::StatusCode, Json};
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
 
-use crate::types::types::Captcha;
+use crate::{types::types::Captcha, AppState};
 
-pub async fn get_captcha() -> (StatusCode, Json<Captcha>) {
-    let salt = env::var("SALT").expect("SALT not set");
-
+pub async fn get_captcha(state: State<AppState>) -> (StatusCode, Json<Captcha>) {
+    let id = rand::thread_rng().gen_range(0..255);
     let text: String = thread_rng()
         .sample_iter(&Alphanumeric)
-        .take(30)
+        .take(id)
         .map(char::from)
         .collect();
 
-    let config = Config {
-        mem_cost: 256,
-        ..Default::default()
-    };
-    let hash = argon2::hash_encoded(text.as_bytes(), salt.as_bytes(), &config).unwrap();
+    state.cache.insert(id, text.clone()).await;
 
-    (StatusCode::OK, Json(Captcha { hash, text }))
+    (StatusCode::OK, Json(Captcha { id, text }))
+}
+
+pub async fn verify_captcha(
+    state: State<AppState>,
+    Json(captcha): Json<Captcha>,
+) -> (StatusCode, Json<Captcha>) {
+    let rest = state.cache.get(&captcha.id);
+
+    if rest.is_none() || rest.unwrap() != captcha.text {
+        println!("Captcha verification failed: {:?}", captcha);
+        return (StatusCode::BAD_REQUEST, Json(Captcha::default()));
+    }
+
+    println!("Captcha verification success: {:?}", captcha);
+    (StatusCode::OK, Json(captcha))
 }
