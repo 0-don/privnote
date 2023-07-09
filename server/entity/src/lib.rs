@@ -2,4 +2,4 @@
 
 pub mod prelude;
 
-pub mod posts;
+pub mod note;
