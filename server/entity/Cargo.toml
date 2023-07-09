@@ -2,6 +2,7 @@
 name = "entity"
 version = "1.0.0"
 edition = "2021"
+publish = false
 
 [lib]
 name = "entity"
@@ -11,4 +12,4 @@ path = "src/lib.rs"
 serde = { version = "1", features = ["derive"] }
 
 [dependencies.sea-orm]
-sea-orm = { version = "^0" }
+sea-orm = { version = "^0.11.3" }
