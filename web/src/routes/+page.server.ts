@@ -32,6 +32,8 @@ export const actions = {
 
       const form = Object.fromEntries(await request.formData());
 
+      console.log(form);
+
       const data = NoteSchema.parse(form);
 
       const messages = await (
