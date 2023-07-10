@@ -21,3 +21,5 @@ export type Captcha = {
 };
 
 export type CaptchaLoad = { tag: string } | Notification[];
+
+export type NotificationEvent = Notification & { key: string };

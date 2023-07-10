@@ -10,7 +10,6 @@
   </section>
 </header>
 <hr class="border-alt border-8" />
-<!-- <Debug /> -->
 <section class="container">
   <slot />
 </section>

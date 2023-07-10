@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { dev } from '$app/environment';
   import type { CaptchaLoad, Notification } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
@@ -14,17 +13,10 @@
 </script>
 
 <form method="POST">
-  {#if dev}
-    <h5 class="text-green-400">Form</h5>
-    <p class="break-all text-green-400">{JSON.stringify(form, null, 4)}</p>
-    <h5 class="text-blue-400">Load</h5>
-    <p class="break-all text-blue-400">{JSON.stringify(data, null, 4)}</p>
-  {/if}
-
-  {#if errorForm || tag || errorsData}
-    <p class="break-all text-red-400">form: {errorForm}</p>
-    <p class="break-all text-red-400">tag: {tag}</p>
-    <p class="break-all text-red-400">data: {errorsData}</p>
+  {#if errorForm || errorsData || tag}
+    <p class="break-all text-red-400">{errorForm}</p>
+    <p class="break-all text-red-400">{errorsData}</p>
+    <p class="break-all text-red-400">{tag}</p>
   {/if}
 
   <section id="content" class="mt-4">
