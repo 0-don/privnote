@@ -365,19 +365,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bae2"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fd40dd3a38190deb294cbc378fc5da4036c777837ceeb7d5ddff5152c4eb6cbb"
-dependencies = [
- "heck 0.4.1",
- "proc-macro-error",
- "proc-macro2",
- "quote",
- "syn 2.0.25",
-]
-
-[[package]]
 name = "base64"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -725,17 +712,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "derivative"
-version = "2.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fcc3dd5e9e9c0b295d6e1e4d811fb6f157d5ffd784b8d202fc62eac8035a770b"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 1.0.109",
-]
-
-[[package]]
 name = "digest"
 version = "0.10.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -782,7 +758,7 @@ checksum = "7fcaabb2fef8c910e7f4c7ce9f67a1283a1715879a7c230ca9d6d1ae31f16d91"
 name = "entity"
 version = "1.0.0"
 dependencies = [
- "sea-orm 0.12.0-rc.4",
+ "sea-orm",
  "serde",
 ]
 
@@ -1186,17 +1162,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "inherent"
-version = "1.0.9"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b311f3b85c4fe018ce74d962fec93365819da2219e1d6529d66db241e7c70ce0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.25",
-]
-
-[[package]]
 name = "instant"
 version = "0.1.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1477,15 +1442,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dd8b5dd2ae5ed71462c540258bedcb51965123ad7e7ccf4b9a8cafaa4a63576d"
 
 [[package]]
-name = "ordered-float"
-version = "3.7.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2fc2dbde8f8a79f2102cc474ceb0ad68e3b80b85289ea62389b60e66777e4213"
-dependencies = [
- "num-traits",
-]
-
-[[package]]
 name = "os_str_bytes"
 version = "6.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1498,18 +1454,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e1358bd1558bd2a083fed428ffeda486fbfb323e698cdda7794259d592ca72db"
 dependencies = [
  "aliasable",
- "ouroboros_macro 0.15.6",
-]
-
-[[package]]
-name = "ouroboros"
-version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d813b7b31a82efae94bd30ffaac09aec85efc18db2d5ec3aead1a220ee954351"
-dependencies = [
- "aliasable",
- "ouroboros_macro 0.17.0",
- "static_assertions",
+ "ouroboros_macro",
 ]
 
 [[package]]
@@ -1523,19 +1468,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
-]
-
-[[package]]
-name = "ouroboros_macro"
-version = "0.17.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5a56f651b4dd45ae3ac3d260ced32eaf0620cddaae5f26c69b554a9016594726"
-dependencies = [
- "heck 0.4.1",
- "proc-macro-error",
- "proc-macro2",
- "quote",
- "syn 2.0.25",
 ]
 
 [[package]]
@@ -2077,43 +2009,15 @@ dependencies = [
  "chrono",
  "futures",
  "log",
- "ouroboros 0.15.6",
+ "ouroboros",
  "rust_decimal",
- "sea-orm-macros 0.11.3",
- "sea-query 0.28.5",
- "sea-query-binder 0.3.1",
+ "sea-orm-macros",
+ "sea-query",
+ "sea-query-binder",
  "sea-strum",
  "serde",
  "serde_json",
  "sqlx",
- "thiserror",
- "time",
- "tracing",
- "url",
- "uuid",
-]
-
-[[package]]
-name = "sea-orm"
-version = "0.12.0-rc.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3e9de4ff5b381b6ebdd7eb1f21dff20e7f417ce0095a3b03e00046057cc29266"
-dependencies = [
- "async-stream",
- "async-trait",
- "bigdecimal",
- "chrono",
- "futures",
- "log",
- "ouroboros 0.17.0",
- "rust_decimal",
- "sea-orm-macros 0.12.0-rc.4",
- "sea-query 0.29.0-rc.2",
- "sea-query-binder 0.4.0-rc.2",
- "serde",
- "serde_json",
- "sqlx",
- "strum",
  "thiserror",
  "time",
  "tracing",
@@ -2151,20 +2055,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sea-orm-macros"
-version = "0.12.0-rc.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05b7f70110837b9bdea495ceca4a189c27c120b26de01c3d0e0694fe8d3f35d4"
-dependencies = [
- "bae2",
- "heck 0.4.1",
- "proc-macro2",
- "quote",
- "syn 2.0.25",
- "unicode-ident",
-]
-
-[[package]]
 name = "sea-orm-migration"
 version = "0.11.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2174,7 +2064,7 @@ dependencies = [
  "clap",
  "dotenvy",
  "futures",
- "sea-orm 0.11.3",
+ "sea-orm",
  "sea-orm-cli",
  "sea-schema",
  "tracing",
@@ -2197,24 +2087,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "sea-query"
-version = "0.29.0-rc.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05dd3789809ccc9909a1b9857c8b9d966871f4a8d27d724ef417db73c9f9d5db"
-dependencies = [
- "bigdecimal",
- "chrono",
- "derivative",
- "inherent",
- "ordered-float",
- "rust_decimal",
- "sea-query-derive",
- "serde_json",
- "time",
- "uuid",
-]
-
-[[package]]
 name = "sea-query-binder"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2223,23 +2095,7 @@ dependencies = [
  "bigdecimal",
  "chrono",
  "rust_decimal",
- "sea-query 0.28.5",
- "serde_json",
- "sqlx",
- "time",
- "uuid",
-]
-
-[[package]]
-name = "sea-query-binder"
-version = "0.4.0-rc.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0ea1c5f39f9734cc54703b2f26e506a8d6a4a0c9e7d4bc3e7120693cf36e95ce"
-dependencies = [
- "bigdecimal",
- "chrono",
- "rust_decimal",
- "sea-query 0.29.0-rc.2",
+ "sea-query",
  "serde_json",
  "sqlx",
  "time",
@@ -2266,7 +2122,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eeb2940bb5a10bc6cd05b450ce6cd3993e27fddd7eface2becb97fc5af3a040e"
 dependencies = [
  "futures",
- "sea-query 0.28.5",
+ "sea-query",
  "sea-schema-derive",
 ]
 
@@ -2321,18 +2177,18 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.170"
+version = "1.0.171"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a56657f512baabca8f840542f9ca8152aecf182c473c26e46e58d6aab4f6e439"
+checksum = "30e27d1e4fd7659406c492fd6cfaf2066ba8773de45ca75e855590f856dc34a9"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.170"
+version = "1.0.171"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "77d477848e6b23adba0db397777d5aad864555bc17fd9c89abb3b8009788b7b8"
+checksum = "389894603bd18c46fa56231694f8d827779c0951a667087194cf9de94ed24682"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -2377,7 +2233,7 @@ name = "service"
 version = "1.0.0"
 dependencies = [
  "entity",
- "sea-orm 0.11.3",
+ "sea-orm",
  "serde",
  "serde_json",
  "tokio",
@@ -2585,12 +2441,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "static_assertions"
-version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
-
-[[package]]
 name = "stringprep"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2599,12 +2449,6 @@ dependencies = [
  "unicode-bidi",
  "unicode-normalization",
 ]
-
-[[package]]
-name = "strum"
-version = "0.24.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "063e6045c0e62079840579a7e47a355ae92f60eb74daaf156fb1e84ba164e63f"
 
 [[package]]
 name = "subtle"
