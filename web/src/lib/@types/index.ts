@@ -15,11 +15,14 @@ export type Notification = {
   path: NoteKeys;
 };
 
-export type Captcha = {
-  text: string;
-  tag: number;
-};
+export type Captcha = Tag & Text;
 
-export type CaptchaLoad = { tag: string } | Notification[];
+export type Text = { text: string };
 
-export type NotificationEvent = Notification & { key: string };
+export type Tag = { tag: string };
+
+export type Key = { key: string };
+
+export type CaptchaLoad = Tag | Notification[];
+
+export type NotificationEvent = Notification & Key;

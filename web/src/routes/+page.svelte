@@ -1,6 +1,6 @@
 <script lang="ts">
   import { dev } from '$app/environment';
-  import type { CaptchaLoad, Notification, NotificationEvent } from '$lib/@types';
+  import type { CaptchaLoad, Notification, NotificationEvent, Tag } from '$lib/@types';
   import Header from '$lib/components/pages/app/Header.svelte';
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
   import Debug from '$lib/components/pages/debug/Debug.svelte';
@@ -10,7 +10,10 @@
   const events: NotificationEvent[] = dev
     ? [
         ...(form || []).map((m) => ({ ...m, key: 'form' })),
-        ...(Array.isArray(data) ? data : []).map((m) => ({ ...m, key: 'captcha' }))
+        ...('tag' in data ? [{ key: 'tag', path: 'error', message: data.tag } as NotificationEvent] : []).map((m) => ({
+          ...m,
+          key: 'captcha'
+        }))
       ]
     : [];
 </script>
