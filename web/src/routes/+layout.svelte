@@ -2,6 +2,7 @@
   import 'uno.css';
   import '../app.css';
   import Header from '$lib/components/container/Header.svelte';
+  import Footer from '$lib/components/container/Footer.svelte';
 </script>
 
 <header class="bg-main py-3">
@@ -11,7 +12,8 @@
   </section>
 </header>
 <hr class="border-alt border-8" />
-<section class="container">
+<section class="container flex flex-col justify-between">
   <Header />
   <slot />
 </section>
+<Footer />

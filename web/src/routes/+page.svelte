@@ -1,7 +1,6 @@
 <script lang="ts">
   import { dev } from '$app/environment';
   import type { DebugMessages, Messages, ResponseBody, Tag } from '$lib/@types';
-  import Header from '$lib/components/container/Header.svelte';
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
   import Debug from '$lib/components/pages/debug/Debug.svelte';
 
