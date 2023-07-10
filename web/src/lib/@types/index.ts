@@ -10,19 +10,20 @@ export type NoteKeys =
   | 'error'
   | 'ok';
 
-export type Notification = {
+export type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
+
+export type ResponseBody = {
+  data?: JSONValue;
+  messages: Message[];
+};
+
+export type Message = {
   message: string;
   path: NoteKeys;
 };
 
+export type Text = { text: string };
+export type Tag = { tag: string };
 export type Captcha = Tag & Text;
 
-export type Text = { text: string };
-
-export type Tag = { tag: string };
-
 export type Key = { key: string };
-
-export type CaptchaLoad = Tag | Notification[];
-
-export type NotificationEvent = Notification & Key;

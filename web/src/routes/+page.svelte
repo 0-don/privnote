@@ -1,11 +1,11 @@
 <script lang="ts">
   import { dev } from '$app/environment';
-  import type { CaptchaLoad, Notification, NotificationEvent, Tag } from '$lib/@types';
+  import type { CaptchaLoad, Message, NotificationEvent, Tag } from '$lib/@types';
   import Header from '$lib/components/pages/app/Header.svelte';
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
   import Debug from '$lib/components/pages/debug/Debug.svelte';
 
-  export let form: Notification[] = [];
+  export let form: Message[] = [];
   export let data: CaptchaLoad;
   const events: NotificationEvent[] = dev
     ? [

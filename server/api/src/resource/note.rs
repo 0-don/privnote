@@ -9,23 +9,27 @@ use axum::{
 };
 use service::types::types::{GetNote, NoteReq};
 
-use crate::{constants, model::response::ErrorResponseBody, utils::types::AppState};
+use crate::{
+    constants,
+    model::response::{ResponseBody, ResponseMessages},
+    utils::types::AppState,
+};
 
 pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq>) -> Response {
     let text = state.cache.get(&create_note.tag);
     if text.is_none() {
-        return Json(vec![ErrorResponseBody::new(
-            constants::MESSAGE_NO_TAG_OR_NO_TEXT,
-            constants::ERROR_PATH,
-        )])
+        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+            constants::MESSAGE_NO_TAG_OR_NO_TEXT.to_string(),
+            constants::ERROR_PATH.to_string(),
+        )))
         .into_response();
     }
 
     if create_note.text != text.unwrap() {
-        return Json(vec![ErrorResponseBody::new(
-            constants::MESSAGE_CAPTCHA_WRONG,
-            constants::ERROR_PATH,
-        )])
+        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+            constants::MESSAGE_CAPTCHA_WRONG.to_string(),
+            constants::ERROR_PATH.to_string(),
+        )))
         .into_response();
     }
 
@@ -33,7 +37,7 @@ pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq
         .await
         .unwrap();
 
-    Json(note).into_response()
+    Json(ResponseBody::new_data(Some(note))).into_response()
 }
 
 pub async fn get_note(

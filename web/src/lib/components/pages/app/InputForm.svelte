@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { CaptchaLoad, Notification } from '$lib/@types';
+  import type { CaptchaLoad, Message } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 
-  export let form: Notification[] = [];
+  export let form: Message[] = [];
   export let data: CaptchaLoad;
   const note = form?.find(({ path }) => path === 'note')?.message || '';
   const tag = form?.find(({ path }) => path === 'tag')?.message || '';

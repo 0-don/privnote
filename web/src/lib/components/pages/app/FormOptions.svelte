@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Notification } from '$lib/@types';
+  import type { Message } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import Checkbox from '$lib/components/elements/Checkbox.svelte';
   import Dropdown from '$lib/components/elements/Dropdown.svelte';
   import Input from '$lib/components/elements/Input.svelte';
 
-  export let form: Notification[] = [];
+  export let form: Message[] = [];
 </script>
 
 <section id="options" class="relative mt-4 hidden target:block">

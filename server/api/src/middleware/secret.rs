@@ -1,6 +1,9 @@
 use std::env;
 
-use crate::{constants, model::response::ErrorResponseBody};
+use crate::{
+    constants,
+    model::response::{ResponseBody, ResponseMessages},
+};
 use axum::{
     http::Request,
     middleware::Next,
@@ -20,21 +23,21 @@ pub async fn secret_middleware<B>(request: Request<B>, next: Next<B>) -> Respons
     let secret = request.headers().get("SECRET");
 
     if secret.is_none() {
-        return Json(vec![ErrorResponseBody::new(
-            constants::MESSAGE_NO_SECRET,
-            constants::ERROR_PATH,
-        )])
+        return Json(ResponseBody::<()>::new_msg(ResponseMessages::new(
+            constants::MESSAGE_NO_SECRET.to_owned(),
+            constants::ERROR_PATH.to_owned(),
+        )))
         .into_response();
     }
 
     if correct_secret == secret.unwrap().to_str().unwrap() {
         return next.run(request).await;
     }
-
-    Json(vec![ErrorResponseBody::new(
-        constants::MESSAGE_SECRET_NOT_VALID,
-        constants::ERROR_PATH,
-    )])
+    
+    Json(ResponseBody::<()>::new_msg(ResponseMessages::new(
+        constants::MESSAGE_SECRET_NOT_VALID.to_owned(),
+        constants::ERROR_PATH.to_owned(),
+    )))
     .into_response()
 }
 

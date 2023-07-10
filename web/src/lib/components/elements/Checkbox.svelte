@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Notification } from '$lib/@types';
+  import type { Message } from '$lib/@types';
 
   export let name: string;
   export let className = '';
 
-  export let form: Notification[] = [];
+  export let form: Message[] = [];
   const error = form?.find((f) => f.path === name)?.message;
 </script>
 
