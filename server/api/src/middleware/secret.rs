@@ -1,3 +1,5 @@
+use std::env;
+
 use crate::{constants, model::response::NoSecretResponseBody};
 use axum::{
     http::Request,
@@ -7,18 +9,42 @@ use axum::{
 };
 
 pub async fn secret_middleware<B>(request: Request<B>, next: Next<B>) -> Response {
-    let headers = request.headers();
     let uri = request.uri().clone();
-    let secret = headers.get("SECRET").unwrap().to_str().unwrap().to_string();
-    println!("{:?}", secret);
 
-    if uri.to_string().contains("auth") {
+    // run on debug & skip captcha route
+    if cfg!(debug_assertions) && uri.to_string().contains("auth") {
+        return next.run(request).await;
+    }
+
+    let correct_secret = env::var("SECRET").expect("SECRET is not set in .env file");
+    let secret = request
+        .headers()
+        .get("SECRET")
+        .unwrap()
+        .to_str()
+        .unwrap_or_default()
+        .to_string();
+
+    if secret.is_empty() {
+        return Json(vec![NoSecretResponseBody::new(
+            constants::MESSAGE_NO_SECRET,
+            constants::ERROR_PATH,
+        )])
+        .into_response();
+    }
+
+    if correct_secret == secret {
         return next.run(request).await;
     }
 
     Json(vec![NoSecretResponseBody::new(
-        constants::MESSAGE_NO_SECRET,
+        constants::MESSAGE_SECRET_NOT_VALID,
         constants::ERROR_PATH,
     )])
     .into_response()
 }
+
+//  #[cfg(debug_assertions)]
+//     {
+//         window.open_devtools();
+//     }

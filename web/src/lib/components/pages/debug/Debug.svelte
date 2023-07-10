@@ -10,7 +10,7 @@
     {#each events as event}
       <div class="mt-1 flex flex-col space-y-0.5">
         <p class="text-sm text-gray-300">{event.key}</p>
-        <p class="text-sm text-gray-400">{event.message}</p>
+        <p class="text-sm text-gray-400 break-words">{JSON.stringify(event.message)}</p>
       </div>
     {/each}
   </div>
