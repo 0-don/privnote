@@ -1,6 +1,6 @@
 use std::env;
 
-use crate::{constants, model::response::NoSecretResponseBody};
+use crate::{constants, model::response::ErrorResponseBody};
 use axum::{
     http::Request,
     middleware::Next,
@@ -20,7 +20,7 @@ pub async fn secret_middleware<B>(request: Request<B>, next: Next<B>) -> Respons
     let secret = request.headers().get("SECRET");
 
     if secret.is_none() {
-        return Json(vec![NoSecretResponseBody::new(
+        return Json(vec![ErrorResponseBody::new(
             constants::MESSAGE_NO_SECRET,
             constants::ERROR_PATH,
         )])
@@ -31,7 +31,7 @@ pub async fn secret_middleware<B>(request: Request<B>, next: Next<B>) -> Respons
         return next.run(request).await;
     }
 
-    Json(vec![NoSecretResponseBody::new(
+    Json(vec![ErrorResponseBody::new(
         constants::MESSAGE_SECRET_NOT_VALID,
         constants::ERROR_PATH,
     )])
