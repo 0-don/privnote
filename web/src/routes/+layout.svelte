@@ -1,6 +1,7 @@
 <script>
   import 'uno.css';
   import '../app.css';
+  import Header from '$lib/components/container/Header.svelte';
 </script>
 
 <header class="bg-main py-3">
@@ -11,5 +12,6 @@
 </header>
 <hr class="border-alt border-8" />
 <section class="container">
+  <Header />
   <slot />
 </section>
