@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Message } from '$lib/@types';
+  import type { ResponseBody } from '$lib/@types';
 
   export let name: string;
   export let className = '';
 
-  export let form: Message[] = [];
-  const error = form?.find((f) => f.path === name)?.message;
+  export let form: ResponseBody;
+  const error = form?.messages?.find((f) => f.path === name)?.message;
 </script>
 
 <fieldset class="w-full {className}">

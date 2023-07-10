@@ -1,14 +1,14 @@
 <script lang="ts">
-  import type { CaptchaLoad, Message } from '$lib/@types';
+  import type { Messages, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 
-  export let form: Message[] = [];
-  export let data: CaptchaLoad;
-  const note = form?.find(({ path }) => path === 'note')?.message || '';
-  const tag = form?.find(({ path }) => path === 'tag')?.message || '';
+  export let form: ResponseBody;
+  export let data: ResponseBody;
+  const note = form?.messages?.find(({ path }) => path === 'note')?.message || '';
+  const tag = form?.messages?.find(({ path }) => path === 'tag')?.message || '';
 
-  const errorsForm = form
+  const errorsForm = form?.messages
     ?.filter((f) => f.path === 'error')
     .map(({ message }) => message)
     .join(', ');
@@ -34,8 +34,8 @@
     {/if}
   </section>
 
-  {#if 'tag' in data}
-    <input type="hidden" name="tag" value={data.tag} />
+  {#if typeof data?.data === 'object' && !Array.isArray(data?.data)}
+    <input type="hidden" name="tag" value={data.data?.config} />
   {/if}
 
   <FormOptions {form} />

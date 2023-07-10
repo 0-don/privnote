@@ -1,8 +1,8 @@
 import { Dispatcher, request } from 'undici';
 import { env } from '$env/dynamic/private';
-import type { Message } from '$lib/@types';
+import type { Messages } from '$lib/@types';
 
-export const client = async <T = Message[]>(
+export const client = async <T = Messages[]>(
   path: string,
   options?: Parameters<typeof request>['1']
 ): Promise<{ body: { json: () => Promise<T> } } & Dispatcher.ResponseData> => {

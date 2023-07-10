@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Message } from '$lib/@types';
+  import type { ResponseBody } from '$lib/@types';
 
   export let className = '';
   export let name = '';
   export let options = [] as { value: string | number; text: string | number }[];
 
-  export let form: Message[] = [];
-  const error = form?.find((f) => f.path === name)?.message;
+  export let form: ResponseBody;
+  const error = form?.messages?.find((f) => f.path === name)?.message;
 </script>
 
 <label class="w-full" for={name}>

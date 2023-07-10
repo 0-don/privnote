@@ -1,14 +1,14 @@
 <script lang="ts">
   import type { HTMLInputTypeAttribute } from 'svelte/elements';
-  import type { Message } from '$lib/@types';
+  import type { ResponseBody } from '$lib/@types';
 
   export let className = '';
   export let name = '';
   export let type = 'text' as HTMLInputTypeAttribute;
   export let label = '';
 
-  export let form: Message[] = [];
-  const error = form?.find((f) => f.path === name)?.message;
+  export let form: ResponseBody;
+  const error = form?.messages?.find((f) => f.path === name)?.message;
 </script>
 
 <div class="flex w-full flex-col">

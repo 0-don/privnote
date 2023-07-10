@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Message } from '$lib/@types';
+  import type { Messages, ResponseBody } from '$lib/@types';
 
   export let href = '';
   export let type = 'a' as 'button' | 'a';
@@ -8,8 +8,8 @@
   export let className = '';
   export let icon = '';
 
-  export let form: Message[] = [];
-  const error = form?.find((f) => f.path === text)?.message;
+  export let form: ResponseBody | undefined = undefined;
+  const error = form?.messages?.find((f) => f.path === text)?.message;
 
   let defaultClassName =
     'flex items-center rounded-md border border-zinc-500 bg-zinc-600 p-2 shadow-main hover:border-main';

@@ -14,16 +14,15 @@ export type JSONValue = string | number | boolean | { [x: string]: JSONValue } |
 
 export type ResponseBody = {
   data?: JSONValue;
-  messages: Message[];
+  messages?: Messages[];
 };
 
-export type Message = {
+export type Messages = {
   message: string;
   path: NoteKeys;
+  key?: string;
 };
 
 export type Text = { text: string };
 export type Tag = { tag: string };
 export type Captcha = Tag & Text;
-
-export type Key = { key: string };
