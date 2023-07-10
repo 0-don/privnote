@@ -17,15 +17,9 @@ pub async fn secret_middleware<B>(request: Request<B>, next: Next<B>) -> Respons
     }
 
     let correct_secret = env::var("SECRET").expect("SECRET is not set in .env file");
-    let secret = request
-        .headers()
-        .get("SECRET")
-        .unwrap()
-        .to_str()
-        .unwrap_or_default()
-        .to_string();
+    let secret = request.headers().get("SECRET");
 
-    if secret.is_empty() {
+    if secret.is_none() {
         return Json(vec![NoSecretResponseBody::new(
             constants::MESSAGE_NO_SECRET,
             constants::ERROR_PATH,
@@ -33,7 +27,7 @@ pub async fn secret_middleware<B>(request: Request<B>, next: Next<B>) -> Respons
         .into_response();
     }
 
-    if correct_secret == secret {
+    if correct_secret == secret.unwrap().to_str().unwrap() {
         return next.run(request).await;
     }
 

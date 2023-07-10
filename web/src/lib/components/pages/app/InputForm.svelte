@@ -8,13 +8,16 @@
   const note = form?.find(({ path }) => path === 'note')?.message || '';
   const tag = form?.find(({ path }) => path === 'tag')?.message || '';
 
-  const errorForm = form?.find((f) => f.path === 'error')?.message || '';
+  const errorsForm = form
+    ?.filter((f) => f.path === 'error')
+    .map(({ message }) => message)
+    .join(', ');
   const errorsData = (Array.isArray(data) ? data : []).map(({ message }) => message).join(', ');
 </script>
 
 <form method="POST">
-  {#if errorForm || errorsData || tag}
-    <p class="break-all text-red-400">{errorForm}</p>
+  {#if errorsForm || errorsData || tag}
+    <p class="break-all text-red-400">{errorsForm}</p>
     <p class="break-all text-red-400">{errorsData}</p>
     <p class="break-all text-red-400">{tag}</p>
   {/if}
