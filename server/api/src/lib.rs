@@ -1,7 +1,23 @@
+mod constants;
+mod model;
 mod resource;
 
-use axum::{routing::get, Router, Server};
+use crate::{
+    model::response::NoSecretResponseBody,
+    resource::{
+        auth::{get_captcha, verify_captcha},
+        note::{create_note, get_note},
+    },
+};
+use axum::{
+    http::Request,
+    middleware::{self, Next},
+    response::{IntoResponse, Response},
+    routing::get,
+    Json, Router,
+};
 use core::{str::FromStr, time::Duration};
+use hyper::Server;
 use migration::{
     sea_orm::{Database, DatabaseConnection},
     Migrator, MigratorTrait,
@@ -9,15 +25,30 @@ use migration::{
 use moka::future::Cache;
 use std::{env, net::SocketAddr};
 
-use crate::resource::{
-    auth::{get_captcha, verify_captcha},
-    note::{create_note, get_note},
-};
-
 #[derive(Clone)]
 pub struct AppState {
     conn: DatabaseConnection,
     cache: Cache<usize, String>,
+}
+
+async fn my_middleware<B>(request: Request<B>, next: Next<B>) -> Response {
+    // do something with `request`...
+    let headers = request.headers();
+    let uri = request.uri().clone();
+    let secret = headers.get("SECRET").unwrap().to_str().unwrap().to_string();
+    println!("{:?}", secret);
+
+    let response = next.run(request).await;
+
+    if uri.to_string().contains("auth") {
+        return response;
+    }
+
+    Json(vec![NoSecretResponseBody::new(
+        constants::MESSAGE_INVALID_TOKEN,
+        constants::ERROR_PATH,
+    )])
+    .into_response()
 }
 
 #[tokio::main]
@@ -51,7 +82,8 @@ async fn start() -> anyhow::Result<()> {
             Router::new()
                 .route("/", get(|| async { "Hello, World!" }))
                 .route("/auth/captcha", get(get_captcha).post(verify_captcha))
-                .route("/note", get(get_note).post(create_note)),
+                .route("/note", get(get_note).post(create_note))
+                .route_layer(middleware::from_fn(my_middleware)),
         )
         .with_state(state);
 

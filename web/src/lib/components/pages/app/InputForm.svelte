@@ -6,11 +6,11 @@
 
   export let form: Notification[] = [];
   export let data: CaptchaLoad;
-  const note = form?.find(({ path }) => path === 'note');
-  const tag = form?.find(({ path }) => path === 'tag');
+  const note = form?.find(({ path }) => path === 'note')?.message || '';
+  const tag = form?.find(({ path }) => path === 'tag')?.message || '';
 
-  const errorForm = form?.find((f) => f.path === 'error')?.message;
-  const errorCaptcha = form?.find((f) => f.path === 'error')?.message;
+  const errorForm = form?.find((f) => f.path === 'error')?.message || '';
+  const errorsData = (Array.isArray(data) ? data : []).map(({ message }) => message).join(', ');
 </script>
 
 <form method="POST">
@@ -21,8 +21,10 @@
     <p class="break-all text-blue-400">{JSON.stringify(data, null, 4)}</p>
   {/if}
 
-  {#if errorForm || errorCaptcha || tag}
-    <p class="break-all text-red-400">{errorForm + ' ' + errorCaptcha + ' ' + tag}</p>
+  {#if errorForm || tag || errorsData}
+    <p class="break-all text-red-400">form: {errorForm}</p>
+    <p class="break-all text-red-400">tag: {tag}</p>
+    <p class="break-all text-red-400">data: {errorsData}</p>
   {/if}
 
   <section id="content" class="mt-4">
@@ -33,7 +35,7 @@
       class="w-full !bg-yellow-100 !bg-opacity-75 p-5 text-black outline-none placeholder:text-black"
     />
     {#if note}
-      <p class="text-red-400">{note.message}</p>
+      <p class="text-red-400">{note}</p>
     {/if}
   </section>
 

@@ -35,13 +35,13 @@ export const actions = {
       const data = NoteSchema.parse(form);
 
       const message = await (
-        await client<string>('note', {
+        await client<string | Notification[]>('note', {
           method: 'POST',
           body: JSON.stringify({ ...data, text })
         })
       ).body.json();
 
-      return [{ message, path: 'ok' }];
+      return !Array.isArray(message) ? [{ message, path: 'ok' }] : message;
     } catch (err) {
       if (err instanceof z.ZodError) {
         return err.issues.map(({ message, path }) => ({

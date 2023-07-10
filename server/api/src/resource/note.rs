@@ -10,7 +10,7 @@ pub async fn create_note(
     state: State<AppState>,
     Json(create_note): Json<NoteReq>,
 ) -> (StatusCode, Json<note::Model>) {
-    println!("{:?}", create_note);
+    // println!("{:?}", create_note);
 
     let note = MutationCore::create_note(&state.conn, create_note)
         .await
