@@ -1,25 +1,24 @@
 <script lang="ts">
-  import type { ResponseBody } from '$lib/@types';
+  import type { ResponseBody, Tag } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 
   export let form: ResponseBody;
   export let data: ResponseBody;
   const note = form?.messages?.find(({ path }) => path === 'note')?.message || '';
-  const tag = form?.messages?.find(({ path }) => path === 'tag')?.message || '';
 
   const errorsForm = form?.messages
     ?.filter((f) => f.path === 'error')
     .map(({ message }) => message)
     .join(', ');
-  const errorsData = (Array.isArray(data) ? data : []).map(({ message }) => message).join(', ');
+  const errorsData = (Array.isArray(data.messages) ? data.messages : []).map(({ message }) => message).join(', ');
+  const tag = (data.data as Tag)?.tag;
 </script>
 
 <form method="POST">
-  {#if errorsForm || errorsData || tag}
+  {#if errorsForm || errorsData}
     <p class="break-all text-red-400">{errorsForm}</p>
     <p class="break-all text-red-400">{errorsData}</p>
-    <p class="break-all text-red-400">{tag}</p>
   {/if}
 
   <section id="content" class="mt-4">
@@ -34,8 +33,8 @@
     {/if}
   </section>
 
-  {#if typeof data?.data === 'object' && !Array.isArray(data?.data)}
-    <input type="hidden" name="tag" value={data.data?.config} />
+  {#if tag}
+    <input type="hidden" name="tag" value={tag} />
   {/if}
 
   <FormOptions {form} />

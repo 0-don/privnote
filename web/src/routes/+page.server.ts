@@ -32,18 +32,18 @@ export const actions = {
 
       const form = Object.fromEntries(await request.formData());
 
-      console.log(form);
-
       const data = NoteSchema.parse(form);
 
-      const messages = await (
-        await client<string | Messages[]>('note', {
+      const response = await (
+        await client<ResponseBody>('note', {
           method: 'POST',
           body: JSON.stringify({ ...data, text })
         })
       ).body.json();
 
-      return Array.isArray(messages) ? { messages } : { data: messages };
+      console.log(response);
+
+      return response;
     } catch (err) {
       if (err instanceof z.ZodError) {
         return {
