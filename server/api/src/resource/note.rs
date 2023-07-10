@@ -1,11 +1,13 @@
 use axum::{http::StatusCode, Json};
+use entity::note::ActiveModel;
+use migration::sea_orm::Set;
 use service::types::types::{GetNote, NoteReq};
 
 pub async fn create_note(Json(note): Json<NoteReq>) -> (StatusCode, Json<NoteReq>) {
-    // let note = Note {
-    //     note: payload.note,
-    //     ..Default::default()
-    // };
+    let note = ActiveModel {
+        note: Set(note.note),
+        ..Default::default()
+    };
 
     println!("{:?}", note);
 

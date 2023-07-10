@@ -16,3 +16,6 @@ features = ["debug-print", "runtime-tokio-rustls", "sqlx-postgres"]
 
 [dev-dependencies]
 tokio = { version = "1.29.1", features = ["macros", "rt"] }
+
+[features]
+mock = ["sea-orm/mock"]

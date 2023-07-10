@@ -54,7 +54,7 @@ impl ColumnTrait for Column {
     fn def(&self) -> ColumnDef {
         match self {
             Self::Id => ColumnType::Uuid.def(),
-            Self::Note => ColumnType::Char(Some(10000u32)).def(),
+            Self::Note => ColumnType::String(None).def(),
             Self::DurationHours => ColumnType::Integer.def(),
             Self::ManualPassword => ColumnType::Char(Some(10000u32)).def().null(),
             Self::NotifyEmail => ColumnType::Char(Some(1000u32)).def().null(),

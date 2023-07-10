@@ -33,9 +33,9 @@ impl MigrationTrait for Migration {
                     )
                     .col(
                         ColumnDef::new(Note::Note)
+                            .char_len(100000)
                             .string()
-                            .not_null()
-                            .char_len(10000),
+                            .not_null(),
                     )
                     .col(
                         ColumnDef::new(Note::DurationHours)
