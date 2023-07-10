@@ -7,19 +7,9 @@ pub struct Mutation;
 
 impl Mutation {
     pub async fn create_note(db: &DbConn, form_data: NoteReq) -> Result<bool, DbErr> {
-        let model = note::Model {
-            note: form_data.note,
-            duration_hours: form_data.duration_hours,
-            manual_password: Some(form_data.manual_password),
-            notify_email: Some(form_data.notify_email),
-            notify_ref: Some(form_data.notify_ref),
-
-            id: Default::default(),
-            created_at: Default::default(),
-        };
-
+        let id_set = ActiveValue::Set(form_data.note);
         let active_model: note::ActiveModel = note::ActiveModel {
-            note: Set(model.note),
+            note: id_set,
             ..Default::default()
         };
 
