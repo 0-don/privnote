@@ -1,4 +1,4 @@
-export type NoteKeys =
+export type PathKeys =
   | 'tag'
   | 'note'
   | 'duration_hours'
@@ -7,6 +7,7 @@ export type NoteKeys =
   | 'destroy_without_confirmation'
   | 'notify_email'
   | 'notify_ref'
+  | 'data'
   | 'error'
   | 'ok';
 
@@ -18,8 +19,8 @@ export type ResponseBody = {
 };
 
 export type Messages = {
-  message: string;
-  path: NoteKeys;
+  message: JSONValue;
+  path: PathKeys;
   key?: string;
 };
 
@@ -27,7 +28,7 @@ export type DebugMessages = {
   form?: Messages[];
   captcha?: Messages[];
   data?: Messages[];
-}
+};
 
 export type Text = { text: string };
 export type Tag = { tag: string };

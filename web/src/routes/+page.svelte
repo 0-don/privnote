@@ -12,16 +12,11 @@
         data: [
           ...(data?.data ? [{ key: 'response', path: 'data', message: data.data }] : []),
           ...(form.data ? [{ key: 'request', path: 'data', message: form.data }] : [])
-        ],
+        ] as Messages[],
         form: (form?.messages || []).map((m) => ({ ...m, key: 'form' })),
         captcha: (data?.messages || []).map((m) => ({ ...m, key: 'captcha' }))
       }
-    : // ? ([
-      //     ...(form?.messages || []).map((m) => ({ ...m, key: 'form' })),
-      //     ...(data?.messages || []).map((m) => ({ ...m, key: 'captcha' })),
-      //     ...(data?.data ? [{ key: 'data', path: 'data', message: data?.data }] : [])
-      //   ] as Messages[])
-      {};
+    : {};
 </script>
 
 <svelte:head>
