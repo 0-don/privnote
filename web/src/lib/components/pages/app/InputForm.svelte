@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Messages, ResponseBody } from '$lib/@types';
+  import type { ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 

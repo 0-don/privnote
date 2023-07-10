@@ -11,7 +11,7 @@
     ? {
         data: [
           ...(data?.data ? [{ key: 'response', path: 'data', message: data.data }] : []),
-          ...(form.data ? [{ key: 'request', path: 'data', message: form.data }] : [])
+          ...(form?.data ? [{ key: 'request', path: 'form', message: form.data }] : [])
         ] as Messages[],
         form: (form?.messages || []).map((m) => ({ ...m, key: 'form' })),
         captcha: (data?.messages || []).map((m) => ({ ...m, key: 'captcha' }))
