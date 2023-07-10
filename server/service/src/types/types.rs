@@ -1,3 +1,4 @@
+use sea_orm::prelude::Uuid;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -8,7 +9,7 @@ pub struct Captcha {
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct GetNote {
-    pub id: String,
+    pub id: Uuid,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]

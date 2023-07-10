@@ -1,4 +1,4 @@
-use ::entity::{note, note::Entity as Note};
+use ::entity::note;
 use sea_orm::*;
 
 use crate::types::types::NoteReq;
@@ -6,14 +6,20 @@ use crate::types::types::NoteReq;
 pub struct Mutation;
 
 impl Mutation {
-    pub async fn create_note(db: &DbConn, form_data: NoteReq) -> Result<bool, DbErr> {
-        let id_set: ActiveValue<String> = ActiveValue::Set(form_data.note);
-        let active_model: note::ActiveModel = note::ActiveModel {
-            note: id_set,
+    pub async fn create_note(db: &DbConn, form_data: NoteReq) -> Result<note::Model, DbErr> {
+        let model = note::ActiveModel {
+            note: Set(form_data.note),
+            duration_hours: Set(form_data.duration_hours),
+            manual_password: Set(Some(form_data.manual_password)),
+            notify_email: Set(Some(form_data.notify_email)),
+            notify_ref: Set(Some(form_data.notify_ref)),
             ..Default::default()
-        };
+        }
+        .save(db)
+        .await?
+        .try_into_model()?;
 
-        Ok(true)
+        Ok(model)
     }
 
     // pub async fn delete_all_posts(db: &DbConn) -> Result<DeleteResult, DbErr> {

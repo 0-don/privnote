@@ -1,11 +1,12 @@
-
+use ::entity::{note, note::Entity as Note};
+use sea_orm::{prelude::Uuid, DbConn, DbErr, EntityTrait};
 
 pub struct Query;
 
 impl Query {
-    // pub async fn find_post_by_id(db: &DbConn, id: i32) -> Result<Option<posts::Model>, DbErr> {
-    //     Post::find_by_id(id).one(db).await
-    // }
+    pub async fn find_note_by_id(db: &DbConn, id: Uuid) -> Result<Option<note::Model>, DbErr> {
+        Note::find_by_id(id).one(db).await
+    }
 
     // /// If ok, returns (posts models, num pages).
     // pub async fn find_posts_in_page(
