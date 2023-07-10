@@ -18,10 +18,10 @@ impl Mutation {
             created_at: Default::default(),
         };
 
-        // let active_model: note::ActiveModel = note::ActiveModel {
-        //     note: Set(model.note),
-        //     ..Default::default()
-        // };
+        let active_model: note::ActiveModel = note::ActiveModel {
+            note: Set(model.note),
+            ..Default::default()
+        };
 
         Ok(true)
     }

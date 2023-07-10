@@ -4,11 +4,6 @@ use migration::sea_orm::Set;
 use service::types::types::{GetNote, NoteReq};
 
 pub async fn create_note(Json(note): Json<NoteReq>) -> (StatusCode, Json<NoteReq>) {
-    let note = ActiveModel {
-        note: Set(note.note),
-        ..Default::default()
-    };
-
     println!("{:?}", note);
 
     (StatusCode::CREATED, Json(note))
