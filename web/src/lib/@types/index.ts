@@ -23,6 +23,12 @@ export type Messages = {
   key?: string;
 };
 
+export type DebugMessages = {
+  form?: Messages[];
+  captcha?: Messages[];
+  data?: Messages[];
+}
+
 export type Text = { text: string };
 export type Tag = { tag: string };
 export type Captcha = Tag & Text;
