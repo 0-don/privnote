@@ -41,8 +41,6 @@ export const actions = {
         })
       ).body.json();
 
-      console.log(response);
-
       return response;
     } catch (err) {
       if (err instanceof z.ZodError) {

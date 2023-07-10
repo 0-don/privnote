@@ -7,7 +7,7 @@ mod utils;
 use crate::{
     middleware::secret::secret_middleware,
     resource::{
-        auth::{get_captcha, verify_captcha},
+        auth::get_captcha,
         note::{create_note, get_note},
     },
     utils::helper::get_app_state,
@@ -38,7 +38,7 @@ async fn start() -> anyhow::Result<()> {
             "/api",
             Router::new()
                 .route("/", get(|| async { "Hello, World!" }))
-                .route("/auth/captcha", get(get_captcha).post(verify_captcha))
+                .route("/auth/captcha", get(get_captcha))
                 .route("/note", get(get_note).post(create_note))
                 .route_layer(Middleware::from_fn(secret_middleware)),
         )
