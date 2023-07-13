@@ -10,6 +10,15 @@ export type PathKeys =
   | 'data'
   | 'error'
   | 'ok';
+export type Note = {
+  id: string;
+  note: string;
+  duration_hours: number;
+  manual_password: string;
+  notify_email: string;
+  notify_ref: string;
+  created_at: string;
+};
 
 export type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
 

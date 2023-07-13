@@ -6,6 +6,7 @@
   import Debug from '$lib/components/pages/debug/Debug.svelte';
   import NewNoteInfo from '$lib/components/pages/app/info/NewNoteInfo.svelte';
   import NoteLinReadyInfo from '$lib/components/pages/app/info/NoteLinReadyInfo.svelte';
+  import NoteReady from '$lib/components/pages/app/NoteReady.svelte';
 
   export let form: ResponseBody;
   export let data: ResponseBody;
@@ -28,4 +29,9 @@
 
 <Debug {debug} />
 <Header title={form?.data ? 'Note link ready' : 'New note'} info={form?.data ? NoteLinReadyInfo : NewNoteInfo} />
-<InputForm {form} {data} />
+
+{#if form?.data}
+  <NoteReady {form} />
+{:else}
+  <InputForm {form} {data} />
+{/if}

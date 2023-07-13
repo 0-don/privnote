@@ -21,7 +21,7 @@
     <p class="break-all text-red-400">{errorsData}</p>
   {/if}
 
-  <section id="content" class="mt-4">
+  <section id="content">
     <textarea
       rows="13"
       name="note"

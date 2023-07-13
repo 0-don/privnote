@@ -13,3 +13,4 @@
   <div class="absolute -top-14 right-1"><Button title="question" href="" icon="i-line-md:close-circle" /></div>
   <svelte:component this={info} />
 </div>
+<hr class="mb-4 border-transparent" />
