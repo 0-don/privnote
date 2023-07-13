@@ -17,7 +17,8 @@ const config = {
         container: {
           DEFAULT: '#333639'
         },
-        olive: '#737300'
+        olive: '#737300',
+        darkGold: '#A37B06'
       }
     },
     container: {
