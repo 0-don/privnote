@@ -17,7 +17,7 @@
 
 {#if type === 'a'}
   <div class={'cursor-pointer'} title={title || text}>
-    <a href="#{href}" class={defaultClassName + ' ' + className}>
+    <a href="{href}" class={defaultClassName + ' ' + className}>
       <p>{text}</p>
       <i class={icon + ' text-xl'} />
     </a>
