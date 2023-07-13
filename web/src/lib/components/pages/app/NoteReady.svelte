@@ -15,5 +15,12 @@
 </p>
 <p class="bg-darkGold mb-4 p-2 font-light italic">The note will self-destruct after reading it.</p>
 <div class="flex items-center justify-between">
-  <Button type="a" text="E-mail link"  className="!rounded-none" icon="i-line-md:email-twotone" href="mailto:?body={url}" />
+  <Button
+    type="a"
+    text="E-mail link"
+    className="!rounded-none"
+    icon="i-line-md:email-twotone"
+    href="mailto:?body={url}"
+  />
+  <Button type="a" text="Destroy note now" className="!rounded-none" icon="i-line-md:close-circle" href="#destroy" />
 </div>
