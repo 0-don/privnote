@@ -2,10 +2,14 @@
   import { dev } from '$app/environment';
   import type { DebugMessages, Messages, ResponseBody, Tag } from '$lib/@types';
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
+  import Header from '$lib/components/container/Header.svelte';
   import Debug from '$lib/components/pages/debug/Debug.svelte';
+  import NewNoteInfo from '$lib/components/pages/app/info/NewNoteInfo.svelte';
+  import NoteLinReadyInfo from '$lib/components/pages/app/info/NoteLinReadyInfo.svelte';
 
   export let form: ResponseBody;
   export let data: ResponseBody;
+
   const debug: DebugMessages = dev
     ? {
         data: [
@@ -23,5 +27,5 @@
 </svelte:head>
 
 <Debug {debug} />
-
+<Header title={form?.data ? 'Note link ready' : 'New note'} info={form?.data ? NoteLinReadyInfo : NewNoteInfo} />
 <InputForm {form} {data} />

@@ -13,7 +13,7 @@
 </header>
 <hr class="border-alt border-8" />
 <section class="container flex flex-col justify-between">
-  <Header />
+ 
   <slot />
 </section>
 <Footer />

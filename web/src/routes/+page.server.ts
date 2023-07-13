@@ -41,13 +41,7 @@ export const actions = {
         })
       ).body.json();
 
-      return {
-        headers: {
-          location: `/?access_token`
-        },
-        body: response,
-        status: 302
-      } as any;
+      return response;
     } catch (err) {
       if (err instanceof z.ZodError) {
         return {
