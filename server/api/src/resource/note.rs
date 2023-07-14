@@ -1,4 +1,5 @@
 use entity::note;
+use migration::sea_orm::prelude::Uuid;
 use service::{Mutation as MutationCore, Query as QueryCore};
 
 use axum::{
@@ -7,7 +8,9 @@ use axum::{
     response::{IntoResponse, Response},
     Json,
 };
-use service::types::types::{GetNote, NoteReq};
+
+use axum::extract::Path;
+use service::types::types::NoteReq;
 
 use crate::{
     constants,
@@ -42,11 +45,11 @@ pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq
 
 pub async fn get_note(
     state: State<AppState>,
-    Json(payload): Json<GetNote>,
+    Path(id): Path<Uuid>,
 ) -> (StatusCode, Json<note::Model>) {
-    print!("{:?}", payload);
+    println!("id: {}", id);
 
-    let note = QueryCore::find_note_by_id(&state.conn, payload.id)
+    let note = QueryCore::find_note_by_id(&state.conn, id)
         .await
         .unwrap()
         .unwrap();

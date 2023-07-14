@@ -14,7 +14,7 @@ use crate::{
 };
 use axum::{
     middleware::{self as Middleware},
-    routing::get,
+    routing::{get, post},
     Router,
 };
 use core::str::FromStr;
@@ -39,7 +39,8 @@ async fn start() -> anyhow::Result<()> {
             Router::new()
                 .route("/", get(|| async { "Hello, World!" }))
                 .route("/auth/captcha", get(get_captcha))
-                .route("/note", get(get_note).post(create_note))
+                .route("/note/:id", get(get_note))
+                .route("/note", post(create_note))
                 .route_layer(Middleware::from_fn(secret_middleware)),
         )
         .with_state(get_app_state().await);
