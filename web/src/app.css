@@ -21,3 +21,44 @@ textarea {
 ::-webkit-scrollbar-thumb:horizontal {
   @apply bg-gradient-to-l from-transparent via-main to-transparent;
 }
+
+#destroy a.close {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #34495e;
+  opacity: 0.5;
+  transition: opacity 200ms;
+}
+#destroy a.close:hover {
+  opacity: 0.4;
+}
+
+body {
+  background-color: #ecf0f1;
+  color: #444;
+}
+
+#button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 16px 24px;
+  border-radius: 1px;
+  text-decoration: none;
+  font-size: 24px;
+  display: block;
+  color: white;
+  background-color: #34495e;
+  text-align: center;
+  font-weight: 100;
+  transition: box-shadow 200ms;
+  border-radius: 4px;
+}
+#button:hover {
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+}
