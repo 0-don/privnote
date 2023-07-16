@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { NoteResponse, ResponseBody } from '$lib/@types';
-  import Debug from '$lib/utils/debug/Debug.svelte';
+  import Debug from '$lib/components/utils/Debug.svelte';
   import ReadNote from '$lib/components/pages/note/ReadNote.svelte';
   import { debugLog } from '$lib/utils/client/constants';
 

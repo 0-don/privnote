@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Messages, ResponseBody } from '$lib/@types';
+  import type { ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import Checkbox from '$lib/components/elements/Checkbox.svelte';
   import Dropdown from '$lib/components/elements/Dropdown.svelte';
@@ -40,5 +40,7 @@
     <Input {form} name="notify_ref" label="Reference name for the note (optional)" />
   </div>
 
-  <div class="absolute -bottom-14 right-1/2"><Button {form} title="close" href="" icon="i-line-md:close-circle" /></div>
+  <div class="absolute -bottom-14 right-1/2">
+    <Button {form} title="close" href="#" icon="i-line-md:close-circle" />
+  </div>
 </section>

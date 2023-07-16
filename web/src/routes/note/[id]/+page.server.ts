@@ -1,5 +1,5 @@
 import type { ResponseBody, Note } from '$lib/@types';
-import { client } from '$lib/utils/client';
+import { client } from '$lib/utils';
 import type { Redirect } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';

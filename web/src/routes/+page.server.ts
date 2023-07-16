@@ -1,6 +1,6 @@
 import type { Captcha, Messages, ResponseBody } from '$lib/@types';
-import { client } from '$lib/utils/client';
-import { NoteSchema } from '$lib/utils/schemas/note.schema';
+import { client } from '$lib/utils';
+import { NoteSchema } from '$lib/schemas/note.schema';
 import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
