@@ -69,6 +69,8 @@ pub async fn get_note(
             .unwrap();
     }
 
+    println!("deleted: {}", deleted);
+
     let alert = if deleted {
         constants::MESSAGE_NOTE_DELETED.to_string()
     } else {
