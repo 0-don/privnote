@@ -1,11 +1,9 @@
-use entity::note;
 use migration::sea_orm::prelude::Uuid;
 use serde::Deserialize;
 use service::{Mutation as MutationCore, Query as QueryCore};
 
 use axum::{
     extract::{Query, State},
-    http::StatusCode,
     response::{IntoResponse, Response},
     Json,
 };

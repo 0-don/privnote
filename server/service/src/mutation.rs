@@ -1,5 +1,5 @@
 use ::entity::note;
-use sea_orm::{prelude::Uuid, *};
+use sea_orm::*;
 
 use crate::types::types::NoteReq;
 
