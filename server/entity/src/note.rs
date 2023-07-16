@@ -21,6 +21,7 @@ pub struct Model {
     pub notify_email: Option<String>,
     pub notify_ref: Option<String>,
     pub created_at: Option<DateTime>,
+    pub delete_at: Option<DateTime>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveColumn)]
@@ -32,6 +33,7 @@ pub enum Column {
     NotifyEmail,
     NotifyRef,
     CreatedAt,
+    DeleteAt,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DerivePrimaryKey)]
@@ -60,6 +62,7 @@ impl ColumnTrait for Column {
             Self::NotifyEmail => ColumnType::Char(Some(1000u32)).def().null(),
             Self::NotifyRef => ColumnType::Char(Some(100u32)).def().null(),
             Self::CreatedAt => ColumnType::DateTime.def().null(),
+            Self::DeleteAt => ColumnType::DateTime.def().null(),
         }
     }
 }
