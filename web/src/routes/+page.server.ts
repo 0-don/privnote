@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { Captcha, JSONValue, Messages, ResponseBody } from '$lib/@types';
+import type { Captcha, Messages, ResponseBody } from '$lib/@types';
 import { client } from '$lib/utils/client';
-import { COOKIE, COOKIE_SERIALIZE_OPTIONS } from '$lib/utils/constants';
 import { NoteSchema } from '$lib/utils/schemas/note.schema';
 import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
-// @ts-ignore
 import { error } from 'console';
+import { COOKIE, COOKIE_SERIALIZE_OPTIONS } from '$lib/utils/server/constants';
 
 export const load = (async ({ cookies }): Promise<ResponseBody> => {
   try {

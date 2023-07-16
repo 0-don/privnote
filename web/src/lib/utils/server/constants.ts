@@ -1,5 +1,6 @@
 import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
+import type { Messages, ResponseBody } from '$lib/@types';
 
 export const COOKIE = 'captcha';
 

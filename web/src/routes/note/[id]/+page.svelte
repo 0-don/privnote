@@ -1,10 +1,13 @@
 <script lang="ts">
-  import type { ResponseBody } from '$lib/@types';
+  import type { NoteResponse, ResponseBody } from '$lib/@types';
+  import Debug from '$lib/components/pages/debug/Debug.svelte';
   import ReadNote from '$lib/components/pages/note/ReadNote.svelte';
+  import { debugLog } from '$lib/utils/client/constants';
 
-  export let data: ResponseBody;
+  export let form: ResponseBody;
+  export let data: ResponseBody<NoteResponse>;
 </script>
 
-<div>{JSON.stringify(data)}</div>
+<Debug debug={debugLog(data, form)} />
 
 <ReadNote {data} />

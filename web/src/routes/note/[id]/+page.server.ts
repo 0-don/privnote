@@ -1,7 +1,7 @@
 import type { ResponseBody, Note } from '$lib/@types';
 import { client } from '$lib/utils/client';
-import { Redirect, redirect } from '@sveltejs/kit';
-
+import type { Redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }): Promise<ResponseBody | Redirect> => {
@@ -9,12 +9,12 @@ export const load = (async ({ params }): Promise<ResponseBody | Redirect> => {
 
   try {
     const note = await (
-      await client<Note>(`note/${params.id}`, {
+      await client<ResponseBody<{ data: Note; alert: string }>>(`note/${params.id}`, {
         method: 'GET'
       })
     ).body.json();
 
-    return { data: note };
+    return note;
   } catch (error) {
     return { messages: [{ message: 'Server error', path: 'error' }] };
   }

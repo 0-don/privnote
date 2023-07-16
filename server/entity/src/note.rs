@@ -58,9 +58,9 @@ impl ColumnTrait for Column {
             Self::Id => ColumnType::Uuid.def(),
             Self::Note => ColumnType::String(None).def(),
             Self::DurationHours => ColumnType::Integer.def(),
-            Self::ManualPassword => ColumnType::Char(Some(10000u32)).def().null(),
-            Self::NotifyEmail => ColumnType::Char(Some(1000u32)).def().null(),
-            Self::NotifyRef => ColumnType::Char(Some(100u32)).def().null(),
+            Self::ManualPassword => ColumnType::String(None).def().null(),
+            Self::NotifyEmail => ColumnType::String(None).def().null(),
+            Self::NotifyRef => ColumnType::String(None).def().null(),
             Self::CreatedAt => ColumnType::DateTime.def().null(),
             Self::DeleteAt => ColumnType::DateTime.def().null(),
         }

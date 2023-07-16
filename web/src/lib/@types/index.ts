@@ -22,8 +22,11 @@ export type Note = {
 
 export type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;
 
-export type ResponseBody = {
+export type ResponseBody<T = {}> = {
   data?: JSONValue;
+  messages?: Messages[];
+} & {
+  data?: T;
   messages?: Messages[];
 };
 
@@ -42,3 +45,8 @@ export type DebugMessages = {
 export type Text = { text: string };
 export type Tag = { tag: string };
 export type Captcha = Tag & Text;
+
+export type NoteResponse = {
+  note: Note;
+  alert: string;
+};

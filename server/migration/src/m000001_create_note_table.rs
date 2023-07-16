@@ -32,12 +32,7 @@ impl MigrationTrait for Migration {
                             .primary_key()
                             .extra("DEFAULT uuid_generate_v4()".into()),
                     )
-                    .col(
-                        ColumnDef::new(Note::Note)
-                            .char_len(100000)
-                            .string()
-                            .not_null(),
-                    )
+                    .col(ColumnDef::new(Note::Note).string().string().not_null())
                     .col(
                         ColumnDef::new(Note::DurationHours)
                             .integer()
@@ -45,13 +40,9 @@ impl MigrationTrait for Migration {
                             .default(0)
                             .extra("check (duration_hours between 0 and 24)".into()),
                     )
-                    .col(
-                        ColumnDef::new(Note::ManualPassword)
-                            .string()
-                            .char_len(10000),
-                    )
-                    .col(ColumnDef::new(Note::NotifyEmail).string().char_len(1000))
-                    .col(ColumnDef::new(Note::NotifyRef).string().char_len(100))
+                    .col(ColumnDef::new(Note::ManualPassword).string())
+                    .col(ColumnDef::new(Note::NotifyEmail).string())
+                    .col(ColumnDef::new(Note::NotifyRef).string())
                     .col(
                         ColumnDef::new(Note::CreatedAt)
                             .timestamp()

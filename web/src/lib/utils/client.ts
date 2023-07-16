@@ -1,4 +1,5 @@
-import { Dispatcher, request } from 'undici';
+import type { Dispatcher } from 'undici';
+import { request } from 'undici';
 import { env } from '$env/dynamic/private';
 import type { Messages } from '$lib/@types';
 
