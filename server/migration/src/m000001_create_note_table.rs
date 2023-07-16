@@ -13,6 +13,7 @@ pub enum Note {
     NotifyEmail,
     NotifyRef,
     CreatedAt,
+    DeleteAt,
 }
 
 #[async_trait::async_trait]
@@ -53,6 +54,11 @@ impl MigrationTrait for Migration {
                     .col(ColumnDef::new(Note::NotifyRef).string().char_len(100))
                     .col(
                         ColumnDef::new(Note::CreatedAt)
+                            .timestamp()
+                            .extra("DEFAULT now()".into()),
+                    )
+                    .col(
+                        ColumnDef::new(Note::DeleteAt)
                             .timestamp()
                             .extra("DEFAULT now()".into()),
                     )

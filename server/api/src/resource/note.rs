@@ -1,9 +1,10 @@
 use entity::note;
 use migration::sea_orm::prelude::Uuid;
+use serde::Deserialize;
 use service::{Mutation as MutationCore, Query as QueryCore};
 
 use axum::{
-    extract::State,
+    extract::{Query, State},
     http::StatusCode,
     response::{IntoResponse, Response},
     Json,
@@ -43,16 +44,33 @@ pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq
     Json(ResponseBody::new_data(Some(note))).into_response()
 }
 
+#[derive(Deserialize, Debug)]
+pub struct NoteParams {
+    pub destroy: Option<u8>,
+}
+
 pub async fn get_note(
     state: State<AppState>,
+    params: Query<NoteParams>,
     Path(id): Path<Uuid>,
-) -> (StatusCode, Json<note::Model>) {
-    println!("id: {}", id);
+) -> Response {
+    let note = QueryCore::find_note_by_id(&state.conn, id).await.unwrap();
 
-    let note = QueryCore::find_note_by_id(&state.conn, id)
-        .await
-        .unwrap()
-        .unwrap();
+    if note.is_none() {
+        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+            constants::MESSAGE_NOTE_NOT_FOUND.to_string(),
+            constants::ERROR_PATH.to_string(),
+        )))
+        .into_response();
+    }
 
-    (StatusCode::CREATED, Json(note))
+    if params.destroy.is_some() {
+        let note = MutationCore::destroy_note_by_id(&state.conn, &note.unwrap())
+            .await
+            .unwrap();
+
+        return Json(ResponseBody::new_data(Some(note))).into_response();
+    }
+
+    return Json(ResponseBody::new_data(note)).into_response();
 }

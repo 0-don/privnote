@@ -1,5 +1,5 @@
 use ::entity::note;
-use sea_orm::*;
+use sea_orm::{prelude::Uuid, *};
 
 use crate::types::types::NoteReq;
 
@@ -20,6 +20,22 @@ impl Mutation {
         .try_into_model()?;
 
         Ok(model)
+    }
+
+    pub async fn destroy_note_by_id(db: &DbConn, note: &note::Model) -> Result<bool, DbErr> {
+        let result = note::ActiveModel {
+            id: Set(note.id),
+            duration_hours: Set(0),
+            ..Default::default()
+        }
+        .delete(db)
+        .await?;
+
+        if result.rows_affected == 0 {
+            Ok(false)
+        } else {
+            Ok(true)
+        }
     }
 
     // pub async fn delete_all_posts(db: &DbConn) -> Result<DeleteResult, DbErr> {

@@ -5,7 +5,10 @@ pub struct Query;
 
 impl Query {
     pub async fn find_note_by_id(db: &DbConn, id: Uuid) -> Result<Option<note::Model>, DbErr> {
-        Note::find_by_id(id).one(db).await
+        let model = Note::find_by_id(id).one(db).await;
+        Note::delete_by_id(id).exec(db).await?;
+
+        Ok(model.unwrap())
     }
 
     // /// If ok, returns (posts models, num pages).
