@@ -10,7 +10,7 @@ use crate::{
         auth::get_captcha,
         note::{create_note, get_note},
     },
-    utils::helper::get_app_state,
+    utils::helper::{cron_delete_old_notes, get_app_state},
 };
 use axum::{
     middleware::{self as Middleware},
@@ -19,7 +19,6 @@ use axum::{
 };
 use core::str::FromStr;
 use hyper::Server;
-
 use std::{env, net::SocketAddr};
 
 #[tokio::main]
@@ -32,6 +31,8 @@ async fn start() -> anyhow::Result<()> {
     let host = env::var("HOST").expect("HOST is not set in .env file");
     let port = env::var("PORT").expect("PORT is not set in .env file");
     let server_url = format!("{host}:{port}");
+
+    cron_delete_old_notes().await?;
 
     let app = Router::new()
         .nest(

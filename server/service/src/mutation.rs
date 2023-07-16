@@ -1,4 +1,5 @@
 use ::entity::note;
+use chrono::Utc;
 use sea_orm::*;
 
 use crate::types::types::NoteReq;
@@ -7,12 +8,16 @@ pub struct Mutation;
 
 impl Mutation {
     pub async fn create_note(db: &DbConn, form_data: NoteReq) -> Result<note::Model, DbErr> {
+        let delete_at =
+            (Utc::now() + chrono::Duration::hours(form_data.duration_hours as i64)).naive_utc();
+
         let model = note::ActiveModel {
             note: Set(form_data.note),
             duration_hours: Set(form_data.duration_hours),
             manual_password: Set(Some(form_data.manual_password)),
             notify_email: Set(Some(form_data.notify_email)),
             notify_ref: Set(Some(form_data.notify_ref)),
+            delete_at: Set(Some(delete_at)),
             ..Default::default()
         }
         .save(db)
@@ -35,6 +40,10 @@ impl Mutation {
         } else {
             Ok(false)
         }
+    }
+
+    pub async fn delete_old_notes(db: &DbConn) -> anyhow::Result<bool> {
+        Ok(true)
     }
 
     // pub async fn delete_all_posts(db: &DbConn) -> Result<DeleteResult, DbErr> {
