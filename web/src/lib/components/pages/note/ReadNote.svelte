@@ -9,13 +9,14 @@
 <div class="mt-3 flex items-center justify-start">
   <h1 class="my-2 text-2xl font-bold">{title}</h1>
 </div>
-<div class="bg-alert text-center">{data.data?.alert}</div>
+<div class="bg-alert text-center p-1 mb-3">{data.data?.alert}</div>
 
 <section id="content">
   <textarea
     rows="13"
     name="note"
     value={data.data?.note.note}
+    readonly
     placeholder="Write your note here..."
     class="w-full !bg-yellow-100 !bg-opacity-75 p-5 text-black outline-none placeholder:text-black"
   />

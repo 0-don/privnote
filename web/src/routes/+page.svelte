@@ -2,7 +2,7 @@
   import type { ResponseBody } from '$lib/@types';
   import InputForm from '$lib/components/pages/app/InputForm.svelte';
   import Header from '$lib/components/container/Header.svelte';
-  import Debug from '$lib/components/pages/debug/Debug.svelte';
+  import Debug from '$lib/utils/debug/Debug.svelte';
   import NewNoteInfo from '$lib/components/pages/app/info/NewNoteInfo.svelte';
   import NoteLinReadyInfo from '$lib/components/pages/app/info/NoteLinReadyInfo.svelte';
   import NoteReady from '$lib/components/pages/app/NoteReady.svelte';
