@@ -44,7 +44,7 @@
         text="Yes, show me the note"
         className="!rounded-none !bg-main"
         icon="i-line-md:clipboard-check"
-        href="/destroy/{note.id}"
+        href="/note/{note.id}"
       />
       <Button type="a" text="No, not now" className="!rounded-none" icon="i-line-md:close-circle" href="#" />
     </div>

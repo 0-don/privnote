@@ -16,7 +16,7 @@ use service::types::types::NoteReq;
 use crate::{
     constants,
     model::response::{ResponseBody, ResponseMessages},
-    utils::types::AppState,
+    utils::types::{AppState, NoteResponse},
 };
 
 pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq>) -> Response {
@@ -51,7 +51,7 @@ pub struct NoteParams {
 
 pub async fn get_note(
     state: State<AppState>,
-    params: Query<NoteParams>,
+    _params: Query<NoteParams>,
     Path(id): Path<Uuid>,
 ) -> Response {
     let note = QueryCore::find_note_by_id(&state.conn, id).await.unwrap();
@@ -64,13 +64,21 @@ pub async fn get_note(
         .into_response();
     }
 
-    if params.destroy.is_some() {
-        let note = MutationCore::destroy_note_by_id(&state.conn, &note.unwrap())
+    let mut deleted = false;
+    if note.as_ref().unwrap().duration_hours == 0 {
+        deleted = MutationCore::destroy_note_by_id(&state.conn, note.as_ref().unwrap())
             .await
             .unwrap();
-
-        return Json(ResponseBody::new_data(Some(note))).into_response();
     }
 
-    return Json(ResponseBody::new_data(note)).into_response();
+    let alert = if deleted {
+        constants::MESSAGE_NOTE_DELETED.to_string()
+    } else {
+        format!(
+            "This note will self-destruct in {} hours",
+            note.as_ref().unwrap().duration_hours
+        )
+    };
+
+    return Json(ResponseBody::new_data(Some(NoteResponse { note, alert }))).into_response();
 }

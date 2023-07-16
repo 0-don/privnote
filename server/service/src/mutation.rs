@@ -25,7 +25,6 @@ impl Mutation {
     pub async fn destroy_note_by_id(db: &DbConn, note: &note::Model) -> Result<bool, DbErr> {
         let result = note::ActiveModel {
             id: Set(note.id),
-            duration_hours: Set(0),
             ..Default::default()
         }
         .delete(db)
