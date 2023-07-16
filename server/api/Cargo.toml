@@ -11,13 +11,11 @@ service = { path = "../service" }
 entity = { path = "../entity" }
 migration = { path = "../migration" }
 
+axum = "0.6.18"
 hyper = "0.14"
-tower = "0.4"
-tower-http = { version = "0.4.0", features = ["map-request-body", "util"] }
 
 tokio = { version = "1.29.1", features = ["full"] }
-axum = "0.6.18"
-chrono = "0.4.26"
+tokio-cron-scheduler = "*"
 
 serde = { version = "1.0.170", features = ["derive"] }
 serde_json = "1.0.100"
@@ -25,9 +23,10 @@ serde_json = "1.0.100"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
-rust-argon2 = "1.0.0"
-rand = "0.8.5"
 dotenvy = "0.15.7"
 anyhow = "1.0.71"
+
+rust-argon2 = "1.0.0"
+rand = "0.8.5"
 moka = { version = "0.11.2", features = ["future"] }
-futures-util = "0.3.28"
+chrono = "0.4.26"

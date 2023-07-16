@@ -5,7 +5,7 @@ export const NoteSchema = z
     tag: z.coerce.number().int().min(0).max(255),
     note: z.string().min(1).max(10000),
     
-    duration_hours: z.coerce.number().int().min(0).max(24).optional(),
+    duration_hours: z.coerce.number().int().min(0).max(720).optional(),
     manual_password: z.string().min(1).max(100).optional().or(z.literal('')),
     manual_password_confirm: z.string().min(1).max(100).optional().or(z.literal('')),
     notify_email: z.string().email().trim().toLowerCase().min(0).max(100).optional().or(z.literal('')),
