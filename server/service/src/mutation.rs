@@ -43,6 +43,11 @@ impl Mutation {
     }
 
     pub async fn delete_old_notes(db: &DbConn) -> anyhow::Result<bool> {
+        note::Entity::delete_many()
+            .filter(note::Column::DeleteAt.lt(Utc::now().naive_utc()))
+            .exec(db)
+            .await?;
+
         Ok(true)
     }
 

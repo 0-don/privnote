@@ -23,10 +23,10 @@ pub async fn get_app_state() -> AppState {
 pub async fn cron_delete_old_notes() -> anyhow::Result<()> {
     let sched = JobScheduler::new().await?;
 
-    // 0 * * * *
-
+    // sec   min   hour   day of month   month   day of week   year
+    // *     *     *      *              *       *             *
     sched
-        .add(Job::new_async("1/7 * * * * *", |_uuid, _l| {
+        .add(Job::new_async("* 0 * * * *", |_uuid, _l| {
             Box::pin(async {
                 let db = get_db_connection().await.unwrap();
                 MutationCore::delete_old_notes(&db).await.unwrap();
