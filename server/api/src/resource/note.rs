@@ -72,10 +72,7 @@ pub async fn get_note(
     let alert = if deleted {
         constants::MESSAGE_NOTE_DELETED.to_string()
     } else {
-        format!(
-            "This note will self-destruct in {} hours",
-            note.as_ref().unwrap().duration_hours
-        )
+        note.as_ref().unwrap().delete_at.unwrap().to_string()
     };
 
     return Json(ResponseBody::new_data(Some(NoteResponse { note, alert }))).into_response();

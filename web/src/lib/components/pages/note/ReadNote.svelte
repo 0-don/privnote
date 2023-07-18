@@ -1,20 +1,27 @@
 <script lang="ts">
   import type { NoteResponse, ResponseBody } from '$lib/@types';
-  import Button from '$lib/components/elements/Button.svelte';
+  import dayjs from 'dayjs';
+  import relativeTime from 'dayjs/plugin/relativeTime';
+
+  dayjs.extend(relativeTime);
 
   export let data: ResponseBody<NoteResponse>;
   export let title = 'Note contents';
 
   const error = data?.messages?.find(({ path }) => path === 'error')?.message || '';
+  const alert = data?.data?.alert;
 </script>
 
 <div class="mt-3 flex items-center justify-start">
   <h1 class="my-2 text-2xl font-bold">{title}</h1>
 </div>
 
-{#if data.data?.alert}
-  <div class="bg-alert mb-3 p-1 text-center">{data.data?.alert}</div>
+{#if alert && dayjs(alert).isValid()}
+  <div class="bg-alert mb-3 p-1 text-center">This note will self-destruct in {dayjs(alert).fromNow()} ({dayjs(alert).toISOString()})</div>
+{:else if alert}
+  <div class="bg-alert mb-3 p-1 text-center">{alert}</div>
 {/if}
+
 {#if error}
   <div class="mb-3 break-all text-red-400">{error}</div>
 {/if}
