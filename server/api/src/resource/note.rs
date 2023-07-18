@@ -64,7 +64,7 @@ pub async fn get_note(
 
     let mut deleted = false;
     if note.as_ref().unwrap().duration_hours == 0 {
-        deleted = MutationCore::destroy_note_by_id(&state.conn, note.as_ref().unwrap())
+        deleted = MutationCore::delete_note_by_id(&state.conn, note.as_ref().unwrap().id)
             .await
             .unwrap();
     }

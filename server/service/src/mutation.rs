@@ -1,13 +1,13 @@
 use ::entity::note;
 use chrono::Utc;
-use sea_orm::*;
+use sea_orm::{prelude::Uuid, *};
 
 use crate::types::types::NoteReq;
 
 pub struct Mutation;
 
 impl Mutation {
-    pub async fn create_note(db: &DbConn, form_data: NoteReq) -> Result<note::Model, DbErr> {
+    pub async fn create_note(db: &DbConn, form_data: NoteReq) -> anyhow::Result<note::Model> {
         let delete_at =
             (Utc::now() + chrono::Duration::hours(form_data.duration_hours as i64)).naive_utc();
 
@@ -27,28 +27,19 @@ impl Mutation {
         Ok(model)
     }
 
-    pub async fn destroy_note_by_id(db: &DbConn, note: &note::Model) -> Result<bool, DbErr> {
-        let result = note::ActiveModel {
-            id: Set(note.id),
-            ..Default::default()
-        }
-        .delete(db)
-        .await?;
-
-        if result.rows_affected == 0 {
-            Ok(true)
-        } else {
-            Ok(false)
-        }
+    pub async fn delete_note_by_id(db: &DbConn, id: Uuid) -> anyhow::Result<bool> {
+        Ok(note::Entity::delete_by_id(id)
+            .exec(db)
+            .await
+            .map_or_else(|_| false, |r| r.rows_affected == 1))
     }
 
     pub async fn delete_old_notes(db: &DbConn) -> anyhow::Result<bool> {
-        note::Entity::delete_many()
+        Ok(note::Entity::delete_many()
             .filter(note::Column::DeleteAt.lt(Utc::now().naive_utc()))
             .exec(db)
-            .await?;
-
-        Ok(true)
+            .await
+            .map_or_else(|_| false, |r| r.rows_affected > 0))
     }
 
     // pub async fn delete_all_posts(db: &DbConn) -> Result<DeleteResult, DbErr> {
