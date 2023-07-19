@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import { env } from '$env/dynamic/public';
   import type { Note, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
 
-  export let form: ResponseBody;
+  let form: ResponseBody = $page.form;
 
   const note = form.data as Note;
 

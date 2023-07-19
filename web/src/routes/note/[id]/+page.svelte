@@ -10,4 +10,4 @@
 
 <Debug debug={debugLog(data, form)} />
 
-<ReadNote {data} />
+<ReadNote />

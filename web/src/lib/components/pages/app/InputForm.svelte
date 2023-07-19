@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import type { ResponseBody, Tag } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import FormOptions from './FormOptions.svelte';
 
-  export let form: ResponseBody;
-  export let data: ResponseBody;
+  let form: ResponseBody = $page.form;
+  let data: ResponseBody = $page.data;
   const note = form?.messages?.find(({ path }) => path === 'note')?.message || '';
 
   const errorsForm = form?.messages
@@ -37,7 +38,7 @@
     <input type="hidden" name="tag" value={tag} />
   {/if}
 
-  <FormOptions {form} />
+  <FormOptions />
 
   <section class="mt-4 flex justify-between">
     <Button type="button" className="!rounded-none" text="Create Note" icon="i-line-md:document-add" />

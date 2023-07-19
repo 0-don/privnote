@@ -20,7 +20,7 @@
 <Header title={form?.data ? 'Note link ready' : 'New note'} info={form?.data ? NoteLinReadyInfo : NewNoteInfo} />
 
 {#if form?.data}
-  <NoteReady {form} />
+  <NoteReady />
 {:else}
-  <InputForm {form} {data} />
+  <InputForm />
 {/if}

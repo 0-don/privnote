@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import type { Captcha, NoteResponse, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import dayjs from 'dayjs';
@@ -6,8 +7,8 @@
 
   dayjs.extend(relativeTime);
 
-  export let data: ResponseBody<NoteResponse & Captcha>;
   export let title = 'Note contents';
+  let data: ResponseBody<NoteResponse & Captcha> = $page.data;
 
   const error = data?.messages?.find(({ path }) => path === 'error')?.message || '';
   const alert = data?.data?.alert;

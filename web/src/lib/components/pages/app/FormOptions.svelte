@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import type { ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import Checkbox from '$lib/components/elements/Checkbox.svelte';
   import Dropdown from '$lib/components/elements/Dropdown.svelte';
   import Input from '$lib/components/elements/Input.svelte';
 
-  export let form: ResponseBody;
+  let form: ResponseBody = $page.form;
 </script>
 
 <section id="options" class="relative mt-4 hidden target:block">
