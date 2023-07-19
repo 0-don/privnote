@@ -1,14 +1,12 @@
-import type { Dispatcher } from 'undici';
-import { request } from 'undici';
-import { env } from '$env/dynamic/private';
-import type { Messages } from '$lib/@types';
+type RandomObject = { [x: string]: any };
 
-export const client = async <T = Messages[]>(
-  path: string,
-  options?: Parameters<typeof request>['1']
-): Promise<{ body: { json: () => Promise<T> } } & Dispatcher.ResponseData> => {
-  return await request(env.SECRET_ENDPOINT + path, {
-    headers: { 'Content-Type': 'application/json', SECRET: env.SECRET_API_SECRET, ...options?.headers },
-    ...options
-  });
-};
+function deepMerge<T extends RandomObject, X extends RandomObject>(target: T, source: X) {
+  const result = { ...target, ...source };
+  for (const key of Object.keys(result)) {
+    (result[key] as RandomObject) =
+      typeof target[key] == 'object' && typeof source[key] == 'object'
+        ? deepMerge(target[key], source[key])
+        : structuredClone(result[key]);
+  }
+  return result;
+}

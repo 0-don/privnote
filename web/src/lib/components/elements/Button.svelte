@@ -17,16 +17,16 @@
 </script>
 
 {#if type === 'a'}
-  <div class={'cursor-pointer'} title={title || text}>
+  <div class={'cursor-pointer group'} title={title || text}>
     <a {href} class={`${defaultClassName} ${className}`}>
       <p>{text}</p>
-      <i class={icon + ' text-xl'} />
+      <i class={icon + ' text-xl group-hover:text-main transition-all duration-1000'} />
     </a>
   </div>
 {:else}
-  <button name={text || title} title={title || text} type="submit" class={`${defaultClassName} ${className}`}>
+  <button name={text || title} title={title || text} type="submit" class={`${defaultClassName} ${className} group`}>
     <p>{text}</p>
-    <i class={icon + ' text-xl'} />
+    <i class={icon + ' text-xl group-hover:text-main transition-all duration-1000'} />
   </button>
 {/if}
 {#if error}

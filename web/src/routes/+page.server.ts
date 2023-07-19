@@ -1,27 +1,13 @@
 import type { Captcha, Messages, ResponseBody } from '$lib/@types';
-import { client } from '$lib/utils';
 import { NoteSchema } from '$lib/schemas/note.schema';
 import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { error } from 'console';
-import { COOKIE, COOKIE_SERIALIZE_OPTIONS } from '$lib/utils/server/constants';
+import { COOKIE } from '$lib/utils/server/constants';
+import { client, getCaptcha } from '$lib/utils/server';
 
-export const load = (async ({ cookies }): Promise<ResponseBody> => {
-  try {
-    const { text, tag } = await (
-      await client<Captcha>('auth/captcha', {
-        method: 'GET'
-      })
-    ).body.json();
-
-    cookies.set(COOKIE, text, COOKIE_SERIALIZE_OPTIONS);
-
-    return { data: { tag } };
-  } catch (error) {
-    return { messages: [{ message: 'Server error', path: 'error' }] };
-  }
-}) satisfies PageServerLoad;
+export const load = (async (options): Promise<ResponseBody> => await getCaptcha(options)) satisfies PageServerLoad;
 
 export const actions = {
   default: async ({ request, cookies }): Promise<ResponseBody> => {
