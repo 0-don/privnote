@@ -36,14 +36,15 @@ pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq
     Json(ResponseBody::new_data(Some(note))).into_response()
 }
 
-pub async fn delete_note(state: State<AppState>, Json(create_note): Json<DeleteNoteReq>) -> Response {
-    let captcha = check_captcha(Captcha::new(&create_note.tag, &create_note.text), &state).await;
+pub async fn delete_note(state: State<AppState>, Json(delete_note): Json<DeleteNoteReq>) -> Response {
+    println!("{:?}", delete_note);
+    let captcha = check_captcha(Captcha::new(&delete_note.tag, &delete_note.text), &state).await;
 
     if captcha.is_some() {
         return captcha.unwrap();
     }
 
-    let note = MutationCore::delete_note_by_id(&state.conn, create_note.id)
+    let note = MutationCore::delete_note_by_id(&state.conn, delete_note.id)
         .await
         .unwrap();
 

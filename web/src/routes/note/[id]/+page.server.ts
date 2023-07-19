@@ -5,9 +5,10 @@ import type { PageServerLoad } from './$types';
 import { client, getCaptcha } from '$lib/utils/server';
 import { deepMerge } from '$lib/utils';
 import { COOKIE } from '$lib/utils/server/constants';
+import { DeleteNoteSchema } from '$lib/schemas/deleteNote.schema';
 
-export const load = (async (options): Promise<ResponseBody | Redirect> => {
-  if (!options.params?.id) return redirect(302, '/');
+export const load = (async (options): Promise<ResponseBody | Redirect | void> => {
+  if (!options.params?.id) throw redirect(307, '/');
 
   try {
     const body = await (
@@ -16,24 +17,35 @@ export const load = (async (options): Promise<ResponseBody | Redirect> => {
       })
     ).body.json();
 
-    if (!body.data?.note.id) return redirect(302, '/');
+    if (!body?.data) throw Error('redirecting');
 
     const captcha = await getCaptcha(options);
 
     return deepMerge(body, captcha);
   } catch (error) {
-    return { messages: [{ message: 'Server error', path: 'error' }] };
+    throw redirect(307, '/');
   }
 }) satisfies PageServerLoad;
 
 export const actions = {
-  default: async ({ request, cookies }) => {
+  default: async ({ request, cookies }): Promise<ResponseBody | Redirect> => {
     try {
       const text = cookies.get(COOKIE);
 
       const form = Object.fromEntries(await request.formData());
 
-      console.log(text, form);
-    } catch (err) {}
+      const body = JSON.stringify(DeleteNoteSchema.parse({ ...form, text }));
+
+      const res = await (
+        await client<ResponseBody<boolean>>(`note`, {
+          method: 'DELETE',
+          body
+        })
+      ).body.json();
+
+      return res;
+    } catch (err) {
+      return { messages: [{ message: 'Server error', path: 'error' }] };
+    }
   }
 } satisfies Actions;

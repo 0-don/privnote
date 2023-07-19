@@ -1,6 +1,7 @@
 use axum::{
+    extract::State,
     response::{IntoResponse, Response},
-    Json, extract::State,
+    Json,
 };
 use core::time::Duration;
 use migration::{
