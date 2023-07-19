@@ -15,7 +15,7 @@ export const client = async <T = Messages[]>(
   });
 };
 
-export const getCaptcha = async ({ cookies }: RequestEvent): Promise<ResponseBody> => {
+export const getCaptcha = async ({ cookies }: RequestEvent): Promise<ResponseBody<Partial<Captcha>>> => {
   try {
     const { text, tag } = await (
       await client<Captcha>('auth/captcha', {

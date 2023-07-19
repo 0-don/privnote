@@ -7,8 +7,30 @@ pub struct Captcha {
     pub text: String,
 }
 
+impl Captcha {
+    pub fn new(tag: &usize, text: &String) -> Captcha {
+        Captcha {
+            tag: tag.clone(),
+            text: text.clone(),
+        }
+    }
+}
+
+#[derive(Deserialize, Debug)]
+pub struct NoteParams {
+    pub destroy: Option<u8>,
+}
+
 #[derive(Serialize, Deserialize, Debug, Default)]
-pub struct GetNote {
+pub struct GetNoteReq {
+    pub id: Uuid,
+}
+
+#[derive(Serialize, Deserialize, Debug, Default)]
+pub struct DeleteNoteReq {
+    pub tag: usize,
+    pub text: String,
+
     pub id: Uuid,
 }
 

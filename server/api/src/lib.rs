@@ -8,7 +8,7 @@ use crate::{
     middleware::secret::secret_middleware,
     resource::{
         auth::get_captcha,
-        note::{create_note, get_note},
+        note::{create_note, delete_note, get_note},
     },
     utils::helper::{cron_delete_old_notes, get_app_state},
 };
@@ -41,7 +41,7 @@ async fn start() -> anyhow::Result<()> {
                 .route("/", get(|| async { "Hello, World!" }))
                 .route("/auth/captcha", get(get_captcha))
                 .route("/note/:id", get(get_note))
-                .route("/note", post(create_note))
+                .route("/note", post(create_note).delete(delete_note))
                 .route_layer(Middleware::from_fn(secret_middleware)),
         )
         .with_state(get_app_state().await);

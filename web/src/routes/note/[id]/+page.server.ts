@@ -3,18 +3,20 @@ import type { Actions, Redirect } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { client, getCaptcha } from '$lib/utils/server';
+import { deepMerge } from '$lib/utils';
+import { COOKIE } from '$lib/utils/server/constants';
 
 export const load = (async (options): Promise<ResponseBody | Redirect> => {
   if (!options.params?.id) return redirect(302, '/');
 
   try {
     const body = await (
-      await client<ResponseBody<{ data: Note; alert: string }>>(`note/${options.params.id}`, {
+      await client<ResponseBody<{ note: Note; alert: string }>>(`note/${options.params.id}`, {
         method: 'GET'
       })
     ).body.json();
 
-    if (!body.data?.data.id) return redirect(302, '/');
+    if (!body.data?.note.id) return redirect(302, '/');
 
     const captcha = await getCaptcha(options);
 
@@ -27,9 +29,11 @@ export const load = (async (options): Promise<ResponseBody | Redirect> => {
 export const actions = {
   default: async ({ request, cookies }) => {
     try {
+      const text = cookies.get(COOKIE);
+
       const form = Object.fromEntries(await request.formData());
 
-      console.log(form);
+      console.log(text, form);
     } catch (err) {}
   }
 } satisfies Actions;

@@ -1,17 +1,18 @@
 <script lang="ts">
-  import type { NoteResponse, ResponseBody } from '$lib/@types';
+  import type { Captcha, NoteResponse, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
 
   dayjs.extend(relativeTime);
 
-  export let data: ResponseBody<NoteResponse>;
+  export let data: ResponseBody<NoteResponse & Captcha>;
   export let title = 'Note contents';
 
   const error = data?.messages?.find(({ path }) => path === 'error')?.message || '';
   const alert = data?.data?.alert;
   const note = data?.data?.note;
+  const tag = data?.data?.tag;
 </script>
 
 <div class="mt-3 flex items-center justify-start">
@@ -43,9 +44,10 @@
   </section>
 {/if}
 
-{#if dayjs(alert).isValid() && note}
+{#if dayjs(alert).isValid() && note && tag}
   <form method="POST" class="flex justify-end mt-2">
     <input name="id" type="hidden" value={note.id} />
-    <Button text="Destroy note now" className="!rounded-none" icon="i-line-md:close-circle" href="#" />
+    <input name="tag" type="hidden" value={tag} />
+    <Button type="button" text="Destroy note now" className="!rounded-none" icon="i-line-md:close-circle" />
   </form>
 {/if}

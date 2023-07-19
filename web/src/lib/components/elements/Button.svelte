@@ -24,7 +24,7 @@
     </a>
   </div>
 {:else}
-  <button name={text || title} title={title || text} type="submit" class={`${defaultClassName} ${className} group`}>
+  <button title={title || text} type="submit" class={`${defaultClassName} ${className} group`}>
     <p>{text}</p>
     <i class={icon + ' text-xl group-hover:text-main transition-all duration-1000'} />
   </button>

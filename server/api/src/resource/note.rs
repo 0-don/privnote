@@ -1,6 +1,8 @@
 use migration::sea_orm::prelude::Uuid;
-use serde::Deserialize;
-use service::{Mutation as MutationCore, Query as QueryCore};
+use service::{
+    types::types::{Captcha, NoteParams, DeleteNoteReq},
+    Mutation as MutationCore, Query as QueryCore,
+};
 
 use axum::{
     extract::{Query, State},
@@ -14,25 +16,17 @@ use service::types::types::NoteReq;
 use crate::{
     constants,
     model::response::{ResponseBody, ResponseMessages},
-    utils::types::{AppState, NoteResponse},
+    utils::{
+        helper::check_captcha,
+        types::{AppState, NoteResponse},
+    },
 };
 
 pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq>) -> Response {
-    let text = state.cache.get(&create_note.tag);
-    if text.is_none() {
-        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
-            constants::MESSAGE_NO_TAG_OR_NO_TEXT.to_string(),
-            constants::ERROR_PATH.to_string(),
-        )))
-        .into_response();
-    }
+    let captcha = check_captcha(Captcha::new(&create_note.tag, &create_note.text), &state).await;
 
-    if create_note.text != text.unwrap() {
-        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
-            constants::MESSAGE_CAPTCHA_WRONG.to_string(),
-            constants::ERROR_PATH.to_string(),
-        )))
-        .into_response();
+    if captcha.is_some() {
+        return captcha.unwrap();
     }
 
     let note = MutationCore::create_note(&state.conn, create_note)
@@ -42,9 +36,18 @@ pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq
     Json(ResponseBody::new_data(Some(note))).into_response()
 }
 
-#[derive(Deserialize, Debug)]
-pub struct NoteParams {
-    pub destroy: Option<u8>,
+pub async fn delete_note(state: State<AppState>, Json(create_note): Json<DeleteNoteReq>) -> Response {
+    let captcha = check_captcha(Captcha::new(&create_note.tag, &create_note.text), &state).await;
+
+    if captcha.is_some() {
+        return captcha.unwrap();
+    }
+
+    let note = MutationCore::delete_note_by_id(&state.conn, create_note.id)
+        .await
+        .unwrap();
+
+    Json(ResponseBody::new_data(Some(note))).into_response()
 }
 
 pub async fn get_note(

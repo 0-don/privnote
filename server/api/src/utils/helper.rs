@@ -1,12 +1,21 @@
+use axum::{
+    response::{IntoResponse, Response},
+    Json, extract::State,
+};
 use core::time::Duration;
 use migration::{
     sea_orm::{Database, DatabaseConnection},
     Migrator, MigratorTrait,
 };
 use moka::future::Cache;
-use service::Mutation as MutationCore;
+use service::{types::types::Captcha, Mutation as MutationCore};
 use std::env;
 use tokio_cron_scheduler::{Job, JobScheduler};
+
+use crate::{
+    constants,
+    model::response::{ResponseBody, ResponseMessages},
+};
 
 use super::types::AppState;
 
@@ -48,4 +57,29 @@ pub async fn get_db_connection() -> anyhow::Result<DatabaseConnection> {
     Migrator::up(&conn, None).await.unwrap();
 
     Ok(conn)
+}
+
+pub async fn check_captcha(captcha: Captcha, state: &State<AppState>) -> Option<Response> {
+    let text = state.cache.get(&captcha.tag);
+    if text.is_none() {
+        return Some(
+            Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+                constants::MESSAGE_NO_TAG_OR_NO_TEXT.to_string(),
+                constants::ERROR_PATH.to_string(),
+            )))
+            .into_response(),
+        );
+    }
+
+    if captcha.text != text.unwrap() {
+        return Some(
+            Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+                constants::MESSAGE_CAPTCHA_WRONG.to_string(),
+                constants::ERROR_PATH.to_string(),
+            )))
+            .into_response(),
+        );
+    }
+
+    None
 }
