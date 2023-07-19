@@ -13,7 +13,7 @@
 <p class="bg-olive p-2 font-bold">
   {url}
 </p>
-<p class="bg-darkGold mb-4 p-2 font-light italic">The note will self-destruct after reading it.</p>
+<p class="italic bg-darkGold mb-4 p-2 font-light">The note will self-destruct after reading it.</p>
 <div class="flex items-center justify-between">
   <Button
     type="a"
