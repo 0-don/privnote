@@ -1,4 +1,8 @@
-use argon2::{self, Config};
+use aes_gcm_siv::{
+    aead::{Aead, KeyInit, OsRng},
+    Aes256GcmSiv,
+    Nonce, // Or `Aes128GcmSiv`
+};
 use chrono::Utc;
 use migration::sea_orm::prelude::Uuid;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
@@ -6,6 +10,7 @@ use service::{
     types::types::{Captcha, DeleteNoteReq, NoteParams},
     Mutation as MutationCore, Query as QueryCore,
 };
+use std::str;
 
 use axum::{
     extract::{Query, State},
@@ -41,14 +46,12 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         .map(char::from)
         .collect();
 
-    let hash = argon2::hash_encoded(
-        create_note.note.as_bytes(),
-        salt.as_bytes(),
-        &Config::default(),
-    )
-    .unwrap();
+    let key = Aes256GcmSiv::generate_key(&mut OsRng);
+    let cipher = Aes256GcmSiv::new(&key);
+    let nonce = Nonce::from_slice(salt.as_bytes()); // 96-bits; unique per message
+    let ciphertext = cipher.encrypt(nonce, create_note.note.as_ref()).unwrap();
 
-    create_note.note = hash;
+    create_note.note = str::from_utf8(&ciphertext.to_owned()).unwrap().to_owned();
     create_note.delete_at = Some(delete_at);
 
     let note = MutationCore::create_note(&state.conn, create_note)
@@ -95,6 +98,21 @@ pub async fn get_note(
     } else {
         let mut note = note.unwrap();
 
+        let key = Aes256GcmSiv::generate_key(&mut OsRng);
+        let cipher = Aes256GcmSiv::new(&key);
+        let nonce = Nonce::from_slice(params.secret.as_bytes());
+        let plaintext = cipher.decrypt(nonce, note.note.as_ref());
+
+        if plaintext.is_err() {
+            return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+                constants::MESSAGE_NOTE_SECRET_WRONG.to_string(),
+                constants::ERROR_PATH.to_string(),
+            )))
+            .into_response();
+        }
+
+        note.note = str::from_utf8(&plaintext.unwrap().to_owned()).unwrap().to_owned();
+
         let mut deleted = false;
         if note.duration_hours == 0 {
             deleted = MutationCore::delete_note_by_id(&state.conn, note.id)
@@ -107,8 +125,6 @@ pub async fn get_note(
         } else {
             note.delete_at.unwrap().to_string()
         };
-
-        aead;
 
         // note.note = argon2::(&note.note, params.secret.as_bytes()).unwrap();
 
