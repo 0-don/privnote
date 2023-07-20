@@ -20,13 +20,13 @@
   <div class={'cursor-pointer group'} title={title || text}>
     <a {href} class={`${defaultClassName} ${className}`}>
       <p>{text}</p>
-      <i class={icon + ' text-xl group-hover:text-main transition-all duration-1000'} />
+      <i class={icon + ' text-xl group-hover:bg-purple-300 transition-all duration-1000'} />
     </a>
   </div>
 {:else}
   <button title={title || text} type="submit" class={`${defaultClassName} ${className} group`}>
     <p>{text}</p>
-    <i class={icon + ' text-xl group-hover:text-main transition-all duration-1000'} />
+    <i class={icon + ' text-xl group-hover:bg-purple-300 transition-all duration-1000'} />
   </button>
 {/if}
 {#if error}

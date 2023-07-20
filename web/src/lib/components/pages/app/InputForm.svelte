@@ -41,7 +41,7 @@
   <FormOptions />
 
   <section class="mt-4 flex justify-between">
-    <Button type="button" className="!rounded-none" text="Create Note" icon="i-line-md:document-add" />
+    <Button type="button" className="!rounded-none !bg-main" text="Create Note" icon="i-line-md:document-add" />
     <Button href="#options" className="!rounded-none" text="Show Options" icon="i-line-md:edit-twotone" />
   </section>
 </form>

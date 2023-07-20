@@ -18,7 +18,7 @@
   <a href="#" class="close hover:opacity-40" />
   <div
     id="target-inner"
-    class="bg-container absolute left-1/2 top-1/2 block w-1/2 -translate-x-1/2 -translate-y-1/2 p-5 shadow-xl"
+    class="bg-container absolute left-0 top-1/2 block w-full -translate-x-0 -translate-y-1/2 p-5 shadow-xl"
   >
     <h2 class="text-3xl font-bold">{title}</h2>
     <p class="my-2 text-gray-300">{text}</p>

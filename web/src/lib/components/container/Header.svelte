@@ -10,7 +10,7 @@
   <Button className="mr-1 !mt-[0.35rem]" href="#question" icon="i-line-md:question-circle" />
 </div>
 <div id="question" class="bg-container relative mt-4 hidden p-2 target:block">
-  <div class="absolute -top-14 right-1"><Button title="question" href="#" icon="i-line-md:close-circle" /></div>
+  <div class="absolute top-[-3.35rem] right-1"><Button title="question" href="#" icon="i-line-md:close-circle" /></div>
   <svelte:component this={info} />
 </div>
 <hr class="mb-4 border-transparent" />
