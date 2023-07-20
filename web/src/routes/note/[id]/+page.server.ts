@@ -22,7 +22,7 @@ export const load = (async (options): Promise<ResponseBody | Redirect | void> =>
     const captcha = await getCaptcha(options);
 
     return deepMerge(body, captcha);
-  } catch (error) {
+  } catch (_) {
     throw redirect(307, '/');
   }
 }) satisfies PageServerLoad;
