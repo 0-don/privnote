@@ -10,7 +10,13 @@ pub struct AppState {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct NoteResponse {
+pub struct GetNoteResponse {
     pub note: Option<note::Model>,
     pub alert: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct CreateNoteResponse {
+    pub note: note::Model,
+    pub secret: String,
 }

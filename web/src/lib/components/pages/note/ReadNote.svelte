@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import type { Captcha, NoteResponse, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
+    import Modal from '$lib/components/elements/Modal.svelte';
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -49,6 +50,15 @@
   <form method="POST" class="flex justify-end mt-2">
     <input name="id" type="hidden" value={note.id} />
     <input name="tag" type="hidden" value={tag} />
-    <Button type="button" text="Destroy note now" className="!rounded-none" icon="i-line-md:close-circle" />
+    <Button type="a" href="#destroy" text="Destroy note now" className="!rounded-none" icon="i-line-md:close-circle" />
   </form>
+  <Modal
+    buttonText="Yes, destroy the note"
+    text="You're about to read and destroy the note with id {note.id}. This action is irreversible."
+    title="Destroy the Note?"
+    type="a"
+    href="/note/{note.id}"
+    id="destroy"
+    icon="i-line-md:clipboard-check"
+  />
 {/if}

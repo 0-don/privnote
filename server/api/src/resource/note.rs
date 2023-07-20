@@ -1,6 +1,9 @@
+use argon2::Config;
+use chrono::Utc;
 use migration::sea_orm::prelude::Uuid;
+use rand::{distributions::Alphanumeric, thread_rng, Rng};
 use service::{
-    types::types::{Captcha, NoteParams, DeleteNoteReq},
+    types::types::{Captcha, DeleteNoteReq, NoteParams},
     Mutation as MutationCore, Query as QueryCore,
 };
 
@@ -18,25 +21,51 @@ use crate::{
     model::response::{ResponseBody, ResponseMessages},
     utils::{
         helper::check_captcha,
-        types::{AppState, NoteResponse},
+        types::{AppState, CreateNoteResponse, GetNoteResponse},
     },
 };
 
-pub async fn create_note(state: State<AppState>, Json(create_note): Json<NoteReq>) -> Response {
+pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<NoteReq>) -> Response {
     let captcha = check_captcha(Captcha::new(&create_note.tag, &create_note.text), &state).await;
 
     if captcha.is_some() {
         return captcha.unwrap();
     }
 
+    let delete_at =
+        (Utc::now() + chrono::Duration::hours(create_note.duration_hours as i64)).naive_utc();
+
+    let salt: String = thread_rng()
+        .sample_iter(&Alphanumeric)
+        .take(12)
+        .map(char::from)
+        .collect();
+
+    let hash = argon2::hash_encoded(
+        create_note.note.as_bytes(),
+        salt.as_bytes(),
+        &Config::default(),
+    )
+    .unwrap();
+
+    create_note.note = hash;
+    create_note.delete_at = Some(delete_at);
+
     let note = MutationCore::create_note(&state.conn, create_note)
         .await
         .unwrap();
 
-    Json(ResponseBody::new_data(Some(note))).into_response()
+    Json(ResponseBody::new_data(Some(CreateNoteResponse {
+        note,
+        secret: salt,
+    })))
+    .into_response()
 }
 
-pub async fn delete_note(state: State<AppState>, Json(delete_note): Json<DeleteNoteReq>) -> Response {
+pub async fn delete_note(
+    state: State<AppState>,
+    Json(delete_note): Json<DeleteNoteReq>,
+) -> Response {
     println!("{:?}", delete_note);
     let captcha = check_captcha(Captcha::new(&delete_note.tag, &delete_note.text), &state).await;
 
@@ -79,5 +108,9 @@ pub async fn get_note(
         note.as_ref().unwrap().delete_at.unwrap().to_string()
     };
 
-    return Json(ResponseBody::new_data(Some(NoteResponse { note, alert }))).into_response();
+    return Json(ResponseBody::new_data(Some(GetNoteResponse {
+        note,
+        alert,
+    })))
+    .into_response();
 }

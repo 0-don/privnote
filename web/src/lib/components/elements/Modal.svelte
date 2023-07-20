@@ -11,15 +11,16 @@
 
 <div
   {id}
-  class="pointer-events-none fixed bottom-0 left-0 right-0 top-0 text-ellipsis opacity-0 transition-all target:pointer-events-auto target:opacity-100 z-40"
+  class="pointer-events-none fixed bottom-0 left-0 right-0 top-0 text-ellipsis opacity-0 transition-all target:pointer-events-auto target:opacity-100 z-50"
 >
   <!-- svelte-ignore a11y-missing-content -->
   <!-- svelte-ignore a11y-invalid-attribute -->
   <a href="#" class="close hover:opacity-40" />
   <div
     id="target-inner"
-    class="bg-container absolute left-0 top-1/2 block w-full -translate-x-0 -translate-y-1/2 p-5 shadow-xl"
+    class="bg-container absolute left-0 md:left-1/2 md:w-1/2 top-1/2 block w-full -translate-x-0 md:-translate-x-1/2 -translate-y-1/2 p-5 shadow-xl"
   >
+    <!-- bg-container absolute top-1/2 block  -translate-y-1/2 p-5 shadow-xl -->
     <h2 class="text-3xl font-bold">{title}</h2>
     <p class="my-2 text-gray-300">{text}</p>
     <div class="flex justify-between">
