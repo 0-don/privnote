@@ -41,12 +41,11 @@ pub struct NoteReq {
     pub tag: usize,
     pub text: String,
 
-    pub note: String,
+    pub note: Vec<u8>,
     pub duration_hours: i32,
     pub manual_password: String,
     pub manual_password_confirm: String,
     pub notify_email: String,
-    pub notify_ref: String,
 
     pub delete_at: Option<chrono::NaiveDateTime>,
 }

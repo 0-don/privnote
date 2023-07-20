@@ -16,7 +16,7 @@ export const actions = {
 
       const form = Object.fromEntries(await request.formData());
 
-      const data = NoteSchema.parse(form);
+      const data = NoteSchema.parse({ ...form, delete_at: null });
 
       const response = await (
         await client<ResponseBody>('note', {
@@ -25,7 +25,7 @@ export const actions = {
         })
       ).body.json();
 
-      return response;
+      return response as any;
     } catch (err) {
       if (err instanceof z.ZodError) {
         return {
@@ -36,6 +36,7 @@ export const actions = {
         };
       } else {
         error(err);
+
         return { messages: [{ message: 'Unknown error', path: 'error' }] };
       }
     }

@@ -32,7 +32,7 @@ impl MigrationTrait for Migration {
                             .primary_key()
                             .extra("DEFAULT uuid_generate_v4()".into()),
                     )
-                    .col(ColumnDef::new(Note::Note).string().string().not_null())
+                    .col(ColumnDef::new(Note::Note).blob(BlobSize::Long).not_null())
                     .col(
                         ColumnDef::new(Note::DurationHours)
                             .integer()

@@ -12,6 +12,7 @@ pub struct AppState {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct GetNoteResponse {
     pub note: note::Model,
+    pub text: String,
     pub alert: String,
 }
 

@@ -10,7 +10,6 @@ import { DeleteNoteSchema } from '$lib/schemas/deleteNote.schema';
 export const load = (async (options): Promise<ResponseBody | Redirect | void> => {
   if (!options.params?.id) throw redirect(307, '/');
 
-  console.log(options.params.id);
   try {
     const body = await (
       await client<ResponseBody<{ note: Note; alert: string }>>(`note/${options.params.id}`, {
@@ -24,7 +23,7 @@ export const load = (async (options): Promise<ResponseBody | Redirect | void> =>
 
     return deepMerge(body, captcha);
   } catch (_) {
-    throw redirect(307, '/');
+    // throw redirect(307, '/');
   }
 }) satisfies PageServerLoad;
 
