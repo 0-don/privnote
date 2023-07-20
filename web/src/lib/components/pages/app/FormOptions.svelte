@@ -38,7 +38,6 @@
 
   <div class="flex flex-col justify-between space-y-2.5 md:flex-row md:space-x-5 md:space-y-0">
     <Input {form} name="notify_email" label="E-mail to notify when note is destroyed" />
-    <Input {form} name="notify_ref" label="Reference name for the note (optional)" />
   </div>
 
   <div class="absolute -bottom-14 right-1/2">

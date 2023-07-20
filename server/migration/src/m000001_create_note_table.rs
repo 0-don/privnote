@@ -42,7 +42,6 @@ impl MigrationTrait for Migration {
                     )
                     .col(ColumnDef::new(Note::ManualPassword).string())
                     .col(ColumnDef::new(Note::NotifyEmail).string())
-                    .col(ColumnDef::new(Note::NotifyRef).string())
                     .col(
                         ColumnDef::new(Note::CreatedAt)
                             .timestamp()

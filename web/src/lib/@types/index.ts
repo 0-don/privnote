@@ -16,8 +16,8 @@ export type Note = {
   duration_hours: number;
   manual_password: string;
   notify_email: string;
-  notify_ref: string;
   created_at: string;
+  deleted_at: string;
 };
 
 export type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;

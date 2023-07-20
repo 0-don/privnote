@@ -18,12 +18,13 @@ impl Captcha {
 
 #[derive(Deserialize, Debug)]
 pub struct NoteParams {
-    pub destroy: Option<u8>,
+    pub secret: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct GetNoteReq {
     pub id: Uuid,
+    pub secret: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -32,6 +33,7 @@ pub struct DeleteNoteReq {
     pub text: String,
 
     pub id: Uuid,
+    pub secret: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]

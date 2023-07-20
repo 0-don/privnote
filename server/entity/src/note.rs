@@ -19,7 +19,6 @@ pub struct Model {
     pub duration_hours: i32,
     pub manual_password: Option<String>,
     pub notify_email: Option<String>,
-    pub notify_ref: Option<String>,
     pub created_at: Option<DateTime>,
     pub delete_at: Option<DateTime>,
 }
@@ -31,7 +30,6 @@ pub enum Column {
     DurationHours,
     ManualPassword,
     NotifyEmail,
-    NotifyRef,
     CreatedAt,
     DeleteAt,
 }
@@ -60,7 +58,6 @@ impl ColumnTrait for Column {
             Self::DurationHours => ColumnType::Integer.def(),
             Self::ManualPassword => ColumnType::String(None).def().null(),
             Self::NotifyEmail => ColumnType::String(None).def().null(),
-            Self::NotifyRef => ColumnType::String(None).def().null(),
             Self::CreatedAt => ColumnType::DateTime.def().null(),
             Self::DeleteAt => ColumnType::DateTime.def().null(),
         }

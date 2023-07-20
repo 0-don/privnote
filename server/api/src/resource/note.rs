@@ -1,4 +1,4 @@
-use argon2::Config;
+use argon2::{self, Config};
 use chrono::Utc;
 use migration::sea_orm::prelude::Uuid;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
@@ -66,23 +66,22 @@ pub async fn delete_note(
     state: State<AppState>,
     Json(delete_note): Json<DeleteNoteReq>,
 ) -> Response {
-    println!("{:?}", delete_note);
     let captcha = check_captcha(Captcha::new(&delete_note.tag, &delete_note.text), &state).await;
 
     if captcha.is_some() {
         return captcha.unwrap();
     }
 
-    let note = MutationCore::delete_note_by_id(&state.conn, delete_note.id)
+    let is_deleted = MutationCore::delete_note_by_id(&state.conn, delete_note.id)
         .await
         .unwrap();
 
-    Json(ResponseBody::new_data(Some(note))).into_response()
+    Json(ResponseBody::new_data(Some(is_deleted))).into_response()
 }
 
 pub async fn get_note(
     state: State<AppState>,
-    _params: Query<NoteParams>,
+    params: Query<NoteParams>,
     Path(id): Path<Uuid>,
 ) -> Response {
     let note = QueryCore::find_note_by_id(&state.conn, id).await.unwrap();
@@ -93,24 +92,30 @@ pub async fn get_note(
             constants::ERROR_PATH.to_string(),
         )))
         .into_response();
-    }
-
-    let mut deleted = false;
-    if note.as_ref().unwrap().duration_hours == 0 {
-        deleted = MutationCore::delete_note_by_id(&state.conn, note.as_ref().unwrap().id)
-            .await
-            .unwrap();
-    }
-
-    let alert = if deleted {
-        constants::MESSAGE_NOTE_DELETED.to_string()
     } else {
-        note.as_ref().unwrap().delete_at.unwrap().to_string()
-    };
+        let mut note = note.unwrap();
 
-    return Json(ResponseBody::new_data(Some(GetNoteResponse {
-        note,
-        alert,
-    })))
-    .into_response();
+        let mut deleted = false;
+        if note.duration_hours == 0 {
+            deleted = MutationCore::delete_note_by_id(&state.conn, note.id)
+                .await
+                .unwrap();
+        }
+
+        let alert = if deleted {
+            constants::MESSAGE_NOTE_DELETED.to_string()
+        } else {
+            note.delete_at.unwrap().to_string()
+        };
+
+        aead;
+
+        // note.note = argon2::(&note.note, params.secret.as_bytes()).unwrap();
+
+        return Json(ResponseBody::new_data(Some(GetNoteResponse {
+            note,
+            alert,
+        })))
+        .into_response();
+    }
 }
