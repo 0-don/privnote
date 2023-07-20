@@ -16,6 +16,7 @@ use tokio_cron_scheduler::{Job, JobScheduler};
 use crate::{
     constants,
     model::response::{ResponseBody, ResponseMessages},
+    DB,
 };
 
 use super::types::AppState;
@@ -33,13 +34,16 @@ pub async fn get_app_state() -> AppState {
 pub async fn cron_delete_old_notes() -> anyhow::Result<()> {
     let sched = JobScheduler::new().await?;
 
+    DB.set(get_db_connection().await.unwrap())
+        .expect("error db connection");
     // sec   min   hour   day of month   month   day of week   year
     // *     *     *      *              *       *             *
     sched
         .add(Job::new_async("* 0 * * * *", |_uuid, _l| {
             Box::pin(async {
-                let db = get_db_connection().await.unwrap();
-                MutationCore::delete_old_notes(&db).await.unwrap();
+                let db = DB.get().unwrap();
+                println!("test");
+                MutationCore::delete_old_notes(db).await.unwrap();
             })
         })?)
         .await?;

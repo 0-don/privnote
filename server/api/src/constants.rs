@@ -6,3 +6,6 @@ pub const MESSAGE_NOTE_DELETED: &str =
     "This note was destroyed. If you need to keep it, copy it before closing this window.";
 pub const MESSAGE_CAPTCHA_WRONG: &str = "Captcha is wrong";
 pub const ERROR_PATH: &str = "error";
+
+
+

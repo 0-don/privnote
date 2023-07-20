@@ -12,10 +12,6 @@
   export let data: ResponseBody;
 </script>
 
-<svelte:head>
-  <title>Priv-Note</title>
-</svelte:head>
-
 <Debug debug={debugLog(data, form)} />
 <Header title={form?.data ? 'Note link ready' : 'New note'} info={form?.data ? NoteLinReadyInfo : NewNoteInfo} />
 

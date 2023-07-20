@@ -19,7 +19,10 @@ use axum::{
 };
 use core::str::FromStr;
 use hyper::Server;
-use std::{env, net::SocketAddr};
+use migration::sea_orm::DatabaseConnection;
+use std::{env, net::SocketAddr, sync::OnceLock};
+
+pub static DB: OnceLock<DatabaseConnection> = OnceLock::new();
 
 #[tokio::main]
 async fn start() -> anyhow::Result<()> {
