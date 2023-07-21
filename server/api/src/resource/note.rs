@@ -6,8 +6,7 @@ use crate::{
         types::{AppState, CreateNoteResponse, GetNoteResponse},
     },
 };
-use ascon_aead::aead::{Aead, KeyInit};
-use ascon_aead::{Ascon128, Key, Nonce}; // Or `Ascon128a`
+use argon2::{self, Config};
 use axum::extract::Path;
 use axum::{
     extract::State,
@@ -16,6 +15,7 @@ use axum::{
 };
 
 use chrono::Utc;
+use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 use migration::sea_orm::prelude::Uuid;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
 use service::types::types::NoteReq;
@@ -36,20 +36,26 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         (Utc::now() + chrono::Duration::hours(create_note.duration_hours as i64)).naive_utc();
     create_note.delete_at = Some(delete_at);
 
-    let secret: String = thread_rng()
+    let mut secret: String = thread_rng()
         .sample_iter(&Alphanumeric)
-        .take(16)
+        .take(8)
         .map(char::from)
         .collect();
 
-    let ciphertext = Ascon128::new(Key::<Ascon128>::from_slice(secret.as_bytes()))
-        .encrypt(
-            Nonce::<Ascon128>::from_slice(b"unique nonce 012"),
-            create_note.note.as_ref(),
-        )
-        .expect("encryption failure!");
+    if !create_note.manual_password.is_empty() {
+        secret = format!("{:?}{:?}", secret, create_note.manual_password);
+        create_note.manual_password =
+            new_magic_crypt!(&secret, 256).encrypt_bytes_to_base64(&create_note.manual_password)
+    }
 
-    let note = MutationCore::create_note(&state.conn, create_note, ciphertext)
+    if !create_note.notify_email.is_empty() {
+        create_note.notify_email =
+            new_magic_crypt!(&secret, 256).encrypt_bytes_to_base64(&create_note.notify_email)
+    }
+
+    create_note.note = new_magic_crypt!(&secret, 256).encrypt_bytes_to_base64(&create_note.note);
+
+    let note = MutationCore::create_note(&state.conn, create_note)
         .await
         .unwrap();
 
@@ -86,13 +92,9 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         .into_response();
     } else {
         let note = note.unwrap();
-
         let secret = secret.unwrap();
 
-        let byte_string = Ascon128::new(Key::<Ascon128>::from_slice(secret.as_bytes())).decrypt(
-            Nonce::<Ascon128>::from_slice(secret.as_bytes()),
-            note.note.as_ref(),
-        );
+        let byte_string = new_magic_crypt!(&secret, 256).decrypt_bytes_to_bytes(&note.note);
 
         if byte_string.is_err() {
             return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
@@ -101,8 +103,6 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             )))
             .into_response();
         }
-
-        // let bytes = byte_string.unwrap();
 
         let mut deleted = false;
         if note.duration_hours == 0 {

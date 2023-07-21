@@ -11,7 +11,6 @@ pub enum Note {
     DurationHours,
     ManualPassword,
     NotifyEmail,
-    NotifyRef,
     CreatedAt,
     DeleteAt,
 }
@@ -32,7 +31,12 @@ impl MigrationTrait for Migration {
                             .primary_key()
                             .extra("DEFAULT uuid_generate_v4()".into()),
                     )
-                    .col(ColumnDef::new(Note::Note).blob(BlobSize::Long).not_null())
+                    .col(
+                        ColumnDef::new(Note::Note)
+                            .string()
+                            .string_len(100000)
+                            .not_null(),
+                    )
                     .col(
                         ColumnDef::new(Note::DurationHours)
                             .integer()
@@ -40,8 +44,12 @@ impl MigrationTrait for Migration {
                             .default(0)
                             .extra("check (duration_hours between 0 and 720)".into()),
                     )
-                    .col(ColumnDef::new(Note::ManualPassword).string())
-                    .col(ColumnDef::new(Note::NotifyEmail).string())
+                    .col(
+                        ColumnDef::new(Note::ManualPassword)
+                            .string()
+                            .string_len(100),
+                    )
+                    .col(ColumnDef::new(Note::NotifyEmail).string().string_len(100))
                     .col(
                         ColumnDef::new(Note::CreatedAt)
                             .timestamp()

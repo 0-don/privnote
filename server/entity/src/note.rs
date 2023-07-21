@@ -15,7 +15,7 @@ impl EntityName for Entity {
 #[derive(Clone, Debug, PartialEq, DeriveModel, DeriveActiveModel, Eq, Serialize, Deserialize)]
 pub struct Model {
     pub id: Uuid,
-    pub note: Vec<u8>,
+    pub note: String,
     pub duration_hours: i32,
     pub manual_password: Option<String>,
     pub notify_email: Option<String>,
@@ -54,10 +54,10 @@ impl ColumnTrait for Column {
     fn def(&self) -> ColumnDef {
         match self {
             Self::Id => ColumnType::Uuid.def(),
-            Self::Note => ColumnType::Binary(BlobSize::Blob(None)).def(),
+            Self::Note => ColumnType::String(None).def(),
             Self::DurationHours => ColumnType::Integer.def(),
-            Self::ManualPassword => ColumnType::String(None).def().null(),
-            Self::NotifyEmail => ColumnType::String(None).def().null(),
+            Self::ManualPassword => ColumnType::String(Some(100u32)).def().null(),
+            Self::NotifyEmail => ColumnType::String(Some(100u32)).def().null(),
             Self::CreatedAt => ColumnType::DateTime.def().null(),
             Self::DeleteAt => ColumnType::DateTime.def().null(),
         }
