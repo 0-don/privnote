@@ -6,23 +6,21 @@ use crate::{
         types::{AppState, CreateNoteResponse, GetNoteResponse},
     },
 };
-use aes_gcm_siv::{
-    aead::{generic_array::GenericArray, Aead, KeyInit, OsRng},
-    Aes256GcmSiv, Nonce,
-};
+use ascon_aead::aead::{Aead, KeyInit};
+use ascon_aead::{Ascon128, Key, Nonce}; // Or `Ascon128a`
 use axum::extract::Path;
 use axum::{
-    extract::{Query, State},
+    extract::State,
     response::{IntoResponse, Response},
     Json,
 };
-use base64::{engine::general_purpose, Engine};
+
 use chrono::Utc;
 use migration::sea_orm::prelude::Uuid;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
 use service::types::types::NoteReq;
 use service::{
-    types::types::{Captcha, DeleteNoteReq, NoteParams},
+    types::types::{Captcha, DeleteNoteReq},
     Mutation as MutationCore, Query as QueryCore,
 };
 use std::str;
@@ -36,15 +34,20 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
 
     let delete_at =
         (Utc::now() + chrono::Duration::hours(create_note.duration_hours as i64)).naive_utc();
-
-    let secret_bytes = &Aes256GcmSiv::generate_key(&mut OsRng);
-    let secret_string = general_purpose::URL_SAFE_NO_PAD.encode(secret_bytes);
-
-    let ciphertext = Aes256GcmSiv::new(secret_bytes)
-        .encrypt(&Nonce::default(), create_note.note.as_ref())
-        .unwrap();
-
     create_note.delete_at = Some(delete_at);
+
+    let secret: String = thread_rng()
+        .sample_iter(&Alphanumeric)
+        .take(16)
+        .map(char::from)
+        .collect();
+
+    let ciphertext = Ascon128::new(Key::<Ascon128>::from_slice(secret.as_bytes()))
+        .encrypt(
+            Nonce::<Ascon128>::from_slice(secret.as_bytes()),
+            create_note.note.as_ref(),
+        )
+        .expect("encryption failure!");
 
     let note = MutationCore::create_note(&state.conn, create_note, ciphertext)
         .await
@@ -52,7 +55,7 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
 
     Json(ResponseBody::new_data(Some(CreateNoteResponse {
         note,
-        secret: secret_string,
+        secret,
     })))
     .into_response()
 }
@@ -82,14 +85,14 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         )))
         .into_response();
     } else {
-        let mut note = note.unwrap();
+        let note = note.unwrap();
 
         let secret = secret.unwrap();
-        let bytes = general_purpose::URL_SAFE_NO_PAD.decode(secret).unwrap();
-        let s_secret = GenericArray::from_slice(&bytes);
 
-        let byte_string =
-            Aes256GcmSiv::new(s_secret).decrypt(&Nonce::default(), note.note.as_ref());
+        let byte_string = Ascon128::new(Key::<Ascon128>::from_slice(secret.as_bytes())).decrypt(
+            Nonce::<Ascon128>::from_slice(secret.as_bytes()),
+            note.note.as_ref(),
+        );
 
         if byte_string.is_err() {
             return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
@@ -99,7 +102,7 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             .into_response();
         }
 
-        let bytes = byte_string.unwrap();
+        // let bytes = byte_string.unwrap();
 
         let mut deleted = false;
         if note.duration_hours == 0 {
@@ -114,10 +117,12 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             note.delete_at.unwrap().to_string()
         };
 
+        let byte_string = byte_string.unwrap();
         return Json(ResponseBody::new_data(Some(GetNoteResponse {
             note,
-            text: String::from_utf8_lossy(&*bytes).to_string(),
+            text: String::from_utf8_lossy(&*byte_string).to_string(),
             alert,
+            // alert,
         })))
         .into_response();
     }
