@@ -7,9 +7,9 @@ use crate::types::types::NoteReq;
 pub struct Mutation;
 
 impl Mutation {
-    pub async fn create_note(db: &DbConn, form_data: NoteReq) -> anyhow::Result<note::Model> {
+    pub async fn create_note(db: &DbConn, form_data: NoteReq, note: Vec<u8>) -> anyhow::Result<note::Model> {
         let model = note::ActiveModel {
-            note: Set(form_data.note),
+            note: Set(note),
             duration_hours: Set(form_data.duration_hours),
             manual_password: Set(Some(form_data.manual_password)),
             notify_email: Set(Some(form_data.notify_email)),

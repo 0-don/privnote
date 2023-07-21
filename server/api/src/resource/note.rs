@@ -48,11 +48,12 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
             create_note.note.as_ref(),
         )
         .unwrap();
-    println!("wtf");
-    create_note.note = ciphertext;
+
+    println!("{:?}", String::from_utf8_lossy(&*ciphertext));
+
     create_note.delete_at = Some(delete_at);
 
-    let note = MutationCore::create_note(&state.conn, create_note)
+    let note = MutationCore::create_note(&state.conn, create_note, ciphertext)
         .await
         .unwrap();
 
@@ -106,13 +107,12 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         .into_response();
     } else {
         let mut note = note.unwrap();
-        println!("note: {:?}", note);
+
         let plaintext = Aes256GcmSiv::new(&Aes256GcmSiv::generate_key(&mut OsRng)).decrypt(
             Nonce::from_slice(secret.unwrap().as_bytes()),
             note.note.as_ref(),
         );
 
-        println!("asd");
         if plaintext.is_err() {
             return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
                 constants::MESSAGE_NOTE_SECRET_WRONG.to_string(),

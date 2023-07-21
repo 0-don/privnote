@@ -41,7 +41,7 @@ pub struct NoteReq {
     pub tag: usize,
     pub text: String,
 
-    pub note: Vec<u8>,
+    pub note: String,
     pub duration_hours: i32,
     pub manual_password: String,
     pub manual_password_confirm: String,
