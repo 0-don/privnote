@@ -1,4 +1,4 @@
-import type { Note, ResponseBody } from '$lib/@types';
+import type { Messages, Note, ResponseBody } from '$lib/@types';
 import type { Actions, Redirect } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -28,10 +28,9 @@ export const load = (async (options): Promise<ResponseBody | Redirect | void> =>
 
 export const actions = {
   default: async ({ request, cookies }): Promise<ResponseBody | Redirect> => {
+    const form = Object.fromEntries(await request.formData());
     try {
       const text = cookies.get(COOKIE);
-
-      const form = Object.fromEntries(await request.formData());
 
       const body = JSON.stringify(DeleteNoteSchema.parse({ ...form, text }));
 
@@ -44,7 +43,15 @@ export const actions = {
 
       return res;
     } catch (err) {
-      return { messages: [{ message: 'Server error', path: 'error' }] };
+      return {
+        messages: [
+          {
+            message: JSON.stringify(err),
+            path: 'error',
+            ...Object.keys(form).map((k) => ({ path: k, value: form[k] }) as Messages)
+          }
+        ]
+      };
     }
   }
 } satisfies Actions;

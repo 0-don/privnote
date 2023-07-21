@@ -26,7 +26,7 @@ export const getCaptcha = async ({ cookies }: RequestEvent): Promise<ResponseBod
     cookies.set(COOKIE, text, COOKIE_SERIALIZE_OPTIONS);
 
     return { data: { tag } };
-  } catch (error) {
-    return { messages: [{ message: 'Server error', path: 'error' }] };
+  } catch (err) {
+    return { messages: [{ message: JSON.stringify(err), path: 'error' }] };
   }
 };

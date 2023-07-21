@@ -31,9 +31,9 @@ export type ResponseBody<T = {}> = {
 };
 
 export type Messages = {
-  message: JSONValue;
+  message?: JSONValue;
+  value?: number | boolean | string | null;
   path: PathKeys;
-  key?: string;
 };
 
 export type DebugMessages = {
@@ -48,6 +48,6 @@ export type Captcha = Tag & Text;
 
 export type NoteResponse = {
   note: Note;
-  
+
   alert: string;
 };

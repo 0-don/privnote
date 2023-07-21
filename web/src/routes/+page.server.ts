@@ -1,9 +1,8 @@
-import type { Captcha, Messages, ResponseBody } from '$lib/@types';
+import type { Messages, ResponseBody } from '$lib/@types';
 import { NoteSchema } from '$lib/schemas/note.schema';
 import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
-import { error } from 'console';
 import { COOKIE } from '$lib/utils/server/constants';
 import { client, getCaptcha } from '$lib/utils/server';
 
@@ -11,10 +10,9 @@ export const load = (async (options): Promise<ResponseBody> => await getCaptcha(
 
 export const actions = {
   default: async ({ request, cookies }): Promise<ResponseBody> => {
+    const form = Object.fromEntries(await request.formData());
     try {
       const text = cookies.get(COOKIE);
-
-      const form = Object.fromEntries(await request.formData());
 
       const data = NoteSchema.parse({ ...form, delete_at: null });
 
@@ -25,19 +23,29 @@ export const actions = {
         })
       ).body.json();
 
-      return response as any;
+      return response;
     } catch (err) {
       if (err instanceof z.ZodError) {
         return {
-          messages: err.issues.map(({ message, path }) => ({
-            message: message,
-            path: path.join('.')
-          })) as Messages[]
+          messages: [
+            ...(err.issues.map(({ message, path }) => ({
+              message: message,
+              path: path.join('.'),
+              value: form?.[path.join('.')] || ''
+            })) as Messages[]),
+            ...Object.keys(form).map((k) => ({ path: k, value: form?.[k] || '' }) as Messages)
+          ]
         };
       } else {
-        error(err);
-
-        return { messages: [{ message: 'Unknown error', path: 'error' }] };
+        return {
+          messages: [
+            {
+              message: JSON.stringify(err),
+              path: 'error',
+              ...Object.keys(form).map((k) => ({ path: k, value: form?.[k] || '' }) as Messages)
+            }
+          ]
+        };
       }
     }
   }

@@ -16,8 +16,8 @@
         {#each messages as message}
           <p class="break-words text-sm text-gray-400">
             <span class="text-gray-500">${message.path}: </span><span class="text-yellow-200"
-              >{JSON.stringify(message.message)}</span
-            >
+              >{message?.message ? JSON.stringify(message.message) : ''} {message?.value || ''}
+            </span>
           </p>
         {/each}
       </div>
