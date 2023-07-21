@@ -7,7 +7,7 @@ use crate::{
     },
 };
 use aes_gcm_siv::{
-    aead::{Aead, KeyInit, OsRng},
+    aead::{generic_array::GenericArray, Aead, KeyInit, OsRng},
     Aes256GcmSiv, Nonce,
 };
 use axum::extract::Path;
@@ -16,6 +16,7 @@ use axum::{
     response::{IntoResponse, Response},
     Json,
 };
+use base64::{engine::general_purpose, Engine};
 use chrono::Utc;
 use migration::sea_orm::prelude::Uuid;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
@@ -36,20 +37,14 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
     let delete_at =
         (Utc::now() + chrono::Duration::hours(create_note.duration_hours as i64)).naive_utc();
 
-    let salt: String = thread_rng()
-        .sample_iter(&Alphanumeric)
-        .take(12)
-        .map(char::from)
-        .collect();
+    let secret_bytes = &Aes256GcmSiv::generate_key(&mut OsRng);
+    let secret_string = general_purpose::URL_SAFE_NO_PAD.encode(secret_bytes);
 
-    let ciphertext = Aes256GcmSiv::new(&Aes256GcmSiv::generate_key(&mut OsRng))
-        .encrypt(
-            Nonce::from_slice(salt.as_bytes()),
-            create_note.note.as_ref(),
-        )
+    let ciphertext = Aes256GcmSiv::new(secret_bytes)
+        .encrypt(&Nonce::default(), create_note.note.as_ref())
         .unwrap();
 
-    println!("{:?}", String::from_utf8_lossy(&*ciphertext));
+    println!("{:?}", ciphertext);
 
     create_note.delete_at = Some(delete_at);
 
@@ -59,26 +54,9 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
 
     Json(ResponseBody::new_data(Some(CreateNoteResponse {
         note,
-        secret: salt,
+        secret: secret_string,
     })))
     .into_response()
-}
-
-pub async fn delete_note(
-    state: State<AppState>,
-    Json(delete_note): Json<DeleteNoteReq>,
-) -> Response {
-    let captcha = check_captcha(Captcha::new(&delete_note.tag, &delete_note.text), &state).await;
-
-    if captcha.is_some() {
-        return captcha.unwrap();
-    }
-
-    let is_deleted = MutationCore::delete_note_by_id(&state.conn, delete_note.id)
-        .await
-        .unwrap();
-
-    Json(ResponseBody::new_data(Some(is_deleted))).into_response()
 }
 
 pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Response {
@@ -86,6 +64,9 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
 
     let id = list.get(0);
     let secret = list.get(1);
+
+    println!("{:?}", id);
+    println!("{:?}", secret);
 
     if id.is_none() || secret.is_none() {
         return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
@@ -108,12 +89,14 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
     } else {
         let mut note = note.unwrap();
 
-        let plaintext = Aes256GcmSiv::new(&Aes256GcmSiv::generate_key(&mut OsRng)).decrypt(
-            Nonce::from_slice(secret.unwrap().as_bytes()),
-            note.note.as_ref(),
-        );
+        let secret = secret.unwrap();
+        let bytes = general_purpose::URL_SAFE_NO_PAD.decode(secret).unwrap();
+        let s_secret = GenericArray::from_slice(&bytes);
 
-        if plaintext.is_err() {
+        let byte_string =
+            Aes256GcmSiv::new(s_secret).decrypt(&Nonce::default(), note.note.as_ref());
+
+        if byte_string.is_err() {
             return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
                 constants::MESSAGE_NOTE_SECRET_WRONG.to_string(),
                 constants::ERROR_PATH.to_string(),
@@ -121,8 +104,9 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             .into_response();
         }
 
-        let text = str::from_utf8(&plaintext.unwrap()).unwrap().to_string();
-        println!("{}", text);
+        let bytes = byte_string.unwrap();
+        let text = String::from_utf8_lossy(&*bytes);
+        println!("{:?}", text);
 
         let mut deleted = false;
         if note.duration_hours == 0 {
@@ -137,13 +121,28 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             note.delete_at.unwrap().to_string()
         };
 
-        // note.note = argon2::(&note.note, params.secret.as_bytes()).unwrap();
-
         return Json(ResponseBody::new_data(Some(GetNoteResponse {
             note,
-            text,
+            text: String::from_utf8_lossy(&*bytes).to_string(),
             alert,
         })))
         .into_response();
     }
+}
+
+pub async fn delete_note(
+    state: State<AppState>,
+    Json(delete_note): Json<DeleteNoteReq>,
+) -> Response {
+    let captcha = check_captcha(Captcha::new(&delete_note.tag, &delete_note.text), &state).await;
+
+    if captcha.is_some() {
+        return captcha.unwrap();
+    }
+
+    let is_deleted = MutationCore::delete_note_by_id(&state.conn, delete_note.id)
+        .await
+        .unwrap();
+
+    Json(ResponseBody::new_data(Some(is_deleted))).into_response()
 }

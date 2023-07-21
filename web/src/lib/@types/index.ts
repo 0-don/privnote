@@ -48,5 +48,6 @@ export type Captcha = Tag & Text;
 
 export type NoteResponse = {
   note: Note;
+  
   alert: string;
 };

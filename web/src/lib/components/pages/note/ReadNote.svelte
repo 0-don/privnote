@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import type { Captcha, NoteResponse, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
-    import Modal from '$lib/components/elements/Modal.svelte';
+  import Modal from '$lib/components/elements/Modal.svelte';
   import dayjs from 'dayjs';
   import relativeTime from 'dayjs/plugin/relativeTime';
 
@@ -15,6 +15,7 @@
   const alert = data?.data?.alert;
   const note = data?.data?.note;
   const tag = data?.data?.tag;
+  const text = data?.data?.text;
 </script>
 
 <div class="mt-3 flex items-center justify-start">
@@ -33,12 +34,12 @@
   <div class="mb-3 break-all text-red-400">{error}</div>
 {/if}
 
-{#if note}
+{#if text}
   <section id="content">
     <textarea
       rows="13"
       name="note"
-      value={note.note}
+      value={text}
       readonly
       placeholder="Write your note here..."
       class="w-full !bg-yellow-100 !bg-opacity-75 p-5 text-black outline-none placeholder:text-black"
