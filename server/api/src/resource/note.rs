@@ -44,8 +44,6 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         .encrypt(&Nonce::default(), create_note.note.as_ref())
         .unwrap();
 
-    println!("{:?}", ciphertext);
-
     create_note.delete_at = Some(delete_at);
 
     let note = MutationCore::create_note(&state.conn, create_note, ciphertext)
@@ -64,9 +62,6 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
 
     let id = list.get(0);
     let secret = list.get(1);
-
-    println!("{:?}", id);
-    println!("{:?}", secret);
 
     if id.is_none() || secret.is_none() {
         return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
@@ -105,8 +100,6 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         }
 
         let bytes = byte_string.unwrap();
-        let text = String::from_utf8_lossy(&*bytes);
-        println!("{:?}", text);
 
         let mut deleted = false;
         if note.duration_hours == 0 {

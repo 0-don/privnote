@@ -14,7 +14,7 @@
   const link = `${env.PUBLIC_DOMAIN}note/${url}`;
 </script>
 
-<p class="bg-olive p-2 font-bold">
+<p class="bg-olive p-2 font-bold text-sm">
   {link}
 </p>
 <p class="italic bg-darkGold mb-4 p-2 font-light">The note will self-destruct after reading it.</p>
