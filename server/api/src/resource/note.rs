@@ -114,7 +114,7 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         let alert = if deleted {
             constants::MESSAGE_NOTE_DELETED.to_string()
         } else {
-            note.delete_at.unwrap().to_string()
+            note.delete_at.to_string()
         };
 
         let byte_string = byte_string.unwrap();

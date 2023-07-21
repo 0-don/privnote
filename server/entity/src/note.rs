@@ -19,8 +19,9 @@ pub struct Model {
     pub duration_hours: i32,
     pub manual_password: Option<String>,
     pub notify_email: Option<String>,
-    pub created_at: Option<DateTime>,
-    pub delete_at: Option<DateTime>,
+    pub destroy_without_confirmation: bool,
+    pub created_at: DateTime,
+    pub delete_at: DateTime,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveColumn)]
@@ -30,6 +31,7 @@ pub enum Column {
     DurationHours,
     ManualPassword,
     NotifyEmail,
+    DestroyWithoutConfirmation,
     CreatedAt,
     DeleteAt,
 }
@@ -58,8 +60,9 @@ impl ColumnTrait for Column {
             Self::DurationHours => ColumnType::Integer.def(),
             Self::ManualPassword => ColumnType::String(Some(1000u32)).def().null(),
             Self::NotifyEmail => ColumnType::String(Some(1000u32)).def().null(),
-            Self::CreatedAt => ColumnType::DateTime.def().null(),
-            Self::DeleteAt => ColumnType::DateTime.def().null(),
+            Self::DestroyWithoutConfirmation => ColumnType::Boolean.def(),
+            Self::CreatedAt => ColumnType::DateTime.def(),
+            Self::DeleteAt => ColumnType::DateTime.def(),
         }
     }
 }

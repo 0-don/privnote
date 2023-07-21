@@ -11,6 +11,7 @@ pub enum Note {
     DurationHours,
     ManualPassword,
     NotifyEmail,
+    DestroyWithoutConfirmation,
     CreatedAt,
     DeleteAt,
 }
@@ -29,7 +30,7 @@ impl MigrationTrait for Migration {
                             .unique_key()
                             .not_null()
                             .primary_key()
-                            .extra("DEFAULT uuid_generate_v4()".into()),
+                            .default("uuid_generate_v4()".to_owned()),
                     )
                     .col(
                         ColumnDef::new(Note::Note)
@@ -51,14 +52,22 @@ impl MigrationTrait for Migration {
                     )
                     .col(ColumnDef::new(Note::NotifyEmail).string().string_len(1000))
                     .col(
+                        ColumnDef::new(Note::DestroyWithoutConfirmation)
+                            .boolean()
+                            .not_null()
+                            .default(false),
+                    )
+                    .col(
                         ColumnDef::new(Note::CreatedAt)
                             .timestamp()
-                            .extra("DEFAULT now()".into()),
+                            .not_null()
+                            .default("now()".to_owned()),
                     )
                     .col(
                         ColumnDef::new(Note::DeleteAt)
                             .timestamp()
-                            .extra("DEFAULT now()".into()),
+                            .not_null()
+                            .default("now()".to_owned()),
                     )
                     .to_owned(),
             )
