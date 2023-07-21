@@ -94,9 +94,9 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         let note = note.unwrap();
         let secret = secret.unwrap();
 
-        let byte_string = new_magic_crypt!(&secret, 256).decrypt_bytes_to_bytes(&note.note);
+        let text = new_magic_crypt!(&secret, 256).decrypt_base64_to_string(&note.note);
 
-        if byte_string.is_err() {
+        if text.is_err() {
             return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
                 constants::MESSAGE_NOTE_SECRET_WRONG.to_string(),
                 constants::ERROR_PATH.to_string(),
@@ -117,10 +117,9 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             note.delete_at.to_string()
         };
 
-        let byte_string = byte_string.unwrap();
         return Json(ResponseBody::new_data(Some(GetNoteResponse {
             note,
-            text: String::from_utf8_lossy(&*byte_string).to_string(),
+            text: text.unwrap(),
             alert,
             // alert,
         })))
