@@ -16,6 +16,7 @@ export type Note = {
   duration_hours: number;
   manual_password: string;
   notify_email: string;
+  destroy_without_confirmation: boolean;
   created_at: string;
   deleted_at: string;
 };

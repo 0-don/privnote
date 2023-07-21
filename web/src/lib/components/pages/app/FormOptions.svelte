@@ -24,7 +24,7 @@
         { text: '30 days from now', value: '720' }
       ]}
     />
-    <Checkbox {form} name="destroy_without_confirmation" />
+    <Checkbox {form} name="destroy_without_confirmation" checked />
   </div>
 
   <h3 class="mb-1 text-xl font-semibold">Manual password</h3>

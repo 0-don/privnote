@@ -13,6 +13,7 @@ impl Mutation {
             duration_hours: Set(form_data.duration_hours),
             manual_password: Set(Some(form_data.manual_password)),
             notify_email: Set(Some(form_data.notify_email)),
+            destroy_without_confirmation: Set(form_data.destroy_without_confirmation),
             delete_at: Set(form_data.delete_at.unwrap()),
             ..Default::default()
         }

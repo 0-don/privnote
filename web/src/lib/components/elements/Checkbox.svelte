@@ -3,6 +3,7 @@
 
   export let name: string;
   export let className = '';
+  export let checked = false;
 
   export let form: ResponseBody;
   const msg = form?.messages?.find((f) => f.path === name);
@@ -13,10 +14,11 @@
   <div class="space-y-5">
     <div class="flex items-start">
       <div class="flex h-6 items-center">
+        <input type="hidden" value="0" {name} />
         <input
           id={name}
           {name}
-          checked={msg?.value === '1'}
+          checked={!msg ? checked : !!Number(msg?.value || 0)}
           value="1"
           type="checkbox"
           class="text-main focus:ring-main h-4 w-4 rounded border-gray-300"

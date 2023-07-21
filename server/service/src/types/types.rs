@@ -46,6 +46,7 @@ pub struct NoteReq {
     pub manual_password: String,
     pub manual_password_confirm: String,
     pub notify_email: String,
+    pub destroy_without_confirmation: bool,
 
     pub delete_at: Option<chrono::NaiveDateTime>,
 }

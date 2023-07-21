@@ -14,7 +14,7 @@ export const actions = {
     try {
       const text = cookies.get(COOKIE);
 
-      const data = NoteSchema.parse({ ...form, delete_at: null });
+      const data = NoteSchema.parse(form);
 
       const response = await (
         await client<ResponseBody>('note', {
