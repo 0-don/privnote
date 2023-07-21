@@ -17,13 +17,13 @@ export const load = (async (options): Promise<ResponseBody | Redirect | void> =>
       })
     ).body.json();
 
-    if (!body?.data) throw Error('redirecting');
-
     const captcha = await getCaptcha(options);
 
     return deepMerge(body, captcha);
-  } catch (_) {
+  } catch (err) {
+    // console.log(err);
     // throw redirect(307, '/');
+    return { messages: [{ message: JSON.stringify(err), path: 'error' }] };
   }
 }) satisfies PageServerLoad;
 
