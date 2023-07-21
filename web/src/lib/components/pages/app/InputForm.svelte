@@ -6,7 +6,7 @@
 
   let form: ResponseBody = $page.form;
   let data: ResponseBody = $page.data;
-  const note = form?.messages?.find(({ path }) => path === 'note')?.message || '';
+  const note = form?.messages?.find(({ path }) => path === 'note');
 
   const errorsForm = form?.messages
     ?.filter((f) => f.path === 'error')
@@ -26,11 +26,12 @@
     <textarea
       rows="13"
       name="note"
+      value="{String(note?.value || '')}"
       placeholder="Write your note here..."
       class="w-full !bg-yellow-100 !bg-opacity-75 p-5 text-black outline-none placeholder:text-black"
     />
-    {#if note}
-      <p class="text-red-400">{note}</p>
+    {#if note?.message}
+      <p class="text-red-400">{note.message}</p>
     {/if}
   </section>
 

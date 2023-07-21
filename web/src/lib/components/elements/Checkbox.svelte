@@ -5,7 +5,7 @@
   export let className = '';
 
   export let form: ResponseBody;
-  const error = form?.messages?.find((f) => f.path === name)?.message;
+  const msg = form?.messages?.find((f) => f.path === name);
 </script>
 
 <fieldset class="w-full {className}">
@@ -16,7 +16,7 @@
         <input
           id={name}
           {name}
-          checked
+          checked={msg?.value === '1'}
           value="1"
           type="checkbox"
           class="text-main focus:ring-main h-4 w-4 rounded border-gray-300"
@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-  {#if error}
-    <p class="text-red-400">{error}</p>
+  {#if msg?.message}
+    <p class="text-red-400">{msg.message}</p>
   {/if}
 </fieldset>

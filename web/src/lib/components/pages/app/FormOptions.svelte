@@ -17,11 +17,11 @@
       {form}
       name="duration_hours"
       options={[
-        { text: 'after reading it', value: 0 },
-        { text: '1 hour from now', value: 1 },
-        { text: '24 hours from now', value: 24 },
-        { text: '7 days from now', value: 168 },
-        { text: '30 days from now', value: 720 }
+        { text: 'after reading it', value: '0' },
+        { text: '1 hour from now', value: '1' },
+        { text: '24 hours from now', value: '24' },
+        { text: '7 days from now', value: '168' },
+        { text: '30 days from now', value: '720' }
       ]}
     />
     <Checkbox {form} name="destroy_without_confirmation" />

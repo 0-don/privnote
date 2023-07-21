@@ -6,16 +6,17 @@
   export let options = [] as { value: string | number; text: string | number }[];
 
   export let form: ResponseBody;
-  const error = form?.messages?.find((f) => f.path === name)?.message;
+  const msg = form?.messages?.find((f) => f.path === name);
+  console.log(msg);
 </script>
 
 <label class="w-full" for={name}>
   <select id={name} {name} class="{className} w-full bg-zinc-600 p-2 focus:bg-zinc-500">
     {#each options as { value, text }, i}
-      <option {value}>{text}</option>
+      <option selected={msg?.value === value} {value}>{text}</option>
     {/each}
   </select>
-  {#if error}
-    <p class="text-red-400">{error}</p>
+  {#if msg?.message}
+    <p class="text-red-400">{msg.message}</p>
   {/if}
 </label>
