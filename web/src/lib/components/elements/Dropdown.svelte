@@ -7,7 +7,6 @@
 
   export let form: ResponseBody;
   const msg = form?.messages?.find((f) => f.path === name);
-  console.log(msg);
 </script>
 
 <label class="w-full" for={name}>
