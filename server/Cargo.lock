@@ -129,6 +129,7 @@ version = "1.0.0"
 dependencies = [
  "aes-gcm-siv",
  "anyhow",
+ "ascon-aead",
  "axum",
  "base64 0.21.2",
  "chrono",
@@ -159,6 +160,24 @@ name = "arrayvec"
 version = "0.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "96d30a06541fbafbc7f82ed10c06164cfbd2c401138f6addd8404629c4b16711"
+
+[[package]]
+name = "ascon"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9fe9a0cff241855e9166670d259192aacf1e9a81b865dc9905afbbab31a9d2c1"
+
+[[package]]
+name = "ascon-aead"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cf081c54f55de655350e71e01dd36e093012f11447a3d575b907b84425887fa3"
+dependencies = [
+ "aead",
+ "ascon",
+ "subtle",
+ "zeroize",
+]
 
 [[package]]
 name = "async-attributes"
@@ -3288,3 +3307,17 @@ name = "zeroize"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a0956f1ba7c7909bfb66c2e9e4124ab6f6482560f6628b5aaeba39207c9aad9"
+dependencies = [
+ "zeroize_derive",
+]
+
+[[package]]
+name = "zeroize_derive"
+version = "1.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ce36e65b0d2999d2aafac989fb249189a141aee1f53c612c1f37d72631959f69"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.27",
+]

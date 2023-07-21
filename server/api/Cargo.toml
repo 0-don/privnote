@@ -32,3 +32,4 @@ rand = "0.8.5"
 moka = { version = "0.11.2", features = ["future"] }
 chrono = "0.4.26"
 base64 = "0.21.2"
+ascon-aead = "0.4.2"
