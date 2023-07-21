@@ -44,7 +44,7 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
 
     let ciphertext = Ascon128::new(Key::<Ascon128>::from_slice(secret.as_bytes()))
         .encrypt(
-            Nonce::<Ascon128>::from_slice(secret.as_bytes()),
+            Nonce::<Ascon128>::from_slice(b"unique nonce 012"),
             create_note.note.as_ref(),
         )
         .expect("encryption failure!");

@@ -14,7 +14,8 @@
   const link = `${env.PUBLIC_DOMAIN}note/${url}`;
 </script>
 
-<input type="text" value="{link}" class="bg-olive p-2 font-bold" />
+<!-- svelte-ignore a11y-autofocus -->
+<input type="text" value="{link}" class="bg-olive p-2 font-bold" autofocus readonly />
 
 <p class="italic bg-darkGold mb-4 p-2 font-light">The note will self-destruct after reading it.</p>
 <div class="flex items-center justify-between">
