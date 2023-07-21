@@ -6,14 +6,12 @@ use crate::{
         types::{AppState, CreateNoteResponse, GetNoteResponse},
     },
 };
-use argon2::{self, Config};
 use axum::extract::Path;
 use axum::{
     extract::State,
     response::{IntoResponse, Response},
     Json,
 };
-
 use chrono::Utc;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
 use migration::sea_orm::prelude::Uuid;
@@ -36,14 +34,16 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         (Utc::now() + chrono::Duration::hours(create_note.duration_hours as i64)).naive_utc();
     create_note.delete_at = Some(delete_at);
 
-    let mut secret: String = thread_rng()
+    let og_secret: String = thread_rng()
         .sample_iter(&Alphanumeric)
         .take(8)
         .map(char::from)
         .collect();
 
+    let mut secret = og_secret.clone();
+
     if !create_note.manual_password.is_empty() {
-        secret = format!("{:?}{:?}", secret, create_note.manual_password);
+        secret = format!("{}{}", secret, create_note.manual_password);
         create_note.manual_password =
             new_magic_crypt!(&secret, 256).encrypt_bytes_to_base64(&create_note.manual_password)
     }
@@ -61,7 +61,7 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
 
     Json(ResponseBody::new_data(Some(CreateNoteResponse {
         note,
-        secret,
+        secret: og_secret,
     })))
     .into_response()
 }

@@ -34,7 +34,7 @@ impl MigrationTrait for Migration {
                     .col(
                         ColumnDef::new(Note::Note)
                             .string()
-                            .string_len(100000)
+                            .string_len(1000000)
                             .not_null(),
                     )
                     .col(
@@ -47,9 +47,9 @@ impl MigrationTrait for Migration {
                     .col(
                         ColumnDef::new(Note::ManualPassword)
                             .string()
-                            .string_len(100),
+                            .string_len(1000),
                     )
-                    .col(ColumnDef::new(Note::NotifyEmail).string().string_len(100))
+                    .col(ColumnDef::new(Note::NotifyEmail).string().string_len(1000))
                     .col(
                         ColumnDef::new(Note::CreatedAt)
                             .timestamp()
