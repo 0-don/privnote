@@ -21,7 +21,6 @@ export const load = (async (options): Promise<ResponseBody | Redirect | void> =>
 
     return deepMerge(body, captcha);
   } catch (err) {
-    // console.log(err);
     // throw redirect(307, '/');
     return { messages: [{ message: JSON.stringify(err), path: 'error' }] };
   }
