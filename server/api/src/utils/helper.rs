@@ -44,7 +44,6 @@ pub async fn cron_delete_old_notes() -> anyhow::Result<()> {
             |_uuid, _l| {
                 Box::pin(async {
                     let db = DB.get().unwrap();
-                    println!("test");
                     MutationCore::delete_old_notes(db).await.unwrap();
                 })
             },
