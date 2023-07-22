@@ -30,3 +30,6 @@ export const getCsrfToken = async ({ cookies }: RequestEvent): Promise<ResponseB
     return { messages: [{ message: JSON.stringify(err), path: 'error' }] };
   }
 };
+
+export const messageFactory = <T extends {}, K extends keyof T = keyof T>(data: T) =>
+  Object.keys(data).map((k) => ({ path: k, value: data?.[k as T[K]] || '' }) as Messages);

@@ -1,10 +1,11 @@
-import type { Messages, ResponseBody } from '$lib/@types';
+import type { Messages, Note, ResponseBody } from '$lib/@types';
 import { NoteSchema } from '$lib/schemas/note.schema';
 import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { COOKIE } from '$lib/utils/server/constants';
-import { client, getCsrfToken } from '$lib/utils/server';
+import { client, getCsrfToken, messageFactory } from '$lib/utils/server';
+import { deepMerge } from '$lib/utils';
 
 export const load = (async (options): Promise<ResponseBody> => await getCsrfToken(options)) satisfies PageServerLoad;
 
@@ -17,13 +18,15 @@ export const actions = {
       const data = NoteSchema.parse(form);
 
       const response = await (
-        await client<ResponseBody>('note', {
+        await client<ResponseBody<Note>>('note', {
           method: 'POST',
           body: JSON.stringify({ ...data, text })
         })
       ).body.json();
 
-      return response;
+      const note = response.data as Note;
+
+      return deepMerge(response, { messages: messageFactory(note) });
     } catch (err) {
       if (err instanceof z.ZodError) {
         return {
@@ -33,7 +36,7 @@ export const actions = {
               path: path.join('.'),
               value: form?.[path.join('.')] || ''
             })) as Messages[]),
-            ...Object.keys(form).map((k) => ({ path: k, value: form?.[k] || '' }) as Messages)
+            ...messageFactory(form)
           ]
         };
       } else {
@@ -41,9 +44,9 @@ export const actions = {
           messages: [
             {
               message: JSON.stringify(err),
-              path: 'error',
-              ...Object.keys(form).map((k) => ({ path: k, value: form?.[k] || '' }) as Messages)
-            }
+              path: 'error'
+            },
+            ...messageFactory(form)
           ]
         };
       }

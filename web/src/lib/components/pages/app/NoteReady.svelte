@@ -3,6 +3,7 @@
   import { env } from '$env/dynamic/public';
   import type { Note, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
+  import Input from '$lib/components/elements/Input.svelte';
   import Modal from '$lib/components/elements/Modal.svelte';
 
   let form: ResponseBody<{ note: Note; secret: string }> = $page.form;
@@ -44,4 +45,11 @@
     id="destroy"
     icon="i-line-md:clipboard-check"
   />
+{/if}
+
+{#if note?.manual_password}
+  <h3 class="mb-1 text-xl font-semibold mt-2">Manual password</h3>
+  <div class="flex flex-col justify-between space-y-2.5 md:flex-row md:space-x-5 md:space-y-0">
+    <Input {form} type="password" name="manual_password" label="Password necessary to read the note" />
+  </div>
 {/if}

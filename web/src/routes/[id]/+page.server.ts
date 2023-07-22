@@ -2,7 +2,7 @@ import type { Messages, Note, ResponseBody } from '$lib/@types';
 import type { Actions, Redirect, RequestEvent } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 
-import { client, getCsrfToken } from '$lib/utils/server';
+import { client, getCsrfToken, messageFactory } from '$lib/utils/server';
 import { deepMerge } from '$lib/utils';
 import { COOKIE } from '$lib/utils/server/constants';
 import { DeleteNoteSchema } from '$lib/schemas/deleteNote.schema';
@@ -20,7 +20,7 @@ export const load = (async (options: RequestEvent): Promise<ResponseBody | Redir
 
     const captcha = await getCsrfToken(options);
 
-    return deepMerge(body, captcha);
+    return deepMerge(body, captcha, { messages: messageFactory(body) });
   } catch (err) {
     // throw redirect(307, '/');
     return { messages: [{ message: JSON.stringify(err), path: 'error' }] };
@@ -35,8 +35,6 @@ export const actions = {
 
       const body = JSON.stringify(DeleteNoteSchema.parse({ ...form, text }));
 
-      console.log(body);
-
       const res = await (
         await client<ResponseBody<boolean>>(`note`, {
           method: 'DELETE',
@@ -50,11 +48,11 @@ export const actions = {
         messages: [
           {
             message: JSON.stringify(err),
-            path: 'error',
-            ...Object.keys(form).map((k) => ({ path: k, value: form[k] }) as Messages)
-          }
+            path: 'error'
+          },
+          ...messageFactory(form)
         ]
-      };
+      } as ResponseBody;
     }
   }
 } satisfies Actions;
