@@ -21,6 +21,7 @@ pub struct DeleteNoteReq {
     pub text: String,
 
     pub id: String,
+    pub manual_password: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]

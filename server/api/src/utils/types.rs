@@ -10,6 +10,14 @@ pub struct AppState {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct GetNoteParams {
+    pub tag: Option<usize>,
+    pub text: Option<String>,
+
+    pub manual_password: Option<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct GetNoteResponse {
     pub note: note::Model,
     pub alert: String,

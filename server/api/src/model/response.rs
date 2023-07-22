@@ -4,11 +4,24 @@ use serde::{Deserialize, Serialize};
 pub struct ResponseMessages {
     message: String,
     path: String,
+    value: Option<String>,
 }
 
 impl ResponseMessages {
     pub fn new(message: String, path: String) -> Vec<ResponseMessages> {
-        vec![ResponseMessages { message, path }]
+        vec![ResponseMessages {
+            message,
+            path,
+            value: None,
+        }]
+    }
+
+    pub fn new_value(message: String, path: String, value: String) -> Vec<ResponseMessages> {
+        vec![ResponseMessages {
+            message,
+            path,
+            value: Some(value),
+        }]
     }
 }
 
@@ -26,7 +39,7 @@ impl<T> ResponseBody<T> {
         }
     }
 
-    pub fn new_data (data: Option<T>) -> ResponseBody<T> {
+    pub fn new_data(data: Option<T>) -> ResponseBody<T> {
         ResponseBody {
             data,
             messages: vec![],

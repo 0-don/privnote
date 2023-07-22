@@ -3,10 +3,10 @@ use crate::{
     model::response::{ResponseBody, ResponseMessages},
     utils::{
         helper::check_csrf_token,
-        types::{AppState, CreateNoteResponse},
+        types::{AppState, CreateNoteResponse, GetNoteParams},
     },
 };
-use axum::extract::Path;
+use axum::extract::{Path, Query};
 use axum::{
     extract::State,
     response::{IntoResponse, Response},
@@ -76,7 +76,11 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
     .into_response()
 }
 
-pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Response {
+pub async fn get_note(
+    state: State<AppState>,
+    Path(id): Path<String>,
+    params: Query<GetNoteParams>,
+) -> Response {
     let list = id.split("@").collect::<Vec<&str>>();
 
     let id = list.get(0);
@@ -102,9 +106,43 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         .into_response();
     } else {
         let mut note = note.unwrap();
-        let secret = secret.unwrap();
+        let mut secret = secret.unwrap().to_string();
 
-        if !note.manual_password.as_ref().unwrap().is_empty() {
+        if params.manual_password.is_some() {
+            if params.tag.is_none() && params.text.is_none() {
+                return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+                    constants::MESSAGE_NO_TAG_OR_NO_TEXT.to_string(),
+                    constants::ERROR_PATH.to_string(),
+                )))
+                .into_response();
+            }
+
+            let csrf = check_csrf_token(
+                CsrfToken::new(&params.tag.unwrap(), params.text.as_ref().unwrap()),
+                &state,
+            )
+            .await;
+
+            if csrf.is_some() {
+                return csrf.unwrap();
+            }
+
+            secret = format!("{}{}", secret, params.manual_password.as_ref().unwrap());
+
+            let is_valid = new_magic_crypt!(&secret, 256)
+                .decrypt_base64_to_string(&note.manual_password.as_ref().unwrap());
+
+            if is_valid.is_err() {
+                return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new_value(
+                    constants::MESSAGE_PASSWORD_WRONG.to_string(),
+                    constants::MANUAL_PASSWORD_PATH.to_string(),
+                    params.manual_password.as_ref().unwrap().to_string(),
+                )))
+                .into_response();
+            }
+        }
+
+        if !note.manual_password.as_ref().unwrap().is_empty() && params.manual_password.is_none() {
             return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
                 constants::MESSAGE_PASSWORD_MISSING.to_string(),
                 constants::BODY_PATH.to_string(),

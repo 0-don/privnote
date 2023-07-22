@@ -12,7 +12,7 @@
 </script>
 
 <div class="flex w-full flex-col">
-  <label for={name} class="text-sm">{label}</label>
+  <label for={name} class="text-sm mb-0.5">{label}</label>
   <input
     id={name}
     {type}
