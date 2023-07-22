@@ -2,14 +2,14 @@ use sea_orm::prelude::Uuid;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
-pub struct Captcha {
+pub struct CsrfToken {
     pub tag: usize,
     pub text: String,
 }
 
-impl Captcha {
-    pub fn new(tag: &usize, text: &String) -> Captcha {
-        Captcha {
+impl CsrfToken {
+    pub fn new(tag: &usize, text: &String) -> CsrfToken {
+        CsrfToken {
             tag: tag.clone(),
             text: text.clone(),
         }

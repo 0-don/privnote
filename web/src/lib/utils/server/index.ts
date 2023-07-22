@@ -15,10 +15,10 @@ export const client = async <T = Messages[]>(
   });
 };
 
-export const getCaptcha = async ({ cookies }: RequestEvent): Promise<ResponseBody<Partial<Captcha>>> => {
+export const getCsrfToken = async ({ cookies }: RequestEvent): Promise<ResponseBody<Partial<Captcha>>> => {
   try {
     const { text, tag } = await (
-      await client<Captcha>('auth/captcha', {
+      await client<Captcha>('auth/csrf', {
         method: 'GET'
       })
     ).body.json();

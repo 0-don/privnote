@@ -1,10 +1,10 @@
 use axum::{extract::State, http::StatusCode, Json};
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
-use service::types::types::Captcha;
+use service::types::types::CsrfToken;
 
 use crate::utils::types::AppState;
 
-pub async fn get_captcha(state: State<AppState>) -> (StatusCode, Json<Captcha>) {
+pub async fn get_csrf_token(state: State<AppState>) -> (StatusCode, Json<CsrfToken>) {
     let id = rand::thread_rng().gen_range(0..255);
     let text: String = thread_rng()
         .sample_iter(&Alphanumeric)
@@ -14,5 +14,5 @@ pub async fn get_captcha(state: State<AppState>) -> (StatusCode, Json<Captcha>) 
 
     state.cache.insert(id, text.clone()).await;
 
-    (StatusCode::OK, Json(Captcha { tag: id, text }))
+    (StatusCode::OK, Json(CsrfToken { tag: id, text }))
 }

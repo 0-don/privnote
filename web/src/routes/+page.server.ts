@@ -4,9 +4,9 @@ import type { PageServerLoad } from './$types';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { COOKIE } from '$lib/utils/server/constants';
-import { client, getCaptcha } from '$lib/utils/server';
+import { client, getCsrfToken } from '$lib/utils/server';
 
-export const load = (async (options): Promise<ResponseBody> => await getCaptcha(options)) satisfies PageServerLoad;
+export const load = (async (options): Promise<ResponseBody> => await getCsrfToken(options)) satisfies PageServerLoad;
 
 export const actions = {
   default: async ({ request, cookies }): Promise<ResponseBody> => {

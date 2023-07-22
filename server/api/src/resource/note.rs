@@ -2,7 +2,7 @@ use crate::{
     constants,
     model::response::{ResponseBody, ResponseMessages},
     utils::{
-        helper::check_captcha,
+        helper::check_csrf_token,
         types::{AppState, CreateNoteResponse, GetNoteResponse},
     },
 };
@@ -18,16 +18,17 @@ use migration::sea_orm::prelude::Uuid;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
 use service::types::types::NoteReq;
 use service::{
-    types::types::{Captcha, DeleteNoteReq},
+    types::types::{CsrfToken, DeleteNoteReq},
     Mutation as MutationCore, Query as QueryCore,
 };
 use std::str;
 
 pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<NoteReq>) -> Response {
-    let captcha = check_captcha(Captcha::new(&create_note.tag, &create_note.text), &state).await;
+    let csrf =
+        check_csrf_token(CsrfToken::new(&create_note.tag, &create_note.text), &state).await;
 
-    if captcha.is_some() {
-        return captcha.unwrap();
+    if csrf.is_some() {
+        return csrf.unwrap();
     }
 
     let delete_at =
@@ -131,7 +132,8 @@ pub async fn delete_note(
     state: State<AppState>,
     Json(delete_note): Json<DeleteNoteReq>,
 ) -> Response {
-    let captcha = check_captcha(Captcha::new(&delete_note.tag, &delete_note.text), &state).await;
+    let captcha =
+        check_csrf_token(CsrfToken::new(&delete_note.tag, &delete_note.text), &state).await;
 
     if captcha.is_some() {
         return captcha.unwrap();

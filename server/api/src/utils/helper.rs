@@ -9,7 +9,7 @@ use migration::{
     Migrator, MigratorTrait,
 };
 use moka::future::Cache;
-use service::{types::types::Captcha, Mutation as MutationCore};
+use service::{types::types::CsrfToken, Mutation as MutationCore};
 use std::env;
 use tokio_cron_scheduler::{Job, JobScheduler};
 
@@ -66,7 +66,7 @@ pub async fn get_db_connection() -> anyhow::Result<DatabaseConnection> {
     Ok(conn)
 }
 
-pub async fn check_captcha(captcha: Captcha, state: &State<AppState>) -> Option<Response> {
+pub async fn check_csrf_token(captcha: CsrfToken, state: &State<AppState>) -> Option<Response> {
     let text = state.cache.get(&captcha.tag);
     if text.is_none() {
         return Some(

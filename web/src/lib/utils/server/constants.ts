@@ -1,8 +1,7 @@
 import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
-import type { Messages, ResponseBody } from '$lib/@types';
 
-export const COOKIE = 'captcha';
+export const COOKIE = 'csrf';
 
 export const TOKEN_EXPIRES_IN = 60 * 60; // 1 Minute
 

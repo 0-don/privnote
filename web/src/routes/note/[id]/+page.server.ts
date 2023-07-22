@@ -2,7 +2,7 @@ import type { Messages, Note, ResponseBody } from '$lib/@types';
 import type { Actions, Redirect } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { client, getCaptcha } from '$lib/utils/server';
+import { client, getCsrfToken } from '$lib/utils/server';
 import { deepMerge } from '$lib/utils';
 import { COOKIE } from '$lib/utils/server/constants';
 import { DeleteNoteSchema } from '$lib/schemas/deleteNote.schema';
@@ -17,7 +17,7 @@ export const load = (async (options): Promise<ResponseBody | Redirect | void> =>
       })
     ).body.json();
 
-    const captcha = await getCaptcha(options);
+    const captcha = await getCsrfToken(options);
 
     return deepMerge(body, captcha);
   } catch (err) {
