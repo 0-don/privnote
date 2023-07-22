@@ -20,7 +20,7 @@ export const load = (async (options: RequestEvent): Promise<ResponseBody | Redir
 
     const captcha = await getCsrfToken(options);
 
-    return deepMerge(body, captcha, { messages: messageFactory(body) });
+    return deepMerge(body, captcha, body.data?.note ? { messages: messageFactory(body.data?.note) } : {});
   } catch (err) {
     // throw redirect(307, '/');
     return { messages: [{ message: JSON.stringify(err), path: 'error' }] };

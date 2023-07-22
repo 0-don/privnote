@@ -59,11 +59,14 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         .await
         .unwrap();
 
-    note.manual_password = Some(
-        new_magic_crypt!(&secret, 256)
-            .decrypt_base64_to_string(&note.manual_password.unwrap())
-            .unwrap(),
-    );
+    if note.manual_password.as_ref().unwrap().len() > 0 {
+        println!("note.manual_password: {:?}", note.manual_password);
+        note.manual_password = Some(
+            new_magic_crypt!(&secret, 256)
+                .decrypt_base64_to_string(&note.manual_password.unwrap())
+                .unwrap(),
+        );
+    }
 
     Json(ResponseBody::new_data(Some(CreateNoteResponse {
         note,
@@ -99,6 +102,8 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
     } else {
         let mut note = note.unwrap();
         let secret = secret.unwrap();
+
+        if note.manual_password.is_some() {}
 
         let text = new_magic_crypt!(&secret, 256).decrypt_base64_to_string(&note.note);
 

@@ -18,13 +18,13 @@ export const actions = {
       const data = NoteSchema.parse(form);
 
       const response = await (
-        await client<ResponseBody<Note>>('note', {
+        await client<ResponseBody<{ note: Note }>>('note', {
           method: 'POST',
           body: JSON.stringify({ ...data, text })
         })
       ).body.json();
 
-      const note = response.data as Note;
+      const note = response.data?.note as Note;
 
       return deepMerge(response, { messages: messageFactory(note) });
     } catch (err) {

@@ -50,6 +50,6 @@
 {#if note?.manual_password}
   <h3 class="mb-1 text-xl font-semibold mt-2">Manual password</h3>
   <div class="flex flex-col justify-between space-y-2.5 md:flex-row md:space-x-5 md:space-y-0">
-    <Input {form} type="password" name="manual_password" label="Password necessary to read the note" />
+    <Input {form} type="text" name="manual_password" label="Password necessary to read the note" />
   </div>
 {/if}
