@@ -1,6 +1,7 @@
 use ::entity::note;
 use chrono::Utc;
-use sea_orm::{prelude::Uuid, *};
+use rand::{distributions::Alphanumeric, thread_rng, Rng};
+use sea_orm::*;
 
 use crate::types::types::NoteReq;
 
@@ -8,7 +9,14 @@ pub struct Mutation;
 
 impl Mutation {
     pub async fn create_note(db: &DbConn, form_data: NoteReq) -> anyhow::Result<note::Model> {
+        let id: String = thread_rng()
+            .sample_iter(&Alphanumeric)
+            .take(8)
+            .map(char::from)
+            .collect();
+
         let model = note::ActiveModel {
+            id: Set(id),
             note: Set(form_data.note),
             duration_hours: Set(form_data.duration_hours),
             manual_password: Set(Some(form_data.manual_password)),
@@ -21,10 +29,11 @@ impl Mutation {
         .await?
         .try_into_model()?;
 
+        println!("id: {:?}", model);
         Ok(model)
     }
 
-    pub async fn delete_note_by_id(db: &DbConn, id: Uuid) -> anyhow::Result<bool> {
+    pub async fn delete_note_by_id(db: &DbConn, id: &str) -> anyhow::Result<bool> {
         Ok(note::Entity::delete_by_id(id)
             .exec(db)
             .await

@@ -14,7 +14,6 @@ use axum::{
 };
 use chrono::Utc;
 use magic_crypt::{new_magic_crypt, MagicCryptTrait};
-use migration::sea_orm::prelude::Uuid;
 use rand::{distributions::Alphanumeric, thread_rng, Rng};
 use service::types::types::NoteReq;
 use service::{
@@ -24,8 +23,7 @@ use service::{
 use std::str;
 
 pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<NoteReq>) -> Response {
-    let csrf =
-        check_csrf_token(CsrfToken::new(&create_note.tag, &create_note.text), &state).await;
+    let csrf = check_csrf_token(CsrfToken::new(&create_note.tag, &create_note.text), &state).await;
 
     if csrf.is_some() {
         return csrf.unwrap();
@@ -81,7 +79,7 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         .into_response();
     }
 
-    let note = QueryCore::find_note_by_id(&state.conn, Uuid::parse_str(id.unwrap()).unwrap())
+    let note = QueryCore::find_note_by_id(&state.conn, id.unwrap().to_string())
         .await
         .unwrap();
 
@@ -107,7 +105,7 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
 
         let mut deleted = false;
         if note.duration_hours == 0 {
-            deleted = MutationCore::delete_note_by_id(&state.conn, note.id)
+            deleted = MutationCore::delete_note_by_id(&state.conn, &note.id)
                 .await
                 .unwrap();
         }
@@ -122,7 +120,6 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             note,
             text: text.unwrap(),
             alert,
-            // alert,
         })))
         .into_response();
     }
@@ -139,7 +136,7 @@ pub async fn delete_note(
         return captcha.unwrap();
     }
 
-    let is_deleted = MutationCore::delete_note_by_id(&state.conn, delete_note.id)
+    let is_deleted = MutationCore::delete_note_by_id(&state.conn, &delete_note.id)
         .await
         .unwrap();
 

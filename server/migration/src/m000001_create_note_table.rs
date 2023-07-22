@@ -26,11 +26,11 @@ impl MigrationTrait for Migration {
                     .if_not_exists()
                     .col(
                         ColumnDef::new(Note::Id)
-                            .uuid()
+                            .string()
+                            .string_len(8)
                             .unique_key()
                             .not_null()
-                            .primary_key()
-                            .default("uuid_generate_v4()".to_owned()),
+                            .primary_key(),
                     )
                     .col(
                         ColumnDef::new(Note::Note)

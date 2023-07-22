@@ -1,4 +1,3 @@
-use sea_orm::prelude::Uuid;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Default)]
@@ -23,7 +22,7 @@ pub struct NoteParams {
 
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct GetNoteReq {
-    pub id: Uuid,
+    pub id: String,
     pub secret: String,
 }
 
@@ -32,7 +31,7 @@ pub struct DeleteNoteReq {
     pub tag: usize,
     pub text: String,
 
-    pub id: Uuid,
+    pub id: String,
     pub secret: String,
 }
 
