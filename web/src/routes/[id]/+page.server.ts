@@ -1,13 +1,14 @@
 import type { Messages, Note, ResponseBody } from '$lib/@types';
-import type { Actions, Redirect } from '@sveltejs/kit';
+import type { Actions, Redirect, RequestEvent } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+
 import { client, getCsrfToken } from '$lib/utils/server';
 import { deepMerge } from '$lib/utils';
 import { COOKIE } from '$lib/utils/server/constants';
 import { DeleteNoteSchema } from '$lib/schemas/deleteNote.schema';
+import type { PageServerLoad } from '../$types';
 
-export const load = (async (options): Promise<ResponseBody | Redirect | void> => {
+export const load = (async (options: RequestEvent): Promise<ResponseBody | Redirect | void> => {
   if (!options.params?.id) throw redirect(307, '/');
 
   try {

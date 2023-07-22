@@ -11,7 +11,7 @@
   const secret = form.data?.secret;
 
   const url = `${note?.id}@${secret}`
-  const link = `${env.PUBLIC_DOMAIN}note/${url}`;
+  const link = `${env.PUBLIC_DOMAIN}${url}`;
 </script>
 
 <!-- svelte-ignore a11y-autofocus -->
@@ -32,7 +32,7 @@
       text="Read note"
       className="!rounded-none"
       icon="i-line-md:clipboard-check"
-      href="/note/{url}"
+      href="/{url}"
     />
   {:else}
     <Button type="a" text="Destroy note now" className="!rounded-none" icon="i-line-md:close-circle" href="#destroy" />
@@ -45,7 +45,7 @@
     text="You're about to read and destroy the note with id {url}."
     title="Read and destroy?"
     type="a"
-    href="/note/{url}"
+    href="/{url}"
     id="destroy"
     icon="i-line-md:clipboard-check"
   />
