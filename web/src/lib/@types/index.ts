@@ -6,10 +6,8 @@ export type PathKeys =
   | 'manual_password_confirm'
   | 'destroy_without_confirmation'
   | 'notify_email'
-  | 'notify_ref'
-  | 'data'
+  | 'body'
   | 'error'
-  | 'ok';
 export type Note = {
   id: string;
   note: string;

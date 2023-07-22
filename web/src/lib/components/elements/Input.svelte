@@ -13,7 +13,13 @@
 
 <div class="flex w-full flex-col">
   <label for={name} class="text-sm">{label}</label>
-  <input id={name} {type} {name} value="{msg?.value || ""}" class="w-full bg-zinc-600 p-2 focus:bg-zinc-500 {className}" />
+  <input
+    id={name}
+    {type}
+    {name}
+    value={msg?.value || ''}
+    class="w-full bg-zinc-600 p-2 focus:bg-zinc-500 {className}"
+  />
   {#if msg?.message}
     <p class="text-red-400">{msg.message}</p>
   {/if}

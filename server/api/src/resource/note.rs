@@ -29,10 +29,6 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         return csrf.unwrap();
     }
 
-    let delete_at =
-        (Utc::now() + chrono::Duration::hours(create_note.duration_hours as i64)).naive_utc();
-    create_note.delete_at = Some(delete_at);
-
     let og_secret: String = thread_rng()
         .sample_iter(&Alphanumeric)
         .take(8)
@@ -40,6 +36,12 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         .collect();
 
     let mut secret = og_secret.clone();
+
+    if create_note.duration_hours != 0 {
+        let delete_at =
+            (Utc::now() + chrono::Duration::hours(create_note.duration_hours as i64)).naive_utc();
+        create_note.delete_at = Some(delete_at);
+    }
 
     if !create_note.manual_password.is_empty() {
         secret = format!("{}{}", secret, create_note.manual_password);
@@ -103,7 +105,13 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         let mut note = note.unwrap();
         let secret = secret.unwrap();
 
-        if note.manual_password.is_some() {}
+        if note.manual_password.is_some() {
+            return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+                constants::MESSAGE_PASSWORD_MISSING.to_string(),
+                constants::BODY_PATH.to_string(),
+            )))
+            .into_response();
+        }
 
         let text = new_magic_crypt!(&secret, 256).decrypt_base64_to_string(&note.note);
 

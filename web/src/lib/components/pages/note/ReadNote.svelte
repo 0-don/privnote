@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import type { Captcha, Note, ResponseBody } from '$lib/@types';
+  import Input from '$lib/components/elements/Input.svelte';
   import Button from '$lib/components/elements/Button.svelte';
   import Modal from '$lib/components/elements/Modal.svelte';
   import dayjs from 'dayjs';
@@ -12,11 +13,14 @@
   let data: ResponseBody<Note & Captcha> = $page.data;
 
   const error = data?.messages?.find(({ path }) => path === 'error')?.message || '';
+  const body = data?.messages?.find(({ path }) => path === 'body')?.message || '';
 
   const note = data?.data;
   const tag = data?.data?.tag;
   const url = $page.params.id;
 </script>
+
+
 
 <div class="mt-3 flex items-center justify-start">
   <h1 class="my-2 text-2xl font-bold">{title}</h1>
