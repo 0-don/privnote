@@ -42,9 +42,7 @@ export const actions = {
         )
       ).body.json();
 
-      const captcha = await getCsrfToken(options);
-
-      return deepMerge(body, captcha, body.data?.note ? { messages: messageFactory(body.data?.note) } : {});
+      return deepMerge(body, body.data?.note ? { messages: messageFactory(body.data?.note) } : {});
     } catch (err) {
       return { messages: [{ message: JSON.stringify(err), path: 'error' }, ...messageFactory(form)] };
     }

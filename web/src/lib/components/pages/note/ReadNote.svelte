@@ -12,13 +12,13 @@
   export let title = 'Note contents';
 
   let data: ResponseBody<Note & Captcha> = $page.data;
-  let form: ResponseBody = $page.form;
+  let form: ResponseBody<Note & Captcha> = $page.form;
 
   const error = data?.messages?.find(({ path }) => path === 'error')?.message || '';
   const body = data?.messages?.find(({ path }) => path === 'body')?.message || '';
 
-  const note = data?.data;
-  const tag = data?.data?.tag;
+  const note = data?.data?.id ? data.data : form?.data;
+  const tag = data?.data?.tag || form?.data?.tag;
   const url = $page.params.id;
 </script>
 
@@ -53,7 +53,7 @@
   </section>
 {/if}
 
-{#if body}
+{#if body && !note}
   <form method="POST" action="?/password">
     <input name="id" type="hidden" value={url} />
     <input name="tag" type="hidden" value={tag} />
@@ -67,7 +67,7 @@
   </form>
 {/if}
 
-{#if dayjs(note?.delete_at).isValid() && tag && !body}
+{#if dayjs(note?.delete_at).isValid() && tag && note?.id}
   <form method="POST" class="flex justify-end mt-2" action="?/delete">
     <input name="id" type="hidden" value={url} />
     <input name="tag" type="hidden" value={tag} />
