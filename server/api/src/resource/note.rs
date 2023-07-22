@@ -212,7 +212,7 @@ pub async fn delete_note(
     let note = note.unwrap();
     let mut secret = secret.unwrap().to_string();
 
-    if note.manual_password.is_some() {
+    if !note.manual_password.as_ref().unwrap().is_empty() {
         secret = format!(
             "{}{}",
             secret,
@@ -220,8 +220,7 @@ pub async fn delete_note(
         );
     }
 
-    let is_valid = new_magic_crypt!(&secret, 256)
-        .decrypt_base64_to_string(&note.manual_password.as_ref().unwrap());
+    let is_valid = new_magic_crypt!(&secret, 256).decrypt_base64_to_string(&note.note);
 
     if is_valid.is_err() {
         return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new_value(

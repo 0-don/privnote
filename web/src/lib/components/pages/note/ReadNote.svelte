@@ -14,7 +14,10 @@
   let data: ResponseBody<Note & Captcha> = $page.data;
   let form: ResponseBody<Note & Captcha> = $page.form;
 
-  const error = data?.messages?.find(({ path }) => path === 'error')?.message || '';
+  const error =
+    data?.messages?.find(({ path }) => path === 'error')?.message ||
+    form?.messages?.find(({ path }) => path === 'error')?.message ||
+    '';
   const body = data?.messages?.find(({ path }) => path === 'body')?.message || '';
 
   const note = data?.data?.id ? data.data : form?.data;
@@ -36,6 +39,20 @@
   </div>
 {/if}
 
+{#if body && !note}
+  <form method="POST" action="?/password">
+    <input name="id" type="hidden" value={url} />
+    <input name="tag" type="hidden" value={tag} />
+
+    <h3 class="mb-1 text-xl font-semibold">Manual password</h3>
+
+    <div class="flex flex-col justify-between w-full md:w-1/2 space-y-2.5 md:flex-row md:space-x-5 md:space-y-0">
+      <Input {form} type="password" name="manual_password" label="Enter a custom password to encrypt the note" />
+    </div>
+    <Button type="button" text="Proceed" className="!rounded-none mt-4" icon="i-line-md:play-filled" />
+  </form>
+{/if}
+
 {#if error && !note?.id}
   <div class="mb-3 break-all text-red-400">{error}</div>
 {/if}
@@ -51,20 +68,6 @@
       class="w-full !bg-yellow-100 !bg-opacity-75 p-5 text-black outline-none placeholder:text-black"
     />
   </section>
-{/if}
-
-{#if body && !note}
-  <form method="POST" action="?/password">
-    <input name="id" type="hidden" value={url} />
-    <input name="tag" type="hidden" value={tag} />
-
-    <h3 class="mb-1 text-xl font-semibold">Manual password</h3>
-
-    <div class="flex flex-col justify-between w-full md:w-1/2 space-y-2.5 md:flex-row md:space-x-5 md:space-y-0">
-      <Input {form} type="password" name="manual_password" label="Enter a custom password to encrypt the note" />
-    </div>
-    <Button type="button" text="Proceed" className="!rounded-none mt-4" icon="i-line-md:play-filled" />
-  </form>
 {/if}
 
 {#if dayjs(note?.delete_at).isValid() && tag && note?.id}
