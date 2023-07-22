@@ -62,7 +62,6 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
         .unwrap();
 
     if note.manual_password.as_ref().unwrap().len() > 0 {
-        println!("note.manual_password: {:?}", note.manual_password);
         note.manual_password = Some(
             new_magic_crypt!(&secret, 256)
                 .decrypt_base64_to_string(&note.manual_password.unwrap())
@@ -105,7 +104,7 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         let mut note = note.unwrap();
         let secret = secret.unwrap();
 
-        if note.manual_password.is_some() {
+        if !note.manual_password.as_ref().unwrap().is_empty() {
             return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
                 constants::MESSAGE_PASSWORD_MISSING.to_string(),
                 constants::BODY_PATH.to_string(),

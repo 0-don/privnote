@@ -7,7 +7,7 @@ export type PathKeys =
   | 'destroy_without_confirmation'
   | 'notify_email'
   | 'body'
-  | 'error'
+  | 'error';
 export type Note = {
   id: string;
   note: string;
@@ -16,7 +16,7 @@ export type Note = {
   notify_email: string;
   destroy_without_confirmation: boolean;
   created_at: string;
-  deleted_at: string;
+  delete_at: string;
 };
 
 export type JSONValue = string | number | boolean | { [x: string]: JSONValue } | Array<JSONValue>;

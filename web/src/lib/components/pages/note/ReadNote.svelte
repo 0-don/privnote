@@ -20,15 +20,13 @@
   const url = $page.params.id;
 </script>
 
-
-
 <div class="mt-3 flex items-center justify-start">
   <h1 class="my-2 text-2xl font-bold">{title}</h1>
 </div>
 
-{#if note?.id && dayjs(note?.deleted_at).isValid()}
+{#if note?.id && dayjs(note?.delete_at).isValid()}
   <div class="bg-alert mb-3 p-1 text-center">
-    This note will self-destruct in {dayjs(note?.deleted_at).fromNow()} ({dayjs(note?.deleted_at).toISOString()})
+    This note will self-destruct in {dayjs(note?.delete_at).fromNow()} ({dayjs(note?.delete_at).toISOString()})
   </div>
 {:else if note?.id}
   <div class="bg-alert mb-3 p-1 text-center">
@@ -53,7 +51,7 @@
   </section>
 {/if}
 
-{#if dayjs(note?.deleted_at).isValid() && note?.id && tag}
+{#if dayjs(note?.delete_at).isValid() && note?.id && tag}
   <form method="POST" class="flex justify-end mt-2">
     <input name="id" type="hidden" value={note.id} />
     <input name="tag" type="hidden" value={tag} />
