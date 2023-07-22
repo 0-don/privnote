@@ -15,24 +15,12 @@ impl CsrfToken {
     }
 }
 
-#[derive(Deserialize, Debug)]
-pub struct NoteParams {
-    pub secret: String,
-}
-
-#[derive(Serialize, Deserialize, Debug, Default)]
-pub struct GetNoteReq {
-    pub id: String,
-    pub secret: String,
-}
-
 #[derive(Serialize, Deserialize, Debug, Default)]
 pub struct DeleteNoteReq {
     pub tag: usize,
     pub text: String,
 
     pub id: String,
-    pub secret: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, Default)]

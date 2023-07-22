@@ -35,6 +35,8 @@ export const actions = {
 
       const body = JSON.stringify(DeleteNoteSchema.parse({ ...form, text }));
 
+      console.log(body);
+
       const res = await (
         await client<ResponseBody<boolean>>(`note`, {
           method: 'DELETE',

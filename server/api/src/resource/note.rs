@@ -3,7 +3,7 @@ use crate::{
     model::response::{ResponseBody, ResponseMessages},
     utils::{
         helper::check_csrf_token,
-        types::{AppState, CreateNoteResponse, GetNoteResponse},
+        types::{AppState, CreateNoteResponse},
     },
 };
 use axum::extract::Path;
@@ -119,11 +119,10 @@ pub async fn delete_note(
     state: State<AppState>,
     Json(delete_note): Json<DeleteNoteReq>,
 ) -> Response {
-    let captcha =
-        check_csrf_token(CsrfToken::new(&delete_note.tag, &delete_note.text), &state).await;
+    let csrf = check_csrf_token(CsrfToken::new(&delete_note.tag, &delete_note.text), &state).await;
 
-    if captcha.is_some() {
-        return captcha.unwrap();
+    if csrf.is_some() {
+        return csrf.unwrap();
     }
 
     let is_deleted = MutationCore::delete_note_by_id(&state.conn, &delete_note.id)
