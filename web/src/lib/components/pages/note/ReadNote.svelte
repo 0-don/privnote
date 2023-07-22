@@ -58,7 +58,7 @@
     text="You're about to read and destroy the note with id {note.id}. This action is irreversible."
     title="Destroy the Note?"
     type="a"
-    href="/note/{note.id}"
+    href="/{note.id}"
     id="destroy"
     icon="i-line-md:clipboard-check"
   />

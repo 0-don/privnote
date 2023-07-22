@@ -21,7 +21,7 @@ pub struct Model {
     pub notify_email: Option<String>,
     pub destroy_without_confirmation: bool,
     pub created_at: DateTime,
-    pub delete_at: DateTime,
+    pub delete_at: Option<DateTime>,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveColumn)]
@@ -62,7 +62,7 @@ impl ColumnTrait for Column {
             Self::NotifyEmail => ColumnType::String(Some(1000u32)).def().null(),
             Self::DestroyWithoutConfirmation => ColumnType::Boolean.def(),
             Self::CreatedAt => ColumnType::DateTime.def(),
-            Self::DeleteAt => ColumnType::DateTime.def(),
+            Self::DeleteAt => ColumnType::DateTime.def().null(),
         }
     }
 }

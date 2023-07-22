@@ -8,21 +8,19 @@ pub struct Mutation;
 
 impl Mutation {
     pub async fn create_note(db: &DbConn, form_data: NoteReq) -> anyhow::Result<note::Model> {
-
         let model = note::ActiveModel {
             note: Set(form_data.note),
             duration_hours: Set(form_data.duration_hours),
             manual_password: Set(Some(form_data.manual_password)),
             notify_email: Set(Some(form_data.notify_email)),
             destroy_without_confirmation: Set(form_data.destroy_without_confirmation),
-            delete_at: Set(form_data.delete_at.unwrap()),
+            delete_at: Set(form_data.delete_at),
             ..Default::default()
         }
         .save(db)
         .await?
         .try_into_model()?;
 
-        println!("id: {:?}", model);
         Ok(model)
     }
 

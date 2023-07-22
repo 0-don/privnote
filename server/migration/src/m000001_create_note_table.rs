@@ -31,10 +31,7 @@ impl MigrationTrait for Migration {
                             .unique_key()
                             .not_null()
                             .primary_key()
-                            .extra(
-                                "DEFAULT SUBSTRING( md5(random()::text), 1, 8 )"
-                                    .to_owned(),
-                            ),
+                            .extra("DEFAULT SUBSTRING( md5(random()::text), 1, 8 )".to_owned()),
                     )
                     .col(
                         ColumnDef::new(Note::Note)
@@ -67,12 +64,7 @@ impl MigrationTrait for Migration {
                             .not_null()
                             .default("now()".to_owned()),
                     )
-                    .col(
-                        ColumnDef::new(Note::DeleteAt)
-                            .timestamp()
-                            .not_null()
-                            .default("now()".to_owned()),
-                    )
+                    .col(ColumnDef::new(Note::DeleteAt).timestamp())
                     .to_owned(),
             )
             .await

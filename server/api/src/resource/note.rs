@@ -90,7 +90,7 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
         )))
         .into_response();
     } else {
-        let note = note.unwrap();
+        let mut note = note.unwrap();
         let secret = secret.unwrap();
 
         let text = new_magic_crypt!(&secret, 256).decrypt_base64_to_string(&note.note);
@@ -103,25 +103,15 @@ pub async fn get_note(state: State<AppState>, Path(id): Path<String>) -> Respons
             .into_response();
         }
 
-        let mut deleted = false;
         if note.duration_hours == 0 {
-            deleted = MutationCore::delete_note_by_id(&state.conn, &note.id)
+            MutationCore::delete_note_by_id(&state.conn, &note.id)
                 .await
                 .unwrap();
         }
 
-        let alert = if deleted {
-            constants::MESSAGE_NOTE_DELETED.to_string()
-        } else {
-            note.delete_at.to_string()
-        };
+        note.note = text.unwrap();
 
-        return Json(ResponseBody::new_data(Some(GetNoteResponse {
-            note,
-            text: text.unwrap(),
-            alert,
-        })))
-        .into_response();
+        return Json(ResponseBody::new_data(Some(note))).into_response();
     }
 }
 
