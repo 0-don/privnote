@@ -16,8 +16,6 @@
   const note = data?.data;
   const tag = data?.data?.tag;
   const url = $page.params.id;
-
-  console.log(note?.id);
 </script>
 
 <div class="mt-3 flex items-center justify-start">

@@ -43,6 +43,7 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
 
     if !create_note.manual_password.is_empty() {
         secret = format!("{}{}", secret, create_note.manual_password);
+
         create_note.manual_password =
             new_magic_crypt!(&secret, 256).encrypt_bytes_to_base64(&create_note.manual_password)
     }
@@ -54,9 +55,15 @@ pub async fn create_note(state: State<AppState>, Json(mut create_note): Json<Not
 
     create_note.note = new_magic_crypt!(&secret, 256).encrypt_bytes_to_base64(&create_note.note);
 
-    let note = MutationCore::create_note(&state.conn, create_note)
+    let mut note = MutationCore::create_note(&state.conn, create_note)
         .await
         .unwrap();
+
+    note.manual_password = Some(
+        new_magic_crypt!(&secret, 256)
+            .decrypt_base64_to_string(&note.manual_password.unwrap())
+            .unwrap(),
+    );
 
     Json(ResponseBody::new_data(Some(CreateNoteResponse {
         note,
