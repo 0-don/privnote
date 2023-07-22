@@ -36,7 +36,7 @@
   </div>
 {/if}
 
-{#if error}
+{#if error && !note?.id}
   <div class="mb-3 break-all text-red-400">{error}</div>
 {/if}
 

@@ -210,28 +210,29 @@ pub async fn delete_note(
     }
 
     let note = note.unwrap();
+    let mut secret = secret.unwrap().to_string();
 
     if note.manual_password.is_some() {
-        let secret = format!(
+        secret = format!(
             "{}{}",
-            secret.unwrap(),
+            secret,
             delete_note.manual_password.as_ref().unwrap()
         );
-
-        let is_valid = new_magic_crypt!(&secret, 256)
-            .decrypt_base64_to_string(&note.manual_password.as_ref().unwrap());
-
-        if is_valid.is_err() {
-            return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new_value(
-                constants::MESSAGE_PASSWORD_WRONG.to_string(),
-                constants::MANUAL_PASSWORD_PATH.to_string(),
-                delete_note.manual_password.as_ref().unwrap().to_string(),
-            )))
-            .into_response();
-        }
     }
 
-    let is_deleted = MutationCore::delete_note_by_id(&state.conn, &delete_note.id)
+    let is_valid = new_magic_crypt!(&secret, 256)
+        .decrypt_base64_to_string(&note.manual_password.as_ref().unwrap());
+
+    if is_valid.is_err() {
+        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new_value(
+            constants::MESSAGE_PASSWORD_WRONG.to_string(),
+            constants::MANUAL_PASSWORD_PATH.to_string(),
+            delete_note.manual_password.as_ref().unwrap().to_string(),
+        )))
+        .into_response();
+    }
+
+    let is_deleted = MutationCore::delete_note_by_id(&state.conn, &note.id)
         .await
         .unwrap();
 
