@@ -2368,7 +2368,6 @@ dependencies = [
  "anyhow",
  "chrono",
  "entity",
- "rand",
  "sea-orm",
  "serde",
  "serde_json",

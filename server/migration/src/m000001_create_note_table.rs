@@ -30,7 +30,11 @@ impl MigrationTrait for Migration {
                             .string_len(8)
                             .unique_key()
                             .not_null()
-                            .primary_key(),
+                            .primary_key()
+                            .extra(
+                                "DEFAULT SUBSTRING( md5(random()::text), 1, 8 )"
+                                    .to_owned(),
+                            ),
                     )
                     .col(
                         ColumnDef::new(Note::Note)
