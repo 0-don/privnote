@@ -140,6 +140,8 @@ pub async fn get_note(
                 )))
                 .into_response();
             }
+
+            note.manual_password = params.manual_password.clone();
         }
 
         if !note.manual_password.as_ref().unwrap().is_empty() && params.manual_password.is_none() {
@@ -176,10 +178,57 @@ pub async fn delete_note(
     state: State<AppState>,
     Json(delete_note): Json<DeleteNoteReq>,
 ) -> Response {
+    let list = delete_note.id.split("@").collect::<Vec<&str>>();
+
+    let id = list.get(0);
+    let secret = list.get(1);
+
+    if id.is_none() || secret.is_none() {
+        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+            constants::MESSAGE_NO_ID_NO_SECRET.to_string(),
+            constants::ERROR_PATH.to_string(),
+        )))
+        .into_response();
+    }
+
     let csrf = check_csrf_token(CsrfToken::new(&delete_note.tag, &delete_note.text), &state).await;
 
     if csrf.is_some() {
         return csrf.unwrap();
+    }
+
+    let note = QueryCore::find_note_by_id(&state.conn, id.as_ref().unwrap().to_string())
+        .await
+        .unwrap();
+
+    if note.is_none() {
+        return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new(
+            constants::MESSAGE_NOTE_NOT_FOUND.to_string(),
+            constants::ERROR_PATH.to_string(),
+        )))
+        .into_response();
+    }
+
+    let note = note.unwrap();
+
+    if note.manual_password.is_some() {
+        let secret = format!(
+            "{}{}",
+            secret.unwrap(),
+            delete_note.manual_password.as_ref().unwrap()
+        );
+
+        let is_valid = new_magic_crypt!(&secret, 256)
+            .decrypt_base64_to_string(&note.manual_password.as_ref().unwrap());
+
+        if is_valid.is_err() {
+            return Json(ResponseBody::<bool>::new_msg(ResponseMessages::new_value(
+                constants::MESSAGE_PASSWORD_WRONG.to_string(),
+                constants::MANUAL_PASSWORD_PATH.to_string(),
+                delete_note.manual_password.as_ref().unwrap().to_string(),
+            )))
+            .into_response();
+        }
     }
 
     let is_deleted = MutationCore::delete_note_by_id(&state.conn, &delete_note.id)

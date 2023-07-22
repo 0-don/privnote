@@ -71,6 +71,10 @@
   <form method="POST" class="flex justify-end mt-2" action="?/delete">
     <input name="id" type="hidden" value={url} />
     <input name="tag" type="hidden" value={tag} />
+    {#if note?.manual_password}
+      <input name="manual_password" type="hidden" value={note?.manual_password} />
+    {/if}
+
     {#if note?.destroy_without_confirmation}
       <Button type="button" text="Destroy note now" className="!rounded-none" icon="i-line-md:close-circle" />
     {:else}
