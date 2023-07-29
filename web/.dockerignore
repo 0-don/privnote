@@ -1,15 +1,3 @@
-.git
-.gitignore
-.gitattributes
-README.md
-.npmrc
-.prettierrc
-.eslintrc.cjs
-.graphqlrc
-.editorconfig
 .svelte-kit
-.vscode
-node_modules
 build
-package
-**/.env
+node_modules 

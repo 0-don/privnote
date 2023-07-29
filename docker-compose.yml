@@ -6,7 +6,6 @@ services:
     build:
       context: web/
       dockerfile: Dockerfile
-      target: prod
     restart: always
     networks:
       - proxy
@@ -21,7 +20,6 @@ services:
     build:
       context: server/
       dockerfile: Dockerfile
-      target: prod
     restart: always
     depends_on:
       - privnote-db
