@@ -13,6 +13,7 @@
 
   const url = `${note?.id}@${secret}`;
   const link = `${env.PUBLIC_DOMAIN}${url}`;
+  console.log($page)
 </script>
 
 <input type="text" value={link} class="bg-olive p-2 font-bold" readonly />
