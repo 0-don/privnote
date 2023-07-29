@@ -2,7 +2,7 @@ use crate::{
     constants,
     model::response::{ResponseBody, ResponseMessages},
     utils::{
-        helper::check_csrf_token,
+        helper::{check_csrf_token, send_email},
         types::{AppState, CreateNoteResponse, GetNoteParams},
     },
 };
@@ -163,9 +163,19 @@ pub async fn get_note(
         }
 
         if note.duration_hours == 0 {
-            MutationCore::delete_note_by_id(&state.conn, &note.id)
+            let is_deleted = MutationCore::delete_note_by_id(&state.conn, &note.id)
                 .await
                 .unwrap();
+
+            if is_deleted && note.notify_email.as_ref().unwrap().len() > 0 {
+                note.notify_email = Some(
+                    new_magic_crypt!(&secret, 256)
+                        .decrypt_base64_to_string(&note.notify_email.unwrap())
+                        .unwrap(),
+                );
+                println!("Sending email to: {}", note.notify_email.as_ref().unwrap());
+                send_email(&note).await.unwrap();
+            }
         }
 
         note.note = text.unwrap();
@@ -209,7 +219,7 @@ pub async fn delete_note(
         .into_response();
     }
 
-    let note = note.unwrap();
+    let mut note = note.unwrap();
     let mut secret = secret.unwrap().to_string();
 
     if !note.manual_password.as_ref().unwrap().is_empty() {
@@ -234,6 +244,16 @@ pub async fn delete_note(
     let is_deleted = MutationCore::delete_note_by_id(&state.conn, &note.id)
         .await
         .unwrap();
+
+    if is_deleted && note.notify_email.as_ref().unwrap().len() > 0 {
+        note.notify_email = Some(
+            new_magic_crypt!(&secret, 256)
+                .decrypt_base64_to_string(&note.notify_email.unwrap())
+                .unwrap(),
+        );
+        println!("Sending email to: {}", note.notify_email.as_ref().unwrap());
+        send_email(&note).await.unwrap();
+    }
 
     Json(ResponseBody::new_data(Some(is_deleted))).into_response()
 }

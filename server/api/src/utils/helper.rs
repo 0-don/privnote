@@ -3,9 +3,12 @@ use axum::{
     response::{IntoResponse, Response},
     Json,
 };
-use entity::note;
-use lettre::{Message, message::header::ContentType, transport::smtp::authentication::Credentials, SmtpTransport, Transport};
 use core::time::Duration;
+use entity::note;
+use lettre::{
+    message::header::ContentType, transport::smtp::authentication::Credentials, Message,
+    SmtpTransport, Transport,
+};
 use migration::{
     sea_orm::{Database, DatabaseConnection},
     Migrator, MigratorTrait,
@@ -93,21 +96,27 @@ pub async fn check_csrf_token(captcha: CsrfToken, state: &State<AppState>) -> Op
     None
 }
 
-pub async fn send_email(note: note::Model) -> anyhow::Result<bool> {
+pub async fn send_email(note: &note::Model) -> anyhow::Result<bool> {
+    let host = env::var("SMTP_HOST").expect("SMTP_HOST is not set in .env file");
+    let port = env::var("SMTP_PORT").expect("SMTP_PORT is not set in .env file");
+    let user = env::var("SMTP_USER").expect("SMTP_USER is not set in .env file");
+    let pass = env::var("SMTP_PASS").expect("SMTP_PASS is not set in .env file");
+
     let email = Message::builder()
-        .from("Privnote <kameystageys@gmail.com>".parse().unwrap())
-        .to("diabolic1996@gmail.com".parse().unwrap())
+        .from(format!("Privnote <{}>", user).parse().unwrap())
+        .to(note.notify_email.as_ref().unwrap().parse().unwrap())
         .subject("Your Privnote has been read")
         .header(ContentType::TEXT_PLAIN)
-        .body(format!("Be happy!"))
+        .body(format!("Hello world?"))
         .unwrap();
 
-    let creds = Credentials::new("smtp_username".to_owned(), "smtp_password".to_owned());
+    let creds = Credentials::new(user.to_owned(), pass.to_owned());
 
     // Open a remote connection to gmail
-    let mailer = SmtpTransport::relay("smtp.gmail.com")
+    let mailer = SmtpTransport::relay(host.as_str())
         .unwrap()
         .credentials(creds)
+        .port(port.parse::<u16>().unwrap())
         .build();
 
     // Send the email
