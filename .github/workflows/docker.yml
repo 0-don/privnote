@@ -37,7 +37,6 @@ jobs:
           touch .env
           echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} > .env
           echo SECRET_API_SECRET=${{ secrets.SECRET }} >> .env
-          echo PUBLIC_DOMAIN=${{ secrets.PUBLIC_DOMAIN }} >> .env
           cat .env
 
       - name: Copy env to Web

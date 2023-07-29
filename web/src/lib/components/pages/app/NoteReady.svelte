@@ -1,6 +1,5 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import { env } from '$env/dynamic/public';
   import type { Note, ResponseBody } from '$lib/@types';
   import Button from '$lib/components/elements/Button.svelte';
   import Input from '$lib/components/elements/Input.svelte';
@@ -12,8 +11,8 @@
   const secret = form.data?.secret;
 
   const url = `${note?.id}@${secret}`;
-  const link = `${env.PUBLIC_DOMAIN}${url}`;
-  console.log($page)
+  const link = `${$page.url.href}${url}`;
+
 </script>
 
 <input type="text" value={link} class="bg-olive p-2 font-bold" readonly />
