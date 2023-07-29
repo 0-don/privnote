@@ -44,7 +44,7 @@ impl MigrationTrait for Migration {
                             .integer()
                             .not_null()
                             .default(0)
-                            .extra("check (duration_hours between 0 and 720)".into()),
+                            .extra("check (duration_hours between 0 and 720)".to_owned()),
                     )
                     .col(
                         ColumnDef::new(Note::ManualPassword)
