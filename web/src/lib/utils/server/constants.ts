@@ -10,6 +10,5 @@ export const COOKIE_SERIALIZE_OPTIONS: import('cookie').CookieSerializeOptions =
   path: '/',
   maxAge: TOKEN_EXPIRES_IN,
   sameSite: !dev ? 'lax' : 'none',
-  secure: true, //process.env.NODE_ENV === 'production' ? true : false, // cookie only works in https
-  domain: env.SECRET_CORS_ORIGIN
+  secure: true //process.env.NODE_ENV === 'production' ? true : false, // cookie only works in https
 };

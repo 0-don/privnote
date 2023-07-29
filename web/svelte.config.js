@@ -1,6 +1,5 @@
 import { vitePreprocess } from '@sveltejs/kit/vite';
 import adapaterNode from '@sveltejs/adapter-node';
-import adapaterAuto from '@sveltejs/adapter-auto';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 
@@ -15,7 +14,7 @@ const config = {
     version: {
       name: pkg.version
     },
-    adapter: process.env?.DEV ? adapaterNode() : adapaterAuto()
+    adapter: adapaterNode()
   }
 };
 

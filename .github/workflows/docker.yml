@@ -12,26 +12,36 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Create env file
+      - name: Create env file (SERVER)
         run: |
           touch .env
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
-          echo SERVER_PORT=${{ secrets.SERVER_PORT }} >> .env
-          echo SESSION_SECRET=${{ secrets.SESSION_SECRET }} >> .env
-          echo CORS_ORIGIN=${{ secrets.CORS_ORIGIN }} >> .env
-          echo SMPT_HOST=${{ secrets.SMPT_HOST }} >> .env
+          echo HOST=${{ secrets.HOST }} > .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo SALT=${{ secrets.SALT }} >> .env
+          echo SECRET=${{ secrets.SECRET }} >> .env
+          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+          echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> .env
+          echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env
+          echo SMTP_HOST=${{ secrets.SMTP_HOST }} >> .env
           echo SMTP_PORT=${{ secrets.SMTP_PORT }} >> .env
-          echo SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} >> .env
-          echo CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} >> .env
-          echo CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }} >> .env
-          echo CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }} >> .env
-          echo CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }} >> .env
-          echo TWITCH_CLIENT_ID=${{ secrets.TWITCH_CLIENT_ID }} >> .env
-          echo TWITCH_CLIENT_SECRET=${{ secrets.TWITCH_CLIENT_SECRET }} >> .env
+          echo SMTP_USER=${{ secrets.SMTP_USER }} >> .env
+          echo SMTP_PASS=${{ secrets.SMTP_PASS }} >> .env
           cat .env
 
       - name: Copy env to Server
         run: mv .env ./server
+
+      - name: Create env file (SERVER)
+        run: |
+          touch .env
+          echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} > .env
+          echo SECRET_API_SECRET=${{ secrets.SECRET }} >> .env
+          echo PUBLIC_DOMAIN=${{ secrets.PUBLIC_DOMAIN }} >> .env
+          cat .env
+
+      - name: Copy env to Web
+        run: mv .env ./web
 
       - name: Docker run
         run: docker compose -f docker-compose.prod.yml up -d --force-recreate --build
