@@ -6,8 +6,8 @@
   y="0px"
   width="auto"
   height="auto"
+  class="md:h-16"
   viewBox="0 0 200 55"
-  enable-background="new 0 0 200 55"
   xml:space="preserve"
 >
   <path
