@@ -9,6 +9,10 @@ services:
       - privnote-web
       - privnote-server
       - privnote-db
+    depends_on:
+      - privnote-web
+      - privnote-server
+      - privnote-db
     environment:
         SERVICE2_TOR_SERVICE_VERSION: '3'
         # hello and again will share the same onion v3 address
