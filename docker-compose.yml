@@ -4,7 +4,7 @@ services:
   privnote-tor:
     container_name: privnote-tor
     hostname: privnote-tor
-    image: goldy/tor-hidden-service:0.3.5.8
+    image: goldy/tor-hidden-service:latest
     links:
       - privnote-web
       - privnote-server
