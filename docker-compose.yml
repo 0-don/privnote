@@ -44,11 +44,11 @@ services:
       dockerfile: Dockerfile
     restart: always
     expose:
-      - ${PORT}
+      - 4000
     depends_on:
       - privnote-db
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@privnote-db:5432/${POSTGRES_DB}?schema=public
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@p${POSTGRES_DB}/${POSTGRES_DB}?schema=public
     networks:
       - proxy
   privnote-db:
