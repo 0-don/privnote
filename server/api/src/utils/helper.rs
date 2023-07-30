@@ -122,6 +122,6 @@ pub async fn send_email(note: &note::Model) -> anyhow::Result<bool> {
     // Send the email
     match mailer.send(&email) {
         Ok(_) => Ok(true),
-        Err(e) => panic!("Could not send email: {e:?}"),
+        Err(_) => Ok(false),
     }
 }
