@@ -2,6 +2,7 @@ version: "3.8"
 
 services:
   privnote-tor:
+    container_name: privnote-tor
     image: goldy/tor-hidden-service:0.3.5.8
     links:
       - privnote-web
