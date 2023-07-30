@@ -60,7 +60,7 @@ jobs:
           echo SMTP_PORT=${{ secrets.SMTP_PORT }} >> .env
           echo SMTP_USER=${{ secrets.SMTP_USER }} >> .env
           echo SMTP_PASS=${{ secrets.SMTP_PASS }} >> .env
-          echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} > .env
+          echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} >> .env
           echo SECRET_API_SECRET=${{ secrets.SECRET }} >> .env
           cat .env
 
