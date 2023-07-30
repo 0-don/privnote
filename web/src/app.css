@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #content textarea {
-  background: rgba(180, 166, 41) url(/privnote-page-flip-30.png) no-repeat bottom right;
+  background: rgba(180, 166, 41) url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAMAAAAM7l6QAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAlQTFRF////zMyZ7OzZWeojMgAAADtJREFUeNp8yTEBAAAMw6Bs/kXXAbx08nnz5s2bN2/evHnz5s2bN2/evHnz5s2bN2/evHnz5s2bdwIMAJ/tAfACsNOXAAAAAElFTkSuQmCC") no-repeat bottom right;
 }
 
 input,
