@@ -13,6 +13,8 @@ services:
       - privnote-web
       - privnote-server
       - privnote-db
+    networks:
+      - proxy
     environment:
         SERVICE2_TOR_SERVICE_VERSION: '3'
         # hello and again will share the same onion v3 address
