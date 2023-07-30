@@ -6,7 +6,6 @@
   import NewNoteInfo from '$lib/components/pages/app/info/NewNoteInfo.svelte';
   import NoteLinReadyInfo from '$lib/components/pages/app/info/NoteLinReadyInfo.svelte';
   import NoteReady from '$lib/components/pages/app/NoteReady.svelte';
-  import { debugLog } from '$lib/utils/client/constants';
 
   export let form: ResponseBody;
   export let data: ResponseBody;
