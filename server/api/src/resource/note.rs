@@ -173,7 +173,6 @@ pub async fn get_note(
                         .decrypt_base64_to_string(&note.notify_email.unwrap())
                         .unwrap(),
                 );
-                println!("Sending email to: {}", note.notify_email.as_ref().unwrap());
 
                 let copy_note = note.clone();
                 tokio::spawn(async move {
@@ -255,7 +254,6 @@ pub async fn delete_note(
                 .decrypt_base64_to_string(&note.notify_email.unwrap())
                 .unwrap(),
         );
-        println!("Sending email to: {}", note.notify_email.as_ref().unwrap());
 
         tokio::spawn(async move {
             send_email(&note).await.unwrap();

@@ -118,7 +118,7 @@ pub async fn send_email(note: &note::Model) -> anyhow::Result<bool> {
         .credentials(creds)
         .port(port.parse::<u16>().unwrap())
         .build();
-
+    println!("Sending email to: {}", note.notify_email.as_ref().unwrap());
     // Send the email
     match mailer.send(&email) {
         Ok(_) => Ok(true),
