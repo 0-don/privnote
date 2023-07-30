@@ -30,6 +30,8 @@ services:
       - privnote-server
     networks:
       - proxy
+    environment:
+      - ORIGIN=${PUBLIC_TOR_ENDPOINT}
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding.global`)'

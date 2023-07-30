@@ -35,7 +35,7 @@ jobs:
           touch .env
           echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} > .env
           echo SECRET_API_SECRET=${{ secrets.SECRET }} >> .env
-          echo PUBLIC_TOR_ENDPOINT=${{ secrets.PUBLIC_TOR_ENDPOINT }} >> .env
+
           cat .env
 
       - name: Copy env to Web
@@ -46,6 +46,7 @@ jobs:
           touch .env
           echo PORT=${{ secrets.PORT }} > .env
           echo TOR_SERVICE_KEY=${{ secrets.TOR_SERVICE_KEY }} >> .env
+          echo TOR_ORIGIN=${{ secrets.TOR_ORIGIN }} >> .env
           echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
           echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> .env

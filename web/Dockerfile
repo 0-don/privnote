@@ -14,4 +14,4 @@ COPY --from=builder /app/.env .env
 COPY package.json .
 EXPOSE 3000
 ENV NODE_ENV=production
-CMD ORIGIN=$PUBLIC_TOR_ENDPOINT node -r dotenv/config build
+CMD node -r dotenv/config build
