@@ -12,9 +12,9 @@ members = [".", "api", "entity", "migration", "service"]
 api = { path = "api" }
 
 
-[profile.release]
-panic = "abort"
-codegen-units = 1
-lto = true
-opt-level = "s"
-strip = true
+# [profile.release]
+# panic = "abort"
+# codegen-units = 1
+# lto = true
+# opt-level = "s"
+# strip = true
