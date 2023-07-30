@@ -15,9 +15,9 @@ const config = {
       name: pkg.version
     },
     adapter: adapaterNode(),
-    // csrf: {
-    //   checkOrigin: false
-    // }
+    csrf: {
+      checkOrigin: false
+    }
   }
 };
 

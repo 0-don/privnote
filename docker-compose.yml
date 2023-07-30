@@ -17,21 +17,6 @@ services:
         SERVICE2_TOR_SERVICE_HOSTS: 80:privnote-web-tor:3000
         # tor v3 address private key base 64 encoded
         SERVICE2_TOR_SERVICE_KEY: ${TOR_SERVICE_KEY}
-  privnote-web-tor:
-    container_name: privnote-web-tor
-    hostname: privnote-web-tor
-    build:
-      context: web/
-      dockerfile: Dockerfile
-    restart: always
-    expose:
-      - 3000
-    links:
-      - privnote-server
-    networks:
-      - proxy
-    environment:
-      - ORIGIN=${TOR_ORIGIN}
   privnote-web:
     container_name: privnote-web
     hostname: privnote-web
@@ -45,8 +30,6 @@ services:
       - privnote-server
     networks:
       - proxy
-    environment:
-      - ORIGIN=https://privnote.coding.global
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding.global`)'
