@@ -4,7 +4,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   x="0px"
   y="0px"
-  class="md:h-16"
+  class="md:h-16 h-12"
   viewBox="0 0 200 55"
   xml:space="preserve"
 >
