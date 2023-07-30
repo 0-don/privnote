@@ -14,7 +14,10 @@ const config = {
     version: {
       name: pkg.version
     },
-    adapter: adapaterNode()
+    adapter: adapaterNode(),
+    csrf: {
+      checkOrigin: false
+    }
   }
 };
 
