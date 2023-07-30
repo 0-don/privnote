@@ -22,6 +22,8 @@ services:
       context: web/
       dockerfile: Dockerfile
     restart: always
+    expose:
+      - 3000
     links:
       - privnote-server
     networks:
