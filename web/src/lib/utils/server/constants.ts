@@ -1,5 +1,4 @@
 import { dev } from '$app/environment';
-import { env } from '$env/dynamic/private';
 
 export const COOKIE = 'csrf';
 
