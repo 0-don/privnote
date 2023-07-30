@@ -44,5 +44,25 @@ jobs:
       - name: Copy env to Web
         run: mv .env ./web
 
+        
+      - name: Create env file (ROOT)
+        run: |
+          touch .env
+          echo HOST=${{ secrets.HOST }} > .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo SALT=${{ secrets.SALT }} >> .env
+          echo SECRET=${{ secrets.SECRET }} >> .env
+          echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+          echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+          echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> .env
+          echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env
+          echo SMTP_HOST=${{ secrets.SMTP_HOST }} >> .env
+          echo SMTP_PORT=${{ secrets.SMTP_PORT }} >> .env
+          echo SMTP_USER=${{ secrets.SMTP_USER }} >> .env
+          echo SMTP_PASS=${{ secrets.SMTP_PASS }} >> .env
+          echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} > .env
+          echo SECRET_API_SECRET=${{ secrets.SECRET }} >> .env
+          cat .env
+
       - name: Docker run
         run: docker compose up -d --force-recreate --build
