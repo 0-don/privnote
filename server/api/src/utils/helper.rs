@@ -107,7 +107,7 @@ pub async fn send_email(note: &note::Model) -> anyhow::Result<bool> {
         .to(note.notify_email.as_ref().unwrap().parse().unwrap())
         .subject("Your Privnote has been read")
         .header(ContentType::TEXT_PLAIN)
-        .body(format!("Hello world?"))
+        .body(format!("privnote has been read: {}", note.id))
         .unwrap();
 
     let creds = Credentials::new(user.to_owned(), pass.to_owned());
