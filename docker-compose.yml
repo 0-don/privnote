@@ -6,15 +6,15 @@ services:
     hostname: privnote-tor
     image: goldy/tor-hidden-service:latest
     links:
-      - privnote-web-tor
+      - privnote-web
     depends_on:
-      - privnote-web-tor
+      - privnote-web
     networks:
       - proxy
     environment:
         SERVICE2_TOR_SERVICE_VERSION: '3'
         # hello and again will share the same onion v3 address
-        SERVICE2_TOR_SERVICE_HOSTS: 80:privnote-web-tor:3000
+        SERVICE2_TOR_SERVICE_HOSTS: 80:privnote-web:3000
         # tor v3 address private key base 64 encoded
         SERVICE2_TOR_SERVICE_KEY: ${TOR_SERVICE_KEY}
   privnote-web:
