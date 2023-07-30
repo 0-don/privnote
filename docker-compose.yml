@@ -1,6 +1,16 @@
 version: "3.8"
 
 services:
+  privnote-tor:
+    image: goldy/tor-hidden-service:0.3.5.8
+    links:
+      - privnote-web
+    environment:
+        SERVICE2_TOR_SERVICE_VERSION: '3'
+        # hello and again will share the same onion v3 address
+        SERVICE2_TOR_SERVICE_HOSTS: 80:privnote-web:3000
+        # tor v3 address private key base 64 encoded
+        SERVICE2_TOR_SERVICE_KEY: ${TOR_SERVICE_KEY}
   privnote-web:
     container_name: privnote-web
     build:
