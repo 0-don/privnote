@@ -9,7 +9,7 @@ export const client = async <T = Messages[]>(
   path: string,
   options?: Parameters<typeof request>['1']
 ): Promise<{ body: { json: () => Promise<T> } } & Dispatcher.ResponseData> => {
-  console.log(env.SECRET_API_SECRET);
+  console.log(env.SECRET_API_SECRET, env.SECRET_ENDPOINT + path, options);
   return await request(env.SECRET_ENDPOINT + path, {
     headers: { 'Content-Type': 'application/json', SECRET: env.SECRET_API_SECRET, ...options?.headers },
     ...options
