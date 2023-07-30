@@ -174,7 +174,11 @@ pub async fn get_note(
                         .unwrap(),
                 );
                 println!("Sending email to: {}", note.notify_email.as_ref().unwrap());
-                send_email(&note).await.unwrap();
+
+                let copy_note = note.clone();
+                tokio::spawn(async move {
+                    send_email(&copy_note).await.unwrap();
+                });
             }
         }
 
@@ -252,7 +256,10 @@ pub async fn delete_note(
                 .unwrap(),
         );
         println!("Sending email to: {}", note.notify_email.as_ref().unwrap());
-        send_email(&note).await.unwrap();
+
+        tokio::spawn(async move {
+            send_email(&note).await.unwrap();
+        });
     }
 
     Json(ResponseBody::new_data(Some(is_deleted))).into_response()
