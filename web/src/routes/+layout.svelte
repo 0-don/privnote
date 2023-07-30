@@ -11,7 +11,7 @@
   <div class="container py-3 items-center flex justify-between">
     <section class="container flex items-center space-x-5 px-2">
       <a href="/"><PrivnoteLogo /></a>
-      <p class="w-64 text-sm">Send notes will self-destruct after being read.</p>
+      <p class="w-64 text-sm">Sent notes will self-destruct after being read.</p>
     </section>
     <section class="flex space-x-2">
       <a href="https://discord.gg/coding" target="_blank"><Discord /></a>
