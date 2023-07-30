@@ -7,6 +7,8 @@ services:
       context: web/
       dockerfile: Dockerfile
     restart: always
+    links:
+      - privnote-server
     networks:
       - proxy
     labels:
@@ -21,6 +23,8 @@ services:
       context: server/
       dockerfile: Dockerfile
     restart: always
+    expose:
+      - ${PORT}
     depends_on:
       - privnote-db
     environment:
