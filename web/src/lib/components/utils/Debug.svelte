@@ -1,10 +1,13 @@
 <script lang="ts">
   import { dev } from '$app/environment';
-  import type { DebugMessages } from '$lib/@types';
+    import { page } from '$app/stores';
+  import type { DebugMessages, ResponseBody } from '$lib/@types';
+    import { deepMerge } from '$lib/utils';
 
-  export let debug: DebugMessages;
+  let data: ResponseBody = $page.data;
+  let form: ResponseBody = $page.form;
 
-  const entries = Object.entries(debug).filter(([, messages]) => messages.length);
+  const entries = Object.entries(deepMerge(data, form) as DebugMessages).filter(([, messages]) => (messages ).length);
 </script>
 
 <!-- {#if dev} -->

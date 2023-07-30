@@ -9,10 +9,10 @@
   import { debugLog } from '$lib/utils/client/constants';
 
   export let form: ResponseBody;
-  export let data: ResponseBody;
+  // export let _data: ResponseBody;
 </script>
 
-<Debug debug={debugLog(data, form)} />
+<Debug  />
 <Header title={form?.data ? 'Note link ready' : 'New note'} info={form?.data ? NoteLinReadyInfo : NewNoteInfo} />
 
 {#if form?.data}
