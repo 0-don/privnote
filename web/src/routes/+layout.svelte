@@ -13,7 +13,7 @@
       <a href="/"><PrivnoteLogo /></a>
       <p class="w-32 md:w-60 text-xs md:text-sm">Sent notes will self-destruct after being read.</p>
     </section>
-    <section class="md:space-x-2 md:flex md:justify-end">
+    <section class="md:space-x-2 md:flex md:justify-end space-y-2 md:space-y-0">
       <a href="https://discord.gg/coding" target="_blank"><Discord /></a>
       <a href="https://github.com/Don-Cryptus/privnote" target="_blank"><Github /></a>
     </section>
