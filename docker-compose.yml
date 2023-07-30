@@ -31,12 +31,6 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@privnote-db:5432/${POSTGRES_DB}?schema=public
     networks:
       - proxy
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.privnote-server.rule=Host(`privnote.coding.global`) && PathPrefix(`/api`)'
-      - 'traefik.http.routers.privnote-server.entrypoints=websecure'
-      - 'traefik.http.routers.privnote-server.tls.certresolver=letsencrypt'
-      - 'traefik.http.services.privnote-server.loadbalancer.server.port=${PORT}'
   privnote-db:
     container_name: privnote-db
     image: postgres:alpine
