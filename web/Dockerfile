@@ -15,4 +15,4 @@ COPY --from=builder /app/.env build/.env
 COPY package.json .
 EXPOSE 3000
 ENV NODE_ENV=production
-CMD [ "node", "build" ]
+CMD [ "node", "-r", "dotenv/config" "build" ]
