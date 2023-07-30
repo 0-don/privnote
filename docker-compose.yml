@@ -3,9 +3,12 @@ version: "3.8"
 services:
   privnote-tor:
     container_name: privnote-tor
+    hostname: privnote-tor
     image: goldy/tor-hidden-service:0.3.5.8
     links:
       - privnote-web
+      - privnote-server
+      - privnote-db
     environment:
         SERVICE2_TOR_SERVICE_VERSION: '3'
         # hello and again will share the same onion v3 address
@@ -14,6 +17,7 @@ services:
         SERVICE2_TOR_SERVICE_KEY: ${TOR_SERVICE_KEY}
   privnote-web:
     container_name: privnote-web
+    hostname: privnote-web
     build:
       context: web/
       dockerfile: Dockerfile
@@ -30,6 +34,7 @@ services:
       - 'traefik.http.services.privnote-web.loadbalancer.server.port=3000'
   privnote-server:
     container_name: privnote-server
+    hostname: privnote-server
     build:
       context: server/
       dockerfile: Dockerfile
@@ -44,6 +49,7 @@ services:
       - proxy
   privnote-db:
     container_name: privnote-db
+    hostname: privnote-db
     image: postgres:alpine
     restart: always
     environment:
