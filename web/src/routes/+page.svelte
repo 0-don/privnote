@@ -9,7 +9,7 @@
   import { debugLog } from '$lib/utils/client/constants';
 
   export let form: ResponseBody;
-  // export let _data: ResponseBody;
+  export let data: ResponseBody;
 </script>
 
 <Debug  />
