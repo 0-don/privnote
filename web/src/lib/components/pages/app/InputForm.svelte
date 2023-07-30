@@ -15,7 +15,7 @@
   const errorsData = (Array.isArray(data.messages) ? data.messages : []).map(({ message }) => message).join(', ');
   const tag = (data.data as Tag)?.tag;
 
-  console.log(form,data);
+
 </script>
 
 <form method="POST">

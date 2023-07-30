@@ -8,7 +8,6 @@
   import NoteReady from '$lib/components/pages/app/NoteReady.svelte';
 
   export let form: ResponseBody;
-  export let data: ResponseBody;
 </script>
 
 <Debug  />
