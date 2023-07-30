@@ -9,6 +9,7 @@ export const client = async <T = Messages[]>(
   path: string,
   options?: Parameters<typeof request>['1']
 ): Promise<{ body: { json: () => Promise<T> } } & Dispatcher.ResponseData> => {
+  console.log(env.SECRET_API_SECRET);
   return await request(env.SECRET_ENDPOINT + path, {
     headers: { 'Content-Type': 'application/json', SECRET: env.SECRET_API_SECRET, ...options?.headers },
     ...options
@@ -32,4 +33,4 @@ export const getCsrfToken = async ({ cookies }: RequestEvent): Promise<ResponseB
 };
 
 export const messageFactory = <T extends {}, K extends keyof T = keyof T>(data: T) =>
-  Object.keys(data).map((k) => ({ path: k, value: data?.[k as T[K]] || '' } as Messages));
+  Object.keys(data).map((k) => ({ path: k, value: data?.[k as T[K]] || '' }) as Messages);
