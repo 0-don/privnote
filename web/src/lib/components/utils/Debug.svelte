@@ -8,7 +8,7 @@
 
   const entries = Object.entries(debugLog(data, form)).filter(([, messages]) => messages.length);
 
-  // console.log(entries);
+
 </script>
 
 <!-- {#if dev} -->
