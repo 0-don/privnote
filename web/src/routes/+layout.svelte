@@ -4,12 +4,13 @@
   import Footer from '$lib/components/container/Footer.svelte';
   import Discord from '$lib/svg/Discord.svelte';
   import Github from '$lib/svg/Github.svelte';
+  import PrivnoteLogo from '$lib/svg/PrivnoteLogo.svelte';
 </script>
 
 <header class="bg-main">
   <div class="container py-3 items-center flex justify-between">
     <section class="container flex items-center space-x-5 px-2">
-      <a href="/"><img alt="logo" src="/privnote-logo.svg" class="cursor-cell" /></a>
+      <a href="/"><PrivnoteLogo /></a>
       <p class="w-64 text-sm">Send notes will self-destruct after being read.</p>
     </section>
     <section class="flex space-x-2">
