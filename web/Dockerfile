@@ -14,4 +14,4 @@ COPY --from=builder /app/.env .env
 COPY package.json .
 EXPOSE 3000
 ENV NODE_ENV=production
-CMD ORIGIN=http://localhost:3000 node -r dotenv/config build
+CMD ORIGIN=http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion node -r dotenv/config build
