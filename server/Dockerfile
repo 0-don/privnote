@@ -1,10 +1,11 @@
-FROM messense/rust-musl-cross:x86_64-musl as builder
+FROM rust:latest as build
+
 WORKDIR /app
 COPY . .
-RUN cargo build --release --target x86_64-unknown-linux-musl
+RUN cargo build --release
 
-# Create a new stage with a minimal image
-FROM scratch
-COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/app /app
-ENTRYPOINT ["/app"]
-EXPOSE 3000
+FROM rust:latest
+COPY --from=build /app/target/release/privnote_server .
+COPY --from=build /app/.env .
+EXPOSE 4000
+CMD ["./privnote_server"]
