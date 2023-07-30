@@ -48,7 +48,7 @@ services:
     depends_on:
       - privnote-db
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@p${POSTGRES_DB}/${POSTGRES_DB}?schema=public
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}
     networks:
       - proxy
   privnote-db:
