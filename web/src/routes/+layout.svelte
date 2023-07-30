@@ -8,12 +8,12 @@
 </script>
 
 <header class="bg-main">
-  <div class="container py-3 items-center flex justify-between">
+  <div class="container py-3 items-center flex justify-between h-full">
     <section class="container flex items-center space-x-5 px-2 w-full">
       <a href="/"><PrivnoteLogo /></a>
       <p class="w-32 md:w-60 text-xs md:text-sm">Sent notes will self-destruct after being read.</p>
     </section>
-    <section class="md:space-x-2 md:flex md:justify-end space-y-5 md:space-y-0">
+    <section class="flex flex-col justify-between items-center h-full space-y-4 md:flex-row md:space-y-0 md:space-x-4">
       <a href="https://discord.gg/coding" target="_blank"><Discord /></a>
       <a href="https://github.com/Don-Cryptus/privnote" target="_blank"><Github /></a>
     </section>
