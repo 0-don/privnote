@@ -30,11 +30,12 @@ jobs:
       - name: Copy env to Server
         run: mv .env ./server
 
-      - name: Create env file (SERVER)
+      - name: Create env file (WEB)
         run: |
           touch .env
           echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} > .env
           echo SECRET_API_SECRET=${{ secrets.SECRET }} >> .env
+          echo PUBLIC_TOR_ENDPOINT=${{ secrets.PUBLIC_TOR_ENDPOINT }} >> .env
           cat .env
 
       - name: Copy env to Web
