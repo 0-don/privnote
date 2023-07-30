@@ -7,12 +7,8 @@ services:
     image: goldy/tor-hidden-service:latest
     links:
       - privnote-web
-      - privnote-server
-      - privnote-db
     depends_on:
       - privnote-web
-      - privnote-server
-      - privnote-db
     networks:
       - proxy
     environment:
