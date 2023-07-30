@@ -8,5 +8,5 @@
   when the note is destroyed.<br />
   <br />
   To know more about how Privnote works, check out the
-  <a href="/info/about">about page</a>.
+  <a href="/info/about" aria-label="About Page">about page</a>.
 </div>

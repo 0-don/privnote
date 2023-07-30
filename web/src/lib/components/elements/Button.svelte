@@ -18,7 +18,7 @@
 
 {#if type === 'a'}
   <div class={'cursor-pointer group'} title={title || text}>
-    <a {href} class={`${defaultClassName} ${className}`}>
+    <a {href} class={`${defaultClassName} ${className}`} aria-label={title || text}>
       <p>{text}</p>
       <i class={icon + ' text-xl group-hover:bg-purple-300 transition-all duration-1000'} />
     </a>

@@ -15,7 +15,7 @@
 >
   <!-- svelte-ignore a11y-missing-content -->
   <!-- svelte-ignore a11y-invalid-attribute -->
-  <a href="#" class="close hover:opacity-40" />
+  <a href="#" class="close hover:opacity-40" aria-label="Close" />
   <div
     id="target-inner"
     class="bg-container absolute left-0 md:left-1/2 md:w-1/2 top-1/2 block w-full -translate-x-0 md:-translate-x-1/2 -translate-y-1/2 p-5 shadow-xl"

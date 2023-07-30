@@ -19,12 +19,16 @@
   </p>
 
   <p>
-    If you have any questions, feel free to submit your inquiry via e-mail to <a href="mailto:info@privnote.com"
-      >info@privnote.com</a
-    >, and remember to check our <a href="faq">Frequently Asked Questions</a> first.
+    If you have any questions, feel free to submit your inquiry via e-mail to <a
+      aria-label="Send Link as Email"
+      href="mailto:info@privnote.com">info@privnote.com</a
+    >, and remember to check our <a aria-label="FAQ" href="faq">Frequently Asked Questions</a> first.
   </p>
 
-  <p>If you are concerned about Privacy issues, please read our <a href="privacy">Privacy Policy</a>.</p>
+  <p>
+    If you are concerned about Privacy issues, please read our <a aria-label="privacy" href="privacy">Privacy Policy</a
+    >.
+  </p>
 
-  <p><a href="/">Give Privnote a try!</a></p>
+  <p><a aria-label="Back to Homepage" href="/">Give Privnote a try!</a></p>
 </div>
