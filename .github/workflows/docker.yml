@@ -35,6 +35,7 @@ jobs:
           touch .env
           echo SECRET_ENDPOINT=${{ secrets.SECRET_ENDPOINT }} > .env
           echo SECRET_API_SECRET=${{ secrets.SECRET }} >> .env
+          echo TOR_ORIGIN=${{ secrets.TOR_ORIGIN }} >> .env
 
           cat .env
 
