@@ -9,11 +9,11 @@
 
 <header class="bg-main">
   <div class="container py-3 items-center flex justify-between">
-    <section class="container flex items-center space-x-5 px-2">
+    <section class="container flex items-center space-x-5 px-2 w-full">
       <a href="/"><PrivnoteLogo /></a>
-      <p class="w-64 text-sm">Sent notes will self-destruct after being read.</p>
+      <p class="w-32 md:w-60 text-xs md:text-sm">Sent notes will self-destruct after being read.</p>
     </section>
-    <section class="flex space-x-2">
+    <section class="md:space-x-2 md:flex md:justify-end">
       <a href="https://discord.gg/coding" target="_blank"><Discord /></a>
       <a href="https://github.com/Don-Cryptus/privnote" target="_blank"><Github /></a>
     </section>

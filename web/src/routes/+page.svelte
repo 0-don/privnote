@@ -10,7 +10,7 @@
   export let form: ResponseBody;
 </script>
 
-<Debug  />
+<!-- <Debug  /> -->
 <Header title={form?.data ? 'Note link ready' : 'New note'} info={form?.data ? NoteLinReadyInfo : NewNoteInfo} />
 
 {#if form?.data}
