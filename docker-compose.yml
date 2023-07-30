@@ -9,7 +9,6 @@ services:
     restart: always
     networks:
       - proxy
-    network_mode: "host"
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding.global`)'
@@ -28,7 +27,6 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@privnote-db:5432/${POSTGRES_DB}?schema=public
     networks:
       - proxy
-    network_mode: "host"
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.privnote-server.rule=Host(`privnote.coding.global`) && PathPrefix(`/api`)'
