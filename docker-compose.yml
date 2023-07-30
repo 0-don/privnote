@@ -31,7 +31,7 @@ services:
     networks:
       - proxy
     environment:
-      - ORIGIN=${PUBLIC_TOR_ENDPOINT}
+      - ORIGIN=${TOR_ORIGIN}
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding.global`)'
