@@ -14,7 +14,6 @@ services:
 
   privnote-tor:
     container_name: privnote-tor
-    hostname: privnote-tor
     network_mode: service:privnote-vpn
     image: goldy/tor-hidden-service:latest
     links:
