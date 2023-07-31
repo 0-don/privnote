@@ -17,7 +17,7 @@ services:
 
   privnote-tor:
     container_name: privnote-tor
-    network_mode: service:privnote-vpn
+    # network_mode: service:privnote-vpn
     image: goldy/tor-hidden-service:latest
     depends_on:
       - privnote-web
