@@ -17,8 +17,6 @@ services:
   privnote-tor:
     container_name: privnote-tor
     image: goldy/tor-hidden-service:latest
-    links:
-      - privnote-web
     depends_on:
       - privnote-web
     networks:
