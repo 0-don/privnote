@@ -12,15 +12,13 @@ export const load = (async (options: RequestEvent): Promise<ResponseBody | Redir
   if (!options.params?.id) throw redirect(307, '/');
 
   try {
-    const body = await (
-      await client<ResponseBody<{ note: Note; alert: string }>>(`note/${options.params.id}`, {
-        method: 'GET'
+    const checkNoteBody = await (
+      await client<ResponseBody<Boolean>>(`note/${options.params.id}`, {
+        method: 'POST'
       })
     ).body.json();
 
-    const captcha = await getCsrfToken(options);
-
-    return deepMerge(body, captcha, body.data?.note ? { messages: messageFactory(body.data?.note) } : {});
+    return deepMerge(checkNoteBody) as any;
   } catch (err) {
     // throw redirect(307, '/');
     return { messages: [{ message: JSON.stringify(err), path: 'error' }] };
@@ -46,6 +44,17 @@ export const actions = {
     } catch (err) {
       return { messages: [{ message: JSON.stringify(err), path: 'error' }, ...messageFactory(form)] };
     }
+  },
+  getNote: async (options) => {
+    const body = await (
+      await client<ResponseBody<{ note: Note; alert: string }>>(`note/${options.params.id}`, {
+        method: 'GET'
+      })
+    ).body.json();
+
+    const captcha = await getCsrfToken(options);
+
+    return deepMerge(body, captcha, body.data?.note ? { messages: messageFactory(body.data?.note) } : {});
   },
   delete: async ({ request, cookies }): Promise<ResponseBody | Redirect> => {
     const form = Object.fromEntries(await request.formData());

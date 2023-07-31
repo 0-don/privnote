@@ -1,13 +1,16 @@
 <script lang="ts">
-  import type { Captcha, NoteResponse, ResponseBody } from '$lib/@types';
   import Debug from '$lib/components/utils/Debug.svelte';
   import ReadNote from '$lib/components/pages/note/ReadNote.svelte';
-  import { debugLog } from '$lib/utils/client/constants';
+  import ConfirmReadNote from '$lib/components/pages/note/ConfirmReadNote.svelte';
+  import type { ResponseBody } from '$lib/@types';
 
-  export let form: ResponseBody;
-  export let data: ResponseBody<NoteResponse & Captcha>;
+  export let data: ResponseBody<Boolean>;
 </script>
 
-<Debug debug={debugLog(data, form)} />
+<Debug />
 
-<ReadNote />
+{#if !data?.data}
+  <ReadNote />
+{:else}
+  <ConfirmReadNote />
+{/if}

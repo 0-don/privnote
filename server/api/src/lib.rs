@@ -8,7 +8,7 @@ use crate::{
     middleware::secret::secret_middleware,
     resource::{
         auth::get_csrf_token,
-        note::{create_note, delete_note, get_note},
+        note::{create_note, delete_note, get_note, check_note},
     },
     utils::helper::{cron_delete_old_notes, get_app_state},
 };
@@ -43,7 +43,7 @@ async fn start() -> anyhow::Result<()> {
             Router::new()
                 .route("/", get(|| async { "Hello, World!" }))
                 .route("/auth/csrf", get(get_csrf_token))
-                .route("/note/:id", get(get_note))
+                .route("/note/:id", get(get_note).post(check_note))
                 .route("/note", post(create_note).delete(delete_note))
                 .route_layer(Middleware::from_fn(secret_middleware)),
         )
