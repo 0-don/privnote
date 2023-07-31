@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   privnote-vpn:
+    container_name: privnote-vpn
     image: qmcgaw/gluetun
+    network_mode: bridge
     cap_add:
       - NET_ADMIN
     environment:
@@ -14,8 +16,8 @@ services:
 
   privnote-tor:
     container_name: privnote-tor
-    network_mode: service:privnote-vpn
     image: goldy/tor-hidden-service:latest
+    # network_mode: service:privnote-vpn
     links:
       - privnote-web
     depends_on:
