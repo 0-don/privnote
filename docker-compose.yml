@@ -4,7 +4,7 @@ services:
   privnote-vpn:
     container_name: privnote-vpn
     image: qmcgaw/gluetun
-    network_mode: bridge
+
     cap_add:
       - NET_ADMIN
     environment:
@@ -17,7 +17,6 @@ services:
   privnote-tor:
     container_name: privnote-tor
     image: goldy/tor-hidden-service:latest
-    network_mode: service:privnote-vpn
     links:
       - privnote-web
     depends_on:
@@ -30,6 +29,7 @@ services:
         SERVICE2_TOR_SERVICE_HOSTS: 80:privnote-web:3000
         # tor v3 address private key base 64 encoded
         SERVICE2_TOR_SERVICE_KEY: ${TOR_SERVICE_KEY}
+
 
   privnote-web:
     container_name: privnote-web
