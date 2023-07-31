@@ -49,6 +49,9 @@ jobs:
           echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
           echo POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} >> .env
           echo POSTGRES_DB=${{ secrets.POSTGRES_DB }} >> .env
+          echo WIREGUARD_PRIVATE_KEY=${{ secrets.WIREGUARD_PRIVATE_KEY }} >> .env
+          echo WIREGUARD_ADDRESSES=${{ secrets.WIREGUARD_ADDRESSES }} >> .env
+          echo SERVER_CITIES=${{ secrets.SERVER_CITIES }} >> .env
           cat .env
 
       - name: Docker run

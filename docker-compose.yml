@@ -1,9 +1,21 @@
 version: "3.8"
 
 services:
+  privnote-vpn:
+    image: qmcgaw/gluetun
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
+      - SERVER_CITIES=${SERVER_CITIES}
+
   privnote-tor:
     container_name: privnote-tor
     hostname: privnote-tor
+    network_mode: service:privnote-vpn
     image: goldy/tor-hidden-service:latest
     links:
       - privnote-web
@@ -17,6 +29,7 @@ services:
         SERVICE2_TOR_SERVICE_HOSTS: 80:privnote-web:3000
         # tor v3 address private key base 64 encoded
         SERVICE2_TOR_SERVICE_KEY: ${TOR_SERVICE_KEY}
+
   privnote-web:
     container_name: privnote-web
     hostname: privnote-web
@@ -36,6 +49,7 @@ services:
       - 'traefik.http.routers.privnote-web.entrypoints=websecure'
       - 'traefik.http.routers.privnote-web.tls.certresolver=letsencrypt'
       - 'traefik.http.services.privnote-web.loadbalancer.server.port=3000'
+
   privnote-server:
     container_name: privnote-server
     hostname: privnote-server
@@ -51,6 +65,7 @@ services:
       - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}
     networks:
       - proxy
+
   privnote-db:
     container_name: privnote-db
     hostname: privnote-db
