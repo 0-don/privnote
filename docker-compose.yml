@@ -3,6 +3,7 @@ version: "3.8"
 services:
   privnote-vpn:
     container_name: privnote-vpn
+    restart: always 
     image: qmcgaw/gluetun
     network_mode: bridge
     cap_add:
@@ -16,10 +17,11 @@ services:
 
   privnote-tor:
     container_name: privnote-tor
-    network_mode: "service:privnote-vpn"
+    network_mode: service:privnote-vpn
     image: goldy/tor-hidden-service:latest
     depends_on:
       - privnote-web
+      - savagescan-vpn
     networks:
       - proxy
     environment:
