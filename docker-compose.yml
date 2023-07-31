@@ -21,7 +21,7 @@ services:
     image: goldy/tor-hidden-service:latest
     depends_on:
       - privnote-web
-      - savagescan-vpn
+      - privnote-vpn
     networks:
       - proxy
     environment:
