@@ -1,12 +1,15 @@
 <script lang="ts">
 </script>
 
-<footer class="bg-body container sticky top-[100vh] flex justify-center">
-  <div class="mb-2">
-    <span>©</span>
-    <span> {new Date().getFullYear()} By</span>
-    <a class="font-bold" href="https://github.com/Don-Cryptus" aria-label="Link to my Github" target="_blank"
-      >Don-Cryptus</a
-    >
+<footer class="sticky top-[100vh] bg-main py-0.5">
+  <div class="container flex justify-between">
+    <a type="a" href="/" aria-label="Write a new note" class="underline hover:no-underline">Write a new note</a>
+    <div>
+      <span>©</span>
+      <span> {new Date().getFullYear()} By</span>
+      <a class="font-bold" href="https://github.com/Don-Cryptus" aria-label="Link to my Github" target="_blank"
+        >Don-Cryptus</a
+      >
+    </div>
   </div>
 </footer>
