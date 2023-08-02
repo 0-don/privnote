@@ -13,7 +13,7 @@
     <img src="web/static/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Privnote</h3>
+  <h1 align="center">Privnote</h1>
 
   <p align="center">
     Privnote is a secure, open source and zero javascript note sharing service inspired by PrivNote written in rust & svelte.
