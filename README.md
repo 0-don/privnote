@@ -16,13 +16,13 @@
   <h1 align="center">Privnote</h1>
 
   <p align="center">
-    Privnote is a secure, open source and zero javascript note sharing service inspired by PrivNote written in rust & svelte.
-    <br />
-    <!-- <a href="https://github.com/don-cryptus/privnote"><strong>Explore the docs »</strong></a> -->
     <a href="https://privnote.coding.global">Clearnet View</a>
     ·
     <a href="http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/">Tor View</a>
     <br />
+    Privnote is a secure, open source and zero javascript note sharing service inspired by PrivNote written in rust & svelte.
+    <br />
+    <!-- <a href="https://github.com/don-cryptus/privnote"><strong>Explore the docs »</strong></a> -->
     <a href="https://github.com/don-cryptus/privnote/issues">Report Bug</a>
     ·
     <a href="https://github.com/don-cryptus/privnote/issues">Request Feature</a>
