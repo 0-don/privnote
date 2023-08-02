@@ -4,7 +4,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+
 
 <!-- PROJECT LOGO -->
 <br />
@@ -49,7 +49,6 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -137,13 +136,8 @@ Contributions are what make the open-source community such an amazing place to l
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
 Project Link: [https://github.com/don-cryptus/privnote](https://github.com/don-cryptus/privnote)
 
@@ -173,8 +167,6 @@ Project Link: [https://github.com/don-cryptus/privnote](https://github.com/don-c
 [stars-url]: https://github.com/don-cryptus/privnote/stargazers
 [issues-shield]: https://img.shields.io/github/issues/don-cryptus/privnote.svg?style=for-the-badge
 [issues-url]: https://github.com/don-cryptus/privnote/issues
-[license-shield]: https://img.shields.io/github/license/don-cryptus/privnote.svg?style=for-the-badge
-[license-url]: https://github.com/don-cryptus/privnote/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
