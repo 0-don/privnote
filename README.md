@@ -2,7 +2,7 @@
 
 http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/
 
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<!-- Improved compatibility of back to top link: See: https://github.com/don-cryptus/privnote/pull/73 -->
 
 <a name="readme-top"></a>
 
@@ -33,7 +33,7 @@ http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/don-cryptus/privnote">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -42,14 +42,14 @@ http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/
   <p align="center">
     An awesome README template to jumpstart your projects!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/don-cryptus/privnote"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/don-cryptus/privnote">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/don-cryptus/privnote/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/don-cryptus/privnote/issues">Request Feature</a>
   </p>
 </div>
 
@@ -172,7 +172,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
   - [ ] Chinese
   - [ ] Spanish
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/don-cryptus/privnote/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -232,15 +232,15 @@ Use this space to list resources you find helpful and would like to give credit 
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/don-cryptus/privnote.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[contributors-url]: https://github.com/don-cryptus/privnote/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/don-cryptus/privnote.svg?style=for-the-badge
+[forks-url]: https://github.com/don-cryptus/privnote/network/members
+[stars-shield]: https://img.shields.io/github/stars/don-cryptus/privnote.svg?style=for-the-badge
+[stars-url]: https://github.com/don-cryptus/privnote/stargazers
+[issues-shield]: https://img.shields.io/github/issues/don-cryptus/privnote.svg?style=for-the-badge
+[issues-url]: https://github.com/don-cryptus/privnote/issues
+[license-shield]: https://img.shields.io/github/license/don-cryptus/privnote.svg?style=for-the-badge
+[license-url]: https://github.com/don-cryptus/privnote/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
