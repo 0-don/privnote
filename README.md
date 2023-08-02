@@ -155,17 +155,11 @@ Project Link: [https://github.com/don-cryptus/privnote](https://github.com/don-c
 - [Rust](https://www.rust-lang.org/)
 - [Docker](https://www.docker.com/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [Redis](https://redis.io/)
-- [Traefik](https://traefik.io/)
 - [SvelteKit](https://kit.svelte.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [Jest](https://jestjs.io/)
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
-- [Husky](https://typicode.github.io/husky/)
-- [lint-staged](https://github.com/okonet/lint-staged)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
