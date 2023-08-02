@@ -59,33 +59,28 @@
 
 ## About The Project
 
+[Privnote](https://github.com/don-cryptus/privnote) is a secure, open-source note sharing service inspired by PrivNote. This project is unique because it's built with Svelte but emits zero JavaScript, ensuring a lightweight and fast user experience. The backend is powered by Axum, a highly performant web application framework.
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+Here's why you should consider using or contributing to Privnote:
 
-Here's why:
+- It's secure: Your notes are safe and can be shared confidently.
+- It's efficient: With zero JavaScript emission from Svelte and a performant backend in Axum, Privnote is built for speed.
+- It's open-source: This means you can contribute to its development, suggest changes, and help improve it.
 
-- Your time should be focused on creating something amazing. A project that solves a problem and helps others
-- You shouldn't be doing the same tasks over and over like creating a README from scratch
-- You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Privnote is not just another note sharing service. It's designed to be secure, efficient, and user-friendly.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+The major frameworks/libraries used to bootstrap this project include:
 
-- [![Next][Next.js]][Next-url]
-- [![React][React.js]][React-url]
-- [![Vue][Vue.js]][Vue-url]
-- [![Angular][Angular.io]][Angular-url]
-- [![Svelte][Svelte.dev]][Svelte-url]
-- [![Laravel][Laravel.com]][Laravel-url]
-- [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-- [![JQuery][JQuery.com]][JQuery-url]
+- [Rust](https://www.rust-lang.org/): A language empowering everyone to build reliable and efficient software.
+- [SvelteKit](https://kit.svelte.dev/): A framework for building extremely high-performance web apps.
+- [SeaORM](https://www.sea-orm.org/): An async, dynamic and lightweight ORM for Rust.
+- [Axum](https://github.com/tokio-rs/axum): A web application framework that ensures high performance.
+- [Svelte](https://svelte.dev/): A JavaScript framework for building user interfaces. In this project, it's configured to emit zero JavaScript.
+- [PostgreSQL](https://www.postgresql.org/): A powerful, open source object-relational database system.
+- [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapidly building custom designs.
+- [TypeScript](https://www.typescriptlang.org/): A typed superset of JavaScript that compiles to plain JavaScript.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -93,34 +88,31 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy of Privnote up and running, follow these steps:
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
+- You need to have Rust installed. If you don't have it, you can install it from [here](https://www.rust-lang.org/tools/install).
+- You need Node.js and npm installed. If you don't have them, you can install Node.js from [here](https://nodejs.org/en/download/) which includes npm.
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+1. Clone the repo
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+   git clone https://github.com/don-cryptus/privnote.git
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
+2. Change directory to the cloned repo
+   ```
+   cd privnote
+   ```
+3. Open a new terminal and start the server
+   ```
+   cd server && cargo run
+   ```
+4. Open a new terminal and start the Web App
+   ```
+   yarn
+   yarn dev
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -129,36 +121,15 @@ _Below is an example of how you can instruct your audience on installing and set
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
+Privnote is a secure, open-source note sharing service. You can use it to share notes securely with others. Simply write your note, generate a link, and share it. The note will self-destruct after being read.
 
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-  - [ ] Chinese
-  - [ ] Spanish
-
-See the [open issues](https://github.com/don-cryptus/privnote/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
+See the [open issues](https://github.com/don-cryptus/privnote/issues) for a list of proposed features and known issues.
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
@@ -166,40 +137,34 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- LICENSE -->
-
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
 Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
+Project Link: [https://github.com/don-cryptus/privnote](https://github.com/don-cryptus/privnote)
 
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-- [Choose an Open Source License](https://choosealicense.com)
-- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-- [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-- [Malven's Grid Cheatsheet](https://grid.malven.co/)
-- [Img Shields](https://shields.io)
-- [GitHub Pages](https://pages.github.com)
-- [Font Awesome](https://fontawesome.com)
-- [React Icons](https://react-icons.github.io/react-icons/search)
+- [Svelte](https://svelte.dev/)
+- [Axum](https://github.com/tokio-rs/axum)
+- [SeaORM](https://www.sea-orm.org/)
+- [Rust](https://www.rust-lang.org/)
+- [Docker](https://www.docker.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [Traefik](https://traefik.io/)
+- [SvelteKit](https://kit.svelte.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Jest](https://jestjs.io/)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Husky](https://typicode.github.io/husky/)
+- [lint-staged](https://github.com/okonet/lint-staged)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
