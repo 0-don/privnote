@@ -1,5 +1,3 @@
-### Zero Javascript Privnote
-
 http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/
 
 <a name="readme-top"></a>
@@ -10,7 +8,6 @@ http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -18,14 +15,15 @@ http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/
     <img src="web/static/favicon.ico" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Privnote</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    Privnote is a secure, open source and zero javascript note sharing service inspired by PrivNote written in rust & svelte.
     <br />
-    <a href="https://github.com/don-cryptus/privnote"><strong>Explore the docs »</strong></a>
+    <!-- <a href="https://github.com/don-cryptus/privnote"><strong>Explore the docs »</strong></a> -->
+    <a href="https://github.com/don-cryptus/privnote">View Demo</a>
     <br />
-    <br />
+    <!-- <br /> -->
     <a href="https://github.com/don-cryptus/privnote">View Demo</a>
     ·
     <a href="https://github.com/don-cryptus/privnote/issues">Report Bug</a>
