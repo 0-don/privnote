@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/don-cryptus/privnote">
-    <img src="web/static/favicon.ico" alt="Logo" width="80" height="80">
+    <img src="web/static/privnote-logo.svg" alt="Logo" width="200" height="80">
   </a>
 
   <h1 align="center">Privnote</h1>
