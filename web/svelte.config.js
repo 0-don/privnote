@@ -1,5 +1,6 @@
-import { vitePreprocess } from '@sveltejs/kit/vite';
 import adapaterNode from '@sveltejs/adapter-node';
+import adapterVercel from '@sveltejs/adapter-vercel';
+import { vitePreprocess } from '@sveltejs/kit/vite';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 
@@ -14,7 +15,7 @@ const config = {
     version: {
       name: pkg.version
     },
-    adapter: adapaterNode(),
+    adapter: process.env.VERCEL_ENV ? adapterVercel() : adapaterNode(),
     csrf: {
       checkOrigin: false
     }
