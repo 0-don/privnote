@@ -1,11 +1,11 @@
 import type { Messages, Note, ResponseBody } from '$lib/@types';
 import { NoteSchema } from '$lib/schemas/note.schema';
-import type { PageServerLoad } from './$types';
+import { deepMerge } from '$lib/utils';
+import { client, getCsrfToken, messageFactory } from '$lib/utils/server';
+import { COOKIE } from '$lib/utils/server/constants';
 import type { Actions } from '@sveltejs/kit';
 import { z } from 'zod';
-import { COOKIE } from '$lib/utils/server/constants';
-import { client, getCsrfToken, messageFactory } from '$lib/utils/server';
-import { deepMerge } from '$lib/utils';
+import type { PageServerLoad } from './$types';
 
 export const load = (async (options): Promise<ResponseBody> => await getCsrfToken(options)) satisfies PageServerLoad;
 
