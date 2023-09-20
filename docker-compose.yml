@@ -47,7 +47,8 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding.global`)'
-      - 'traefik.http.middlewares.testHeader.headers.customresponseheaders.Onion-Location=http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/'
+      - 'traefik.http.middlewares.testHeader.headers.onionHeader.Onion-Location=http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/'
+      - 'traefik.http.routers.privnote-web.middlewares=onionHeader@docker'
       - 'traefik.http.routers.privnote-web.entrypoints=websecure'
       - 'traefik.http.routers.privnote-web.tls.certresolver=letsencrypt'
       - 'traefik.http.services.privnote-web.loadbalancer.server.port=3000'
