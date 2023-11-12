@@ -1,18 +1,18 @@
 version: "3.8"
 
 services:
-  privnote-vpn:
-    container_name: privnote-vpn
-    restart: always 
-    image: qmcgaw/gluetun
-    cap_add:
-      - NET_ADMIN
-    environment:
-      - VPN_SERVICE_PROVIDER=mullvad
-      - VPN_TYPE=wireguard
-      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
-      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
-      - SERVER_CITIES=${SERVER_CITIES}
+  # privnote-vpn:
+  #   container_name: privnote-vpn
+  #   restart: always 
+  #   image: qmcgaw/gluetun
+  #   cap_add:
+  #     - NET_ADMIN
+  #   environment:
+  #     - VPN_SERVICE_PROVIDER=mullvad
+  #     - VPN_TYPE=wireguard
+  #     - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+  #     - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
+  #     - SERVER_CITIES=${SERVER_CITIES}
 
   privnote-tor:
     container_name: privnote-tor
@@ -20,7 +20,6 @@ services:
     image: goldy/tor-hidden-service:latest
     depends_on:
       - privnote-web
-      - privnote-vpn
     networks:
       - proxy
     environment:
