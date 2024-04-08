@@ -1,16 +1,16 @@
 <a name="readme-top"></a>
 
 <div align="center">
-   <img src="https://img.shields.io/github/contributors/don-cryptus/privnote.svg?style=for-the-badge" />
-   <img src="https://img.shields.io/github/forks/don-cryptus/privnote.svg?style=for-the-badge" />
-   <img src="https://img.shields.io/github/stars/don-cryptus/privnote.svg?style=for-the-badge" />
-   <img src="https://img.shields.io/github/issues/don-cryptus/privnote.svg?style=for-the-badge" />
+   <img src="https://img.shields.io/github/contributors/0-don/privnote.svg?style=for-the-badge" />
+   <img src="https://img.shields.io/github/forks/0-don/privnote.svg?style=for-the-badge" />
+   <img src="https://img.shields.io/github/stars/0-don/privnote.svg?style=for-the-badge" />
+   <img src="https://img.shields.io/github/issues/0-don/privnote.svg?style=for-the-badge" />
 </div>
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/don-cryptus/privnote">
+  <a href="https://github.com/0-don/privnote">
     <img src="web/static/privnote-logo.svg" alt="Logo" width="200" height="80">
   </a>
 
@@ -23,10 +23,10 @@
     <br />
     Privnote is a secure, open source and zero javascript note sharing service inspired by PrivNote written in rust & svelte.
     <br />
-    <!-- <a href="https://github.com/don-cryptus/privnote"><strong>Explore the docs »</strong></a> -->
-    <a href="https://github.com/don-cryptus/privnote/issues">Report Bug</a>
+    <!-- <a href="https://github.com/0-don/privnote"><strong>Explore the docs »</strong></a> -->
+    <a href="https://github.com/0-don/privnote/issues">Report Bug</a>
     ·
-    <a href="https://github.com/don-cryptus/privnote/issues">Request Feature</a>
+    <a href="https://github.com/0-don/privnote/issues">Request Feature</a>
   </p>
 </div>
 
@@ -59,7 +59,7 @@
 
 ## About The Project
 
-[Privnote](https://github.com/don-cryptus/privnote) is a secure, open-source note sharing service inspired by PrivNote. This project is unique because it's built with Svelte but emits zero JavaScript, ensuring a lightweight and fast user experience. The backend is powered by Axum, a highly performant web application framework.
+[Privnote](https://github.com/0-don/privnote) is a secure, open-source note sharing service inspired by PrivNote. This project is unique because it's built with Svelte but emits zero JavaScript, ensuring a lightweight and fast user experience. The backend is powered by Axum, a highly performant web application framework.
 
 Here's why you should consider using or contributing to Privnote:
 
@@ -99,7 +99,7 @@ To get a local copy of Privnote up and running, follow these steps:
 
 1. Clone the repo
    ```
-   git clone https://github.com/don-cryptus/privnote.git
+   git clone https://github.com/0-don/privnote.git
    ```
 2. Change directory to the cloned repo
    ```
@@ -125,7 +125,7 @@ Privnote is a secure, open-source note sharing service. You can use it to share 
 
 ## Roadmap
 
-See the [open issues](https://github.com/don-cryptus/privnote/issues) for a list of proposed features and known issues.
+See the [open issues](https://github.com/0-don/privnote/issues) for a list of proposed features and known issues.
 
 ## Contributing
 
@@ -139,7 +139,7 @@ Contributions are what make the open-source community such an amazing place to l
 
 ## Contact
 
-Project Link: [https://github.com/don-cryptus/privnote](https://github.com/don-cryptus/privnote)
+Project Link: [https://github.com/0-don/privnote](https://github.com/0-don/privnote)
 
 ## Acknowledgments
 

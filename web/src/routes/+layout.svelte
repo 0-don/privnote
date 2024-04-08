@@ -1,10 +1,9 @@
 <script>
-  import 'uno.css';
-  import '../app.css';
   import Footer from '$lib/components/container/Footer.svelte';
   import Discord from '$lib/svg/Discord.svelte';
   import Github from '$lib/svg/Github.svelte';
-  import PrivnoteLogo from '$lib/svg/PrivnoteLogo.svelte';
+  import 'uno.css';
+  import '../app.css';
 </script>
 
 <header class="bg-main">
@@ -17,7 +16,7 @@
     </section>
     <section class="flex flex-col justify-between items-center h-full space-y-4 md:flex-row md:space-y-0 md:space-x-4">
       <a aria-label="Our Discord Server" href="https://discord.gg/coding" target="_blank"><Discord /></a>
-      <a aria-label="Github Repository" href="https://github.com/Don-Cryptus/privnote" target="_blank"><Github /></a>
+      <a aria-label="Github Repository" href="https://github.com/0-don/privnote" target="_blank"><Github /></a>
     </section>
   </div>
 </header>

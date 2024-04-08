@@ -7,8 +7,8 @@
     <div>
       <span>©</span>
       <span> {new Date().getFullYear()} By</span>
-      <a class="font-bold" href="https://github.com/Don-Cryptus" aria-label="Link to my Github" target="_blank"
-        >Don-Cryptus</a
+      <a class="font-bold" href="https://github.com/0-don" aria-label="Link to my Github" target="_blank"
+        >0-don</a
       >
     </div>
   </div>
