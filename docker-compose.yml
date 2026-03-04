@@ -37,6 +37,12 @@ services:
       context: web/
       dockerfile: Dockerfile
     restart: always
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     ports:
       - "127.0.0.1:3000:3000"
     expose:
@@ -44,6 +50,7 @@ services:
     networks:
       - proxy
     labels:
+      - 'autoheal=true'
       - 'traefik.enable=true'
       - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding.global`)'
       - 'traefik.http.middlewares.onionHeader.headers.customresponseheaders.Onion-Location=http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/'
@@ -59,6 +66,14 @@ services:
       context: server/
       dockerfile: Dockerfile
     restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - 'autoheal=true'
     expose:
       - 4000
     depends_on:
