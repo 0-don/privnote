@@ -45,7 +45,7 @@ services:
       - proxy
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding.global`)'
+      - 'traefik.http.routers.privnote-web.rule=Host(`privnote.coding-global.com`)'
       - 'traefik.http.middlewares.onionHeader.headers.customresponseheaders.Onion-Location=http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/'
       - 'traefik.http.routers.privnote-web.middlewares=onionHeader@docker'
       - 'traefik.http.routers.privnote-web.entrypoints=websecure'

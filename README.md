@@ -17,7 +17,7 @@
   <h1 align="center">Privnote</h1>
 
   <p align="center">
-    <a href="https://privnote.coding.global">Clearnet View</a>
+    <a href="https://privnote.coding-global.com">Clearnet View</a>
     ·
     <a href="http://pnotegqaaijd3dpqesxfjplwbxk2z6jnaoha7gqalfwiaajqqtsilcqd.onion/">Tor View</a>
     <br />
